@@ -1,0 +1,8 @@
+/* All table font size */
+.custom-ag-grid .ag-header-cell-label {
+  font-size: 12px;
+}
+
+.custom-ag-grid .ag-cell {
+  font-size: 11px;
+}
