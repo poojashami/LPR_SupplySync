@@ -23,8 +23,8 @@ const SimpleBarStyle = styled(SimpleBar)(({ theme }) => ({
   },
   '& .simplebar-track.simplebar-vertical': { width: 10 },
   '& .simplebar-track.simplebar-horizontal .simplebar-scrollbar': { height: '100vh' },
-  '& .simplebar-mask': { zIndex: 'inherit' },
-  backgroundColor: '#c6dcf5'
+  '& .simplebar-mask': { zIndex: 'inherit' }
+  // backgroundColor: '#c6dcf5'
 }));
 
 // ==============================|| SIMPLE SCROLL BAR  ||============================== //

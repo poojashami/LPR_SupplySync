@@ -53,7 +53,7 @@ export default function Header() {
     position: 'fixed',
     elevation: 0,
     sx: {
-      bgcolor: '#a1bcdb',
+      bgcolor: '#318CE7',
       backdropFilter: 'blur(8px)',
       // zIndex: 9999,
       width: isHorizontal

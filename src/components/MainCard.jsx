@@ -14,7 +14,7 @@ import useConfig from 'hooks/useConfig';
 import { padding } from '@mui/system';
 
 // header style
-const headerSX = { pl: 1, pr: 1, pt: 0.2, pb: 0.2, bgcolor: '#cbdcee', '& .MuiCardHeader-action': { m: '0px 0px', alignSelf: 'center' } };
+const headerSX = { pl: 1, pr: 1, pt: 0.2, pb: 0.2, bgcolor: '#6CB4EE', '& .MuiCardHeader-action': { m: '0px 0px', alignSelf: 'center' } };
 
 // ==============================|| CUSTOM - MAIN CARD ||============================== //
 
