@@ -12,9 +12,18 @@ import Typography from '@mui/material/Typography';
 // project-imports
 import useConfig from 'hooks/useConfig';
 import { padding } from '@mui/system';
+import { color } from 'framer-motion';
 
 // header style
-const headerSX = { pl: 1, pr: 1, pt: 0.2, pb: 0.2, bgcolor: '#6CB4EE', '& .MuiCardHeader-action': { m: '0px 0px', alignSelf: 'center' } };
+const headerSX = {
+  pl: 1,
+  pr: 1,
+  pt: 0.2,
+  pb: 0.2,
+  bgcolor: '#bec8d06e',
+  color: 'black',
+  '& .MuiCardHeader-action': { m: '0px 0px', alignSelf: 'center' }
+};
 
 // ==============================|| CUSTOM - MAIN CARD ||============================== //
 

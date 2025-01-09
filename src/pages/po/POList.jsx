@@ -5,7 +5,7 @@ import MainCard from 'components/MainCard';
 import PlusButton from 'components/CustomButton';
 import RFQForm from './RFQForm';
 
-const RfqList = () => {
+const POList = () => {
   const [showLPRForm, setShowLPRForm] = useState(false);
   const LPRColumn = [
     {
@@ -62,9 +62,9 @@ const RfqList = () => {
     <MainCard
       title={
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span>{!showLPRForm ? 'RFQ List' : showLPRForm && 'Create RFQ'}</span>
+          <span>{!showLPRForm ? 'Quote List' : showLPRForm && 'Create Quote'}</span>
           {!showLPRForm ? (
-            <PlusButton label="+Create RFQ" onClick={() => setShowLPRForm(true)} />
+            <PlusButton label="+Create Quote" onClick={() => setShowLPRForm(true)} />
           ) : (
             <PlusButton
               label="Back"
@@ -124,4 +124,4 @@ const RfqList = () => {
   );
 };
 
-export default RfqList;
+export default POList;

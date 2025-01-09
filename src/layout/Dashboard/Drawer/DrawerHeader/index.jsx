@@ -28,7 +28,7 @@ export default function DrawerHeader({ open }) {
         minHeight: isHorizontal ? 'unset' : HEADER_HEIGHT,
         width: isHorizontal ? { xs: '100%', lg: DRAWER_WIDTH + 50 } : 'inherit',
         padding: '4vh 0',
-        backgroundColor: '#318CE7',
+        backgroundColor: '#F0F8FF',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center'

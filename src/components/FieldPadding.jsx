@@ -4,8 +4,8 @@ import { styled } from '@mui/material/styles';
 
 const CustomTextField = styled(TextField)({
   '& .MuiInputBase-input': {
-    padding: '8px',
-    fontSize: '12px'
+    padding: '4px',
+    fontSize: '11px'
   },
   '& .MuiInputBase-input.Mui-disabled': {
     WebkitTextFillColor: '#000000'

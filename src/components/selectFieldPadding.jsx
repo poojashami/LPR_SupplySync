@@ -4,11 +4,11 @@ import { styled } from '@mui/material/styles';
 
 const CustomSelect = styled(Select)({
   '& .MuiSelect-select': {
-    padding: '5px',
-    fontSize: '12px' // Set font size for the selected value
+    padding: '2px',
+    fontSize: '11px' // Set font size for the selected value
   },
   '& .MuiMenuItem-root': {
-    fontSize: '12px' // Set font size for dropdown options
+    fontSize: '11px' // Set font size for dropdown options
   }
 });
 

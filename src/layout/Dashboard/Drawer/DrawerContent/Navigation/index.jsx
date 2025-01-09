@@ -95,7 +95,7 @@ export default function Navigation() {
         pt: drawerOpen ? (isHorizontal ? 0 : 0) : 0,
         ...(!isHorizontal && { '& > ul:first-of-type': { mt: 0 } }),
         display: isHorizontal ? { xs: 'block', lg: 'flex' } : 'block',
-        background: '#318CE7'
+        background: '#F0F8FF'
       }}
     >
       {navGroups}

@@ -3,10 +3,13 @@ import { DataGrid } from '@mui/x-data-grid';
 import { Box, Checkbox } from '@mui/material';
 import MainCard from 'components/MainCard';
 import PlusButton from 'components/CustomButton';
-import RFQForm from './RFQForm';
+import CreateLPRForm from './CreateLPRForm';
+import LPRView from './LPRView';
 
-const RfqList = () => {
+const LPRList = () => {
   const [showLPRForm, setShowLPRForm] = useState(false);
+  const [viewLPR, setViewLPR] = useState(false);
+
   const LPRColumn = [
     {
       field: 'select',
@@ -16,6 +19,7 @@ const RfqList = () => {
       sortable: false
     },
     { field: 'lprNo', headerName: 'LPR No.', width: 100 },
+    { field: 'status', headerName: 'Status', width: 100 },
     { field: 'vertical', headerName: 'Vertical', width: 100 },
     { field: 'company', headerName: 'Company', width: 150 },
     { field: 'division', headerName: 'Division', width: 150 },
@@ -32,6 +36,7 @@ const RfqList = () => {
     {
       id: 1,
       lprNo: 'LPR001',
+      status: 'Send for Approval',
       vertical: 'Finance',
       company: 'ABC Corp',
       division: 'North Division',
@@ -46,6 +51,7 @@ const RfqList = () => {
     {
       id: 2,
       lprNo: 'LPR002',
+      status: 'Send for Approval',
       vertical: 'IT',
       company: 'XYZ Ltd',
       division: 'South Division',
@@ -62,14 +68,15 @@ const RfqList = () => {
     <MainCard
       title={
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span>{!showLPRForm ? 'RFQ List' : showLPRForm && 'Create RFQ'}</span>
-          {!showLPRForm ? (
-            <PlusButton label="+Create RFQ" onClick={() => setShowLPRForm(true)} />
+          <span>{!showLPRForm && !viewLPR ? 'LPR List' : showLPRForm ? 'Create LPR' : 'View LPR'}</span>
+          {!showLPRForm && !viewLPR ? (
+            <PlusButton label="+Create LPR" onClick={() => setShowLPRForm(true)} />
           ) : (
             <PlusButton
               label="Back"
               onClick={() => {
                 setShowLPRForm(false);
+                setViewLPR(false);
               }}
             />
           )}
@@ -77,7 +84,7 @@ const RfqList = () => {
       }
     >
       <Box sx={{ width: '100%' }}>
-        {!showLPRForm ? (
+        {!showLPRForm && !viewLPR ? (
           <DataGrid
             getRowHeight={() => 'auto'}
             sx={{
@@ -116,12 +123,14 @@ const RfqList = () => {
             hideFooterPagination
             hideFooterSelectedRowCount
           />
+        ) : showLPRForm ? (
+          <CreateLPRForm />
         ) : (
-          showLPRForm && <RFQForm />
+          <LPRView />
         )}
       </Box>
     </MainCard>
   );
 };
 
-export default RfqList;
+export default LPRList;
