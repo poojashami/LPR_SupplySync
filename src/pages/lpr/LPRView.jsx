@@ -34,18 +34,20 @@ const LPRView = () => {
     </TableHead>
   );
   const shipmentData = [
-    { label: 'LPR No', value: 'LPR1234' },
+    { label: 'LPR No', value: 'LPR001JBJKKJ878' },
+    { label: 'LPR Date', value: '2024-10-09' },
     { label: 'Vertical', value: 'Engineering' },
     { label: 'Company', value: 'Tech Corp' },
     { label: 'Division', value: 'North Division' },
-    { label: 'LPR Category', value: 'Electronics' },
-    { label: 'Shipment Mode', value: 'Air' },
-    { label: 'Buying Through', value: 'Direct Purchase' },
-    { label: 'OPR Category', value: '5 days' },
-    { label: 'Delivery Time', value: '10 days' },
     { label: 'Requested By Department', value: 'Procurement' },
     { label: 'Requested By', value: 'John Doe' },
-    { label: 'Date', value: '2024-10-09' },
+    { label: ' Quotations Email Alert', value: 'Air' },
+    { label: 'No. Min Quotation', value: '3' },
+    { label: 'LPR Category', value: 'Electronics' },
+    { label: 'Buying Through', value: 'Direct Purchase' },
+    { label: 'OPR Category', value: '5 days' },
+    { label: ' Delivery Type', value: '5 days' },
+    { label: 'Delivery Time', value: '10 days' },
     { label: 'Additional Remarks', value: 'Urgent shipment required' }
   ];
 
@@ -84,8 +86,6 @@ const LPRView = () => {
           </Grid>
         </Grid>
       )}
-
-      {/* <LPRApprove /> */}
     </Box>
   );
 };

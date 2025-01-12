@@ -257,7 +257,7 @@ const ItemForm = () => {
 
                                 <Grid item xs={12} sm={2}>
                                   <Typography variant="body" style={{ fontSize: '11px' }}>
-                                    OPR Qty<ValidationStar>*</ValidationStar>
+                                    LPR Qty<ValidationStar>*</ValidationStar>
                                   </Typography>
                                   <Field
                                     as={FieldPadding}

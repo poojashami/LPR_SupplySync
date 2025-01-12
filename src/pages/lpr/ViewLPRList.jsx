@@ -5,8 +5,9 @@ import MainCard from 'components/MainCard';
 import CreateLPRForm from './CreateLPRForm';
 import LPRView from './LPRView';
 import AllLPRApproveData from './AllLPRApproveData';
+import AllLPRViewApproveData from './AllLPRViewApproveData';
 
-const LPRList = () => {
+const ViewLPRList = () => {
   const [showLPRForm, setShowLPRForm] = useState(false);
   const [viewLPR, setViewLPR] = useState(false);
   const [selectedLPR, setSelectedLPR] = useState(null); // Holds the selected LPR details
@@ -67,7 +68,7 @@ const LPRList = () => {
     {
       id: 1,
       lprNo: 'LPR001JBJKKJ878',
-      status: 'Send for Approval',
+      status: 'Approved',
       vertical: 'Finance',
       company: 'ABC Corp',
       division: 'North Division',
@@ -82,7 +83,7 @@ const LPRList = () => {
     {
       id: 2,
       lprNo: 'LPR00KJHKJH2',
-      status: 'Send for Approval',
+      status: 'Approved',
       vertical: 'IT',
       company: 'XYZ Ltd',
       division: 'South Division',
@@ -99,10 +100,7 @@ const LPRList = () => {
   return (
     <MainCard title={'LPR List'}>
       {viewLPR ? (
-        <AllLPRApproveData
-          lprData={selectedLPR}
-          onBack={() => setViewLPR(false)} // Function to go back to the list
-        />
+        <AllLPRViewApproveData lprData={selectedLPR} onBack={() => setViewLPR(false)} />
       ) : (
         <Box sx={{ width: '100%' }}>
           {!showLPRForm && !viewLPR ? (
@@ -155,4 +153,4 @@ const LPRList = () => {
   );
 };
 
-export default LPRList;
+export default ViewLPRList;

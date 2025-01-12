@@ -77,10 +77,7 @@ const ItemTable = () => {
     { field: 'item_code', headerName: 'Item Code', width: 100 },
     { field: 'item_name', headerName: 'Item Name', width: 200 },
     { field: 'hsn_code', headerName: 'HSN Code', width: 100 },
-    { field: 'sonAvailable', headerName: 'SON Req.', width: 100 },
-    { field: 'nafdacRequired', headerName: 'NAFDAC Req.', width: 100 },
-    { field: 'nafdacAvailable', headerName: 'NAFDAC Available', width: 150 },
-    { field: 'criaRequired', headerName: 'CRIA Required', width: 150 },
+
     { field: 'uom', headerName: 'UOM', width: 100 },
     { field: 'quantity', headerName: 'Qty', width: 100 },
     { field: 'stock_in_transit', headerName: 'Stock In Transit', width: 100 },
@@ -103,10 +100,7 @@ const ItemTable = () => {
       item_code: 'E1001',
       item_name: 'iPhone 14',
       hsn_code: '851712',
-      sonAvailable: 'Yes',
-      nafdacRequired: 'No',
-      nafdacAvailable: 'N/A',
-      criaRequired: 'Yes',
+
       uom: 'Pcs',
       quantity: 50,
       stock_in_transit: 20,
@@ -122,10 +116,7 @@ const ItemTable = () => {
       item_code: 'F2001',
       item_name: 'Office Chair',
       hsn_code: '940310',
-      sonAvailable: 'No',
-      nafdacRequired: 'No',
-      nafdacAvailable: 'N/A',
-      criaRequired: 'No',
+
       uom: 'Units',
       quantity: 100,
       stock_in_transit: 40,
@@ -141,10 +132,7 @@ const ItemTable = () => {
       item_code: 'A3001',
       item_name: 'Microwave Oven',
       hsn_code: '851660',
-      sonAvailable: 'Yes',
-      nafdacRequired: 'Yes',
-      nafdacAvailable: 'Yes',
-      criaRequired: 'No',
+
       uom: 'Units',
       quantity: 20,
       stock_in_transit: 10,
@@ -160,10 +148,7 @@ const ItemTable = () => {
       item_code: 'S4001',
       item_name: 'Ballpoint Pens',
       hsn_code: '960810',
-      sonAvailable: 'No',
-      nafdacRequired: 'No',
-      nafdacAvailable: 'N/A',
-      criaRequired: 'No',
+
       uom: 'Boxes',
       quantity: 200,
       stock_in_transit: 50,
@@ -179,10 +164,7 @@ const ItemTable = () => {
       item_code: 'C5001',
       item_name: 'Cotton T-Shirt',
       hsn_code: '610910',
-      sonAvailable: 'Yes',
-      nafdacRequired: 'No',
-      nafdacAvailable: 'N/A',
-      criaRequired: 'Yes',
+
       uom: 'Pcs',
       quantity: 300,
       stock_in_transit: 150,
@@ -240,7 +222,7 @@ const ItemTable = () => {
             <TableBody>
               <TableRow>
                 <TableCell colSpan={6}>
-                  <div style={{ height: '500px', width: '100%' }}>
+                  <div style={{ width: '100%' }}>
                     <DataGrid
                       getRowHeight={() => 'auto'}
                       sx={{

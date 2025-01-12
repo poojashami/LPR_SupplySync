@@ -1,7 +1,20 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { Box, Button, Grid, Typography, TextField, Table, TableRow, TableHead, TableCell, IconButton, MenuItem } from '@mui/material';
+import {
+  Box,
+  Button,
+  Grid,
+  Typography,
+  TextField,
+  Table,
+  TableRow,
+  TableHead,
+  TableCell,
+  IconButton,
+  MenuItem,
+  InputAdornment
+} from '@mui/material';
 import { errorMessageStyle } from 'components/StyleComponent';
 import ValidationStar from 'components/ValidationStar';
 import FieldPadding from 'components/FieldPadding';
@@ -166,6 +179,15 @@ const CreateLPRForm = ({ onSubmit, onCancel }) => {
                       </Grid>
                       <Grid item xs={12} sm={1}>
                         <Typography variant="body" style={{ fontSize: '11px' }}>
+                          No. Min Quotation<ValidationStar>*</ValidationStar>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={12} sm={2} paddingTop={'20px'}>
+                        <Field as={FieldPadding} name="noMinQuote" variant="outlined" fullWidth size="small" />
+                        <ErrorMessage name="noMinQuote" component="div" style={errorMessageStyle} />
+                      </Grid>
+                      <Grid item xs={12} sm={1}>
+                        <Typography variant="body" style={{ fontSize: '11px' }}>
                           LPR Category<ValidationStar>*</ValidationStar>
                         </Typography>
                       </Grid>
@@ -194,17 +216,31 @@ const CreateLPRForm = ({ onSubmit, onCancel }) => {
                           Delivery Time<ValidationStar>*</ValidationStar>
                         </Typography>
                       </Grid>
+
                       <Grid item xs={12} sm={2} paddingTop={'20px'}>
-                        <Field as={FieldPadding} name="deliveryTime" variant="outlined" fullWidth size="small" />
+                        <Field
+                          as={FieldPadding}
+                          name="deliveryTime"
+                          variant="outlined"
+                          fullWidth
+                          size="small"
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end" sx={{ fontSize: '8px' }}>
+                                Days
+                              </InputAdornment>
+                            )
+                          }}
+                        />
                         <ErrorMessage name="deliveryTime" component="div" style={errorMessageStyle} />
                       </Grid>
-
+                      <Grid item xs={12} sm={3}></Grid>
                       <Grid item xs={12} sm={1}>
                         <Typography variant="body" style={{ fontSize: '11px' }}>
                           Additional Remarks
                         </Typography>
                       </Grid>
-                      <Grid item xs={12} sm={4}>
+                      <Grid item xs={12} sm={2}>
                         <Field as={FieldPadding} name="additionalRemarks" variant="outlined" fullWidth size="small" />
                         <ErrorMessage name="additionalRemarks" component="div" style={errorMessageStyle} />
                       </Grid>
