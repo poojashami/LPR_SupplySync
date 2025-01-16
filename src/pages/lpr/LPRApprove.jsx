@@ -29,7 +29,7 @@ const LPRApprove = () => {
     console.log('Remark Submitted:', remark);
   };
   const renderTableHeader = (sectionName, sectionLabel) => (
-    <TableHead>
+    <TableHead sx={{ backgroundColor: '#EAF1F6' }}>
       <TableRow>
         <TableCell sx={{ padding: 0 }} colSpan={12}>
           <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -194,7 +194,6 @@ const LPRApprove = () => {
         <>
           <Box>
             <Grid container spacing={2}>
-              {/* First DataGrid */}
               <Grid item xs={12} md={6}>
                 <Box color={'#3f78ff'}>Requestor Detail</Box>
                 <DataGrid
@@ -234,10 +233,11 @@ const LPRApprove = () => {
                   hideFooter
                   hideFooterPagination
                   hideFooterSelectedRowCount
+                  disableColumnMenu // Hides column menu options
+                  disableColumnSelector // Disables the column selector feature
                 />
               </Grid>
 
-              {/* Second DataGrid */}
               <Grid item xs={12} md={6}>
                 <Box color={'#3f78ff'}>Approval Log</Box>
                 <DataGrid
@@ -266,6 +266,8 @@ const LPRApprove = () => {
                   hideFooter
                   hideFooterPagination
                   hideFooterSelectedRowCount
+                  disableColumnMenu // Hides column menu options
+                  disableColumnSelector // Disables the column selector feature
                 />
               </Grid>
             </Grid>
@@ -294,7 +296,7 @@ const LPRApprove = () => {
               <Grid item xs={12} sm={6}></Grid>
 
               <Grid item xs={12} sm={2} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                <Button variant="contained" color="primary" onClick={handleSubmit}>
+                <Button variant="contained" size="small" color="primary" onClick={handleSubmit}>
                   Submit Remark
                 </Button>
               </Grid>

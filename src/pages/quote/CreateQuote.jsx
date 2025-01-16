@@ -1,7 +1,7 @@
 import { DataGrid } from '@mui/x-data-grid';
 import MainCard from 'components/MainCard';
 import React, { useState } from 'react';
-import QuoteView from './QuoteView';
+import CreateQuotePage from './CreateQuotePage';
 
 const CreateQuote = () => {
   const [selectedRFQ, setSelectedRFQ] = useState(null); // State to manage selected RFQ
@@ -61,7 +61,7 @@ const CreateQuote = () => {
   ];
 
   return viewMode ? (
-    <QuoteView selectedRFQ={selectedRFQ} onBack={() => setViewMode(false)} />
+    <CreateQuotePage selectedRFQ={selectedRFQ} onBack={() => setViewMode(false)} />
   ) : (
     <MainCard title="Create Quotation - Pending RFQ">
       <DataGrid

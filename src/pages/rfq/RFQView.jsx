@@ -49,14 +49,14 @@ const RFQView = () => {
     }));
   };
   const renderTableHeader = (sectionName, sectionLabel) => (
-    <TableHead>
+    <TableHead sx={{ backgroundColor: '#EAF1F6' }}>
       <TableRow>
         <TableCell sx={{ padding: 0 }} colSpan={12}>
           <Box display="flex" justifyContent="space-between" alignItems="center">
             <Typography variant="h6" fontWeight={500}>
               {sectionLabel}
             </Typography>
-            <IconButton size="large" onClick={() => toggleTableBody(sectionName)} sx={{ height: '30px' }}>
+            <IconButton size="small" onClick={() => toggleTableBody(sectionName)} sx={{ height: '30px' }}>
               {showTableHeading[sectionName] ? <KeyboardArrowUpOutlinedIcon /> : <KeyboardArrowDownOutlinedIcon />}
             </IconButton>
           </Box>
@@ -72,180 +72,177 @@ const RFQView = () => {
     { label: 'Address', value: '123 Tech Street, North Division, Electronics City' }
   ];
   return (
-    <Box>
-      <Table>{renderTableHeader('rfqView', 'View RFQ')}</Table>
-      {showTableHeading.rfqView && (
-        <Grid item xs={12} sm={12} sx={{ padding: '10px' }}>
-          <Grid container spacing={2}>
-            {shipmentData
-              .reduce((acc, item, index) => {
-                if (index % 4 === 0) acc.push([]);
-                acc[acc.length - 1].push(item);
-                return acc;
-              }, [])
-              .map((row, rowIndex) => (
-                <Grid container item xs={12} key={rowIndex} spacing={2}>
-                  {row.map((item, itemIndex) => (
-                    <Grid item xs={3} key={itemIndex}>
-                      <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
-                        <Typography variant="h6" sx={{ marginRight: 1, fontWeight: '500', fontSize: '11px', color: '#333' }}>
-                          {item.label}:
-                        </Typography>
-                        <Typography variant="body1" sx={{ color: '#555', fontSize: '11px' }}>
-                          {item.value}
-                        </Typography>
-                      </Box>
-                    </Grid>
-                  ))}
-                </Grid>
-              ))}
+    // <Box>
+    //   <Table>{renderTableHeader('rfqView', 'View RFQ')}</Table>
+    //   {showTableHeading.rfqView && (
+    //     <Grid item xs={12} sm={12} sx={{ padding: '10px' }}>
+    //       <Grid container spacing={2}>
+    //         {shipmentData
+    //           .reduce((acc, item, index) => {
+    //             if (index % 4 === 0) acc.push([]);
+    //             acc[acc.length - 1].push(item);
+    //             return acc;
+    //           }, [])
+    //           .map((row, rowIndex) => (
+    //             <Grid container item xs={12} key={rowIndex} spacing={2}>
+    //               {row.map((item, itemIndex) => (
+    //                 <Grid item xs={3} key={itemIndex}>
+    //                   <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
+    //                     <Typography variant="h6" sx={{ marginRight: 1, fontWeight: '500', fontSize: '11px', color: '#333' }}>
+    //                       {item.label}:
+    //                     </Typography>
+    //                     <Typography variant="body1" sx={{ color: '#555', fontSize: '11px' }}>
+    //                       {item.value}
+    //                     </Typography>
+    //                   </Box>
+    //                 </Grid>
+    //               ))}
+    //             </Grid>
+    //           ))}
 
-            <Grid item xs={12} sm={3}>
-              <Typography variant="body" style={{ fontSize: '11px' }}>
-                OPR Lead time
-              </Typography>
-              <TextField
-                fullWidth
-                disabled
-                sx={{
-                  '& .MuiInputBase-input': {
-                    padding: '5px'
-                  },
-                  '& .MuiInputBase-input.Mui-disabled': {
-                    WebkitTextFillColor: '#000000'
-                  }
-                }}
-                value={`${leadTime?.map((item) => item)}`}
-              />
-            </Grid>
+    //         <Grid item xs={12} sm={3}>
+    //           <Typography variant="body" style={{ fontSize: '11px' }}>
+    //             OPR Lead time
+    //           </Typography>
+    //           <TextField
+    //             fullWidth
+    //             disabled
+    //             sx={{
+    //               '& .MuiInputBase-input': {
+    //                 padding: '5px'
+    //               },
+    //               '& .MuiInputBase-input.Mui-disabled': {
+    //                 WebkitTextFillColor: '#000000'
+    //               }
+    //             }}
+    //             value={`${leadTime?.map((item) => item)}`}
+    //           />
+    //         </Grid>
 
-            <Grid item xs={12} sm={3}>
-              <Typography variant="body" style={{ fontSize: '11px' }}>
-                OPR Lead time
-              </Typography>
-              <TextField
-                fullWidth
-                InputProps={{
-                  endAdornment: <InputAdornment position="end">Weeks</InputAdornment>
-                }}
-                id="delivery_timeline"
-                name="delivery_timeline"
-                value={rfqDelivery}
-                // onChange={(e) => setRfqDelivery(e.target.value)}
-                sx={{
-                  '& .MuiInputBase-input': {
-                    padding: '5px'
-                  },
-                  '& .MuiInputBase-input.Mui-disabled': {
-                    WebkitTextFillColor: '#000000'
-                  }
-                }}
-              />
-            </Grid>
+    //         <Grid item xs={12} sm={3}>
+    //           <Typography variant="body" style={{ fontSize: '11px' }}>
+    //             OPR Lead time
+    //           </Typography>
+    //           <TextField
+    //             fullWidth
+    //             InputProps={{
+    //               endAdornment: <InputAdornment position="end">Weeks</InputAdornment>
+    //             }}
+    //             id="delivery_timeline"
+    //             name="delivery_timeline"
+    //             value={rfqDelivery}
+    //             // onChange={(e) => setRfqDelivery(e.target.value)}
+    //             sx={{
+    //               '& .MuiInputBase-input': {
+    //                 padding: '5px'
+    //               },
+    //               '& .MuiInputBase-input.Mui-disabled': {
+    //                 WebkitTextFillColor: '#000000'
+    //               }
+    //             }}
+    //           />
+    //         </Grid>
 
-            <Grid item xs={12} sm={3}>
-              <Typography variant="body" style={{ fontSize: '11px' }}>
-                Port of Delivery
-              </Typography>
+    //         <Grid item xs={12} sm={3}>
+    //           <Typography variant="body" style={{ fontSize: '11px' }}>
+    //             Port of Delivery
+    //           </Typography>
 
-              <Select
-                variant="outlined"
-                fullWidth
-                id="portDestination"
-                name="portDestination"
-                value={portDestination}
-                onChange={(e) => setPortDestination(e.target.value)}
-                sx={{
-                  '& .MuiInputBase-input': {
-                    padding: '5px'
-                  },
-                  '& .MuiInputBase-input.Mui-disabled': {
-                    WebkitTextFillColor: '#000000'
-                  }
-                }}
-              >
-                <MenuItem value="">
-                  <em>Port of Discharge</em>
-                </MenuItem>
-                {/* {PortDestination.map((data) => (
-                  <MenuItem key={data.port_destination_id} value={data.port_destination_id}>
-                    {data.port_destination_name}
-                  </MenuItem>
-                ))} */}
-              </Select>
-            </Grid>
+    //           <Select
+    //             variant="outlined"
+    //             fullWidth
+    //             id="portDestination"
+    //             name="portDestination"
+    //             value={portDestination}
+    //             onChange={(e) => setPortDestination(e.target.value)}
+    //             sx={{
+    //               '& .MuiInputBase-input': {
+    //                 padding: '5px'
+    //               },
+    //               '& .MuiInputBase-input.Mui-disabled': {
+    //                 WebkitTextFillColor: '#000000'
+    //               }
+    //             }}
+    //           >
+    //             <MenuItem value="">
+    //               <em>Port of Discharge</em>
+    //             </MenuItem>
 
-            <Grid item xs={12} sm={3}>
-              <Typography variant="body" style={{ fontSize: '11px' }}>
-                Respond Time(Days)
-              </Typography>
-              <TextField
-                fullWidth
-                type="number"
-                id="respond_time"
-                name="respond_time"
-                placeholder="From RFQ Issue Date"
-                value={respond_time}
-                onChange={(e) => setRespondTime(e.target.value)}
-                sx={{
-                  '& .MuiInputBase-input': {
-                    padding: '5px'
-                  },
-                  '& .MuiInputBase-input.Mui-disabled': {
-                    WebkitTextFillColor: '#000000'
-                  }
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={12}>
-              {remarksArr?.map((item, index) => (
-                <Grid
-                  key={index}
-                  container
-                  spacing={1}
-                  display={'flex'}
-                  alignItems="center"
-                  sx={{ border: '2px dotted black', borderRadius: '12px', margin: '2px', padding: '8px' }}
-                >
-                  <Grid item xs={12} sm={6}>
-                    <Typography variant="body" style={{ fontSize: '11px' }}>
-                      Additional Remarks
-                    </Typography>
-                    <TextField
-                      fullWidth
-                      sx={{
-                        '& .MuiInputBase-input': { padding: '5px' },
-                        '& .MuiInputBase-input.Mui-disabled': { WebkitTextFillColor: '#000000' }
-                      }}
-                      id={`remark-${index}`}
-                      name="remark"
-                      onChange={(e) => handleInputChangeFile(e, index, 'remark')}
-                      value={item?.remark}
-                    />
-                  </Grid>
+    //           </Select>
+    //         </Grid>
 
-                  {index !== 0 && (
-                    <Grid item xs={12} sm={0.5}>
-                      <IconButton aria-label="delete" size="large" onClick={() => removeFileEntry(index)}>
-                        <DeleteIcon color="error" />
-                      </IconButton>
-                    </Grid>
-                  )}
+    //         <Grid item xs={12} sm={3}>
+    //           <Typography variant="body" style={{ fontSize: '11px' }}>
+    //             Respond Time(Days)
+    //           </Typography>
+    //           <TextField
+    //             fullWidth
+    //             type="number"
+    //             id="respond_time"
+    //             name="respond_time"
+    //             placeholder="From RFQ Issue Date"
+    //             value={respond_time}
+    //             onChange={(e) => setRespondTime(e.target.value)}
+    //             sx={{
+    //               '& .MuiInputBase-input': {
+    //                 padding: '5px'
+    //               },
+    //               '& .MuiInputBase-input.Mui-disabled': {
+    //                 WebkitTextFillColor: '#000000'
+    //               }
+    //             }}
+    //           />
+    //         </Grid>
+    //         <Grid item xs={12} sm={12}>
+    //           {remarksArr?.map((item, index) => (
+    //             <Grid
+    //               key={index}
+    //               container
+    //               spacing={1}
+    //               display={'flex'}
+    //               alignItems="center"
+    //               sx={{ border: '2px dotted black', borderRadius: '12px', margin: '2px', padding: '8px' }}
+    //             >
+    //               <Grid item xs={12} sm={6}>
+    //                 <Typography variant="body" style={{ fontSize: '11px' }}>
+    //                   Additional Remarks
+    //                 </Typography>
+    //                 <TextField
+    //                   fullWidth
+    //                   sx={{
+    //                     '& .MuiInputBase-input': { padding: '5px' },
+    //                     '& .MuiInputBase-input.Mui-disabled': { WebkitTextFillColor: '#000000' }
+    //                   }}
+    //                   id={`remark-${index}`}
+    //                   name="remark"
+    //                   onChange={(e) => handleInputChangeFile(e, index, 'remark')}
+    //                   value={item?.remark}
+    //                 />
+    //               </Grid>
 
-                  {index === remarksArr.length - 1 && (
-                    <Grid item xs={12} sm={0.5}>
-                      <IconButton aria-label="add" size="large" onClick={addFileEntry}>
-                        <AddIcon color="success" />
-                      </IconButton>
-                    </Grid>
-                  )}
-                </Grid>
-              ))}
-            </Grid>
-          </Grid>
-        </Grid>
-      )}
-    </Box>
+    //               {index !== 0 && (
+    //                 <Grid item xs={12} sm={0.5}>
+    //                   <IconButton aria-label="delete" size="large" onClick={() => removeFileEntry(index)}>
+    //                     <DeleteIcon color="error" />
+    //                   </IconButton>
+    //                 </Grid>
+    //               )}
+
+    //               {index === remarksArr.length - 1 && (
+    //                 <Grid item xs={12} sm={0.5}>
+    //                   <IconButton aria-label="add" size="large" onClick={addFileEntry}>
+    //                     <AddIcon color="success" />
+    //                   </IconButton>
+    //                 </Grid>
+    //               )}
+    //             </Grid>
+    //           ))}
+    //         </Grid>
+    //       </Grid>
+    //     </Grid>
+    //   )}
+    // </Box>
+    <></>
   );
 };
 

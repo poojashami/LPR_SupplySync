@@ -80,7 +80,7 @@ const RfqList = () => {
           <span>
             {showOprItemList ? (generateRFQ ? 'Generate RFQ' : 'Create RFQ - Item List in Selected OPR') : 'Create RFQ - Pending OPR List'}
           </span>
-          <div>
+          <div style={{ display: 'flex', gap: '5px' }}>
             <PlusButton
               label={showOprItemList ? 'Back' : 'Proceed'}
               onClick={() => {

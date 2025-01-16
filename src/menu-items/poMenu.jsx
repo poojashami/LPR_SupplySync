@@ -12,7 +12,7 @@ const PO_Menu = {
   children: [
     {
       id: 'po_list',
-      title: <FormattedMessage id="PO" />,
+      title: <FormattedMessage id="LPO" />,
       type: 'collapse',
       icon: icons.AttachMoneyIcon,
       children: [

@@ -7,7 +7,7 @@ import ValidationStar from 'components/ValidationStar';
 import FieldPadding from 'components/FieldPadding';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutlined';
-import RFQView from './POView';
+import RFQView from './LPOView';
 import ItemList from './ItemList';
 import VendorList from './VendorList';
 import DocumentDetail from './DocumentDetail';
@@ -56,7 +56,7 @@ const RFQForm = () => {
     }));
   };
   const renderTableHeader = (sectionName, sectionLabel) => (
-    <TableHead>
+    <TableHead sx={{ backgroundColor: '#EAF1F6' }}>
       <TableRow>
         <TableCell sx={{ padding: 0 }} colSpan={12}>
           <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -73,7 +73,7 @@ const RFQForm = () => {
   );
   return (
     <Box>
-      <RFQView />
+      {/* <RFQView /> */}
       <Table>{renderTableHeader('createrfqForm', 'Create RFQ')}</Table>
       {showTableHeading.createrfqForm && (
         <Formik

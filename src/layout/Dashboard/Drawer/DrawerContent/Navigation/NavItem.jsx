@@ -77,8 +77,12 @@ export default function NavItem({ item, level, isParents = false }) {
                   mx: 1.25,
                   my: 0.5,
                   borderRadius: 1,
-                  '&:hover': { bgcolor: mode === ThemeMode.DARK ? 'divider' : 'secondary.200' },
-                  '&.Mui-selected': { color: iconSelectedColor, '&:hover': { color: iconSelectedColor } }
+                  '&:hover': { bgcolor: mode === ThemeMode.DARK ? 'divider' : 'rgba(0, 0, 0, 0.12)' },
+                  '&.Mui-selected': {
+                    backgroundColor: '#fafbfb',
+                    color: iconSelectedColor,
+                    '&:hover': { color: iconSelectedColor }
+                  }
                 }),
               ...(!drawerOpen && {
                 px: 2.75,
@@ -93,7 +97,8 @@ export default function NavItem({ item, level, isParents = false }) {
               <ListItemIcon
                 sx={{
                   minWidth: 38,
-                  color: isSelected ? iconSelectedColor : textColor,
+
+                  color: isSelected ? '#cd640d !important' : '#2c6095!important',
                   ...(!drawerOpen &&
                     level === 1 && {
                       borderRadius: 1,
@@ -119,7 +124,9 @@ export default function NavItem({ item, level, isParents = false }) {
             {!itemIcon && drawerOpen && (
               <ListItemIcon
                 sx={{
-                  minWidth: 30
+                  minWidth: 30,
+                  paddingTop: 0,
+                  marginLeft: 1
                 }}
               >
                 <Dot size={isSelected ? 6 : 5} color={isSelected ? 'primary' : 'secondary'} />
@@ -128,6 +135,7 @@ export default function NavItem({ item, level, isParents = false }) {
 
             {(drawerOpen || (!drawerOpen && level !== 1)) && (
               <ListItemText
+                sx={{ marginTop: '0px', marginBottom: '0px' }}
                 primary={
                   <Typography variant="h6" sx={{ color: isSelected ? iconSelectedColor : textColor, fontWeight: isSelected ? 600 : 600 }}>
                     {item.title}
@@ -209,7 +217,7 @@ export default function NavItem({ item, level, isParents = false }) {
           {itemIcon && (
             <ListItemIcon
               sx={{
-                minWidth: 36,
+                minWidth: 28,
                 ...(!drawerOpen && {
                   borderRadius: 1,
                   width: 36,

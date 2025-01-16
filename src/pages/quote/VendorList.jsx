@@ -1,11 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Box } from '@mui/material';
 import CreateIcon from '@mui/icons-material/Create'; // Import Material UI's Create Icon
+import QuoteForm from './QuoteForm';
 
 const VendorList = () => {
-  const locationUrl = 'vendorlist'; // Replace with your actual logic if dynamic
+  // Replace with your actual logic if dynamic
+  const [showQuoteForm, setShowQuoteForm] = useState(false);
+  const [selectedVendor, setSelectedVendor] = useState(null);
 
+  const handleCreateClick = (vendor) => {
+    setSelectedVendor(vendor); // Save the selected vendor details
+    setShowQuoteForm(true); // Show the QuoteForm
+  };
+
+  const handleBackToList = () => {
+    setShowQuoteForm(false); // Hide the QuoteForm and show the list
+    setSelectedVendor(null); // Reset the selected vendor
+  };
   // Hardcoded vendor data
   const VendorData = [
     {
@@ -61,44 +73,34 @@ const VendorList = () => {
   ];
 
   // Vendor columns configuration
-  const VendorColumn =
-    locationUrl !== 'rfqlist'
-      ? [
-          { field: 'id', headerName: 'S.NO', width: 50 },
-          {
-            field: 'action',
-            headerName: 'Create',
-            width: 80,
-            renderCell: (params) => (
-              <CreateIcon
-                style={{ cursor: 'pointer', color: 'blue' }}
-                onClick={() => console.log('Create clicked for:', params?.row?.vendor_series)}
-              />
-            )
-          },
-          { field: 'vendor_series', headerName: 'Vendor Num', width: 120 },
-          { field: 'vendor_name', headerName: 'Vendor Name', width: 250 },
-          { field: 'phone_number', headerName: 'Vendor Ph. No.', width: 150 },
-          { field: 'email', headerName: 'Vendor Email', width: 200 },
-          { field: 'contact_person', headerName: 'Contact Person Name', width: 180 },
-          { field: 'contact_person_phone', headerName: 'Contact Person Ph. No.', width: 180 },
-          { field: 'contact_person_email', headerName: 'Contact Person Email', width: 200 }
-        ]
-      : [
-          { field: 'id', headerName: 'S.NO', width: 50 },
-          { field: 'vendor_series', headerName: 'Vendor Num', width: 120 },
-          { field: 'vendor_name', headerName: 'Vendor Name', width: 250 },
-          { field: 'phone_number', headerName: 'Vendor Ph. No.', width: 150 },
-          { field: 'email', headerName: 'Vendor Email', width: 200 },
-          { field: 'contact_person', headerName: 'Contact Person Name', width: 180 },
-          { field: 'contact_person_phone', headerName: 'Contact Person Ph. No.', width: 180 },
-          { field: 'contact_person_email', headerName: 'Contact Person Email', width: 200 }
-        ];
+  const VendorColumn = [
+    { field: 'id', headerName: 'S.NO', width: 50 },
+    {
+      field: 'action',
+      headerName: 'Create',
+      width: 80,
+      renderCell: (params) => <CreateIcon style={{ cursor: 'pointer', color: 'blue' }} onClick={() => handleCreateClick(params.row)} />
+    },
+    { field: 'vendor_series', headerName: 'Vendor Num', width: 120 },
+    { field: 'vendor_name', headerName: 'Vendor Name', width: 250 },
+    { field: 'phone_number', headerName: 'Vendor Ph. No.', width: 150 },
+    { field: 'email', headerName: 'Vendor Email', width: 200 },
+    { field: 'contact_person', headerName: 'Contact Person Name', width: 180 },
+    { field: 'contact_person_phone', headerName: 'Contact Person Ph. No.', width: 180 },
+    { field: 'contact_person_email', headerName: 'Contact Person Email', width: 200 }
+  ];
 
   return (
     <Box sx={{ width: '100%' }}>
-      <Box sx={{ marginBottom: '10px', overflowX: 'auto', width: '98dvw' }}>
-        <>
+      {showQuoteForm ? (
+        // Render the QuoteForm when showQuoteForm is true
+        <QuoteForm
+          vendor={selectedVendor}
+          onBack={handleBackToList} // Pass a callback to go back to the vendor list
+        />
+      ) : (
+        // Render the Vendor DataGrid when showQuoteForm is false
+        <Box sx={{ marginBottom: '10px', overflowX: 'auto', width: '98dvw' }}>
           <div style={{ overflow: 'hidden' }}>
             <DataGrid
               getRowHeight={() => 'auto'}
@@ -123,8 +125,8 @@ const VendorList = () => {
               hideFooter
             />
           </div>
-        </>
-      </Box>
+        </Box>
+      )}
     </Box>
   );
 };

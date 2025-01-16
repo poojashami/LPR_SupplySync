@@ -5,13 +5,8 @@ const Dashboard = Loadable(lazy(() => import('pages/extra-pages/dashboard')));
 
 import LPRList from 'pages/lpr/LPRList';
 import RfqList from 'pages/rfq/RfqList';
-import POView from 'pages/po/POView';
 import POList from 'pages/po/POList';
-import QuoteList from 'pages/quote/QuoteList';
-import QuoteView from 'pages/quote/QuoteView';
-import QuoteCompare from 'pages/quote/QuoteCompare';
 import QuoteApprove from 'pages/quote/QuoteApprove';
-import POApprove from 'pages/po/POApprove';
 import POReqPayment from 'pages/po/POReqPayment';
 import TreasuryPayment from 'pages/treasury/TreasuryPayment';
 import TreasuryApprove from 'pages/treasury/TreasuryApprove';
@@ -19,6 +14,10 @@ import CreateLPRForm from 'pages/lpr/CreateLPRForm';
 import ViewLPRList from 'pages/lpr/ViewLPRList';
 import ViewGenerateRfqPage from 'pages/rfq/ViewGenerateRfqPage';
 import CreateQuote from 'pages/quote/CreateQuote';
+import QuoteList from 'pages/quote/QuoteList';
+import QuoteComparelist from 'pages/quote/QuoteComparelist';
+import LPOView from 'pages/po/LPOView';
+import LPOApproveList from 'pages/po/LPOApproveList';
 
 const MainRoutes = {
   path: '/',
@@ -75,7 +74,7 @@ const MainRoutes = {
         },
         {
           path: 'quote/compare',
-          element: <QuoteCompare />
+          element: <QuoteComparelist />
         },
         {
           path: 'quote/approve',
@@ -83,7 +82,7 @@ const MainRoutes = {
         },
         {
           path: 'quote/view',
-          element: <QuoteView />
+          element: <QuoteList />
         }
       ]
     },
@@ -97,11 +96,11 @@ const MainRoutes = {
         },
         {
           path: 'po/view',
-          element: <POView />
+          element: <LPOView />
         },
         {
           path: 'po/approve',
-          element: <POApprove />
+          element: <LPOApproveList />
         },
         {
           path: '/po/request-payment',

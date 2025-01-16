@@ -105,7 +105,7 @@ const OprItemList = ({ showItems, setShowItems }) => {
   };
   return (
     <>
-      {showItems ? (
+      {showItems && (
         <Box style={{ height: '80vh', width: '100%' }}>
           <DataGrid
             getRowHeight={() => 'auto'}
@@ -147,8 +147,6 @@ const OprItemList = ({ showItems, setShowItems }) => {
           />
           {/* )} */}
         </Box>
-      ) : (
-        <>{/* <Opr_list setOpr_list={setOpr_list} setShowItems={setShowItems} /> */}</>
       )}
     </>
   );

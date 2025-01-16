@@ -44,7 +44,7 @@ const GenerateRFQ = () => {
       headerName: 'Action',
       width: 80,
       renderCell: (params) => (
-        <IconButton aria-label="delete" color="error" onClick={() => removeItem(params.id)}>
+        <IconButton aria-label="delete" color="error" size="small" onClick={() => removeItem(params.id)}>
           <DeleteIcon />
         </IconButton>
       )
@@ -221,7 +221,7 @@ const GenerateRFQ = () => {
                     value={doc_name}
                     onChange={(e) => setDoc_name(e.target.value)}
                   />
-                  <IconButton aria-label="add" sx={{ height: '50px', width: '50px' }}>
+                  <IconButton aria-label="add" size="small" sx={{ height: '50px', width: '50px' }}>
                     <AddCircleOutlineIcon sx={{ fontSize: '50px' }} color="success" />
                   </IconButton>
                 </Box>
@@ -231,10 +231,10 @@ const GenerateRFQ = () => {
         </Grid>
       </MainCard>
       <Box display="flex" justifyContent="flex-end" mx={'20px'}>
-        <Button variant="outlined" color="error">
+        <Button variant="outlined" size="small" color="error">
           Cancel
         </Button>
-        <Button variant="contained" color="primary">
+        <Button variant="contained" size="small" color="primary">
           Issue RFQ
         </Button>
         {/* <ConfirmForm isOpen={isDialogOpen} onClose={handleCloseDialog} onConfirm={() => handleSubmit()} type={'RFQ'} /> */}

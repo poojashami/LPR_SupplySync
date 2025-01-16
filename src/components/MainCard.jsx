@@ -20,7 +20,7 @@ const headerSX = {
   pr: 1,
   pt: 0.2,
   pb: 0.2,
-  bgcolor: '#bec8d06e',
+  bgcolor: '#CFDDE8',
   color: 'black',
   '& .MuiCardHeader-action': { m: '0px 0px', alignSelf: 'center' }
 };
@@ -58,8 +58,10 @@ function MainCard(
       ref={ref}
       {...others}
       sx={{
+        backgroundColor: '#fafbfb',
         position: 'relative',
         border: border ? '1px solid' : 'none',
+        margin: '6px',
         borderColor: theme.palette.divider,
         ...(((themeContrast && boxShadow) || shadow) && {
           boxShadow: shadow ? shadow : theme.customShadows.z1

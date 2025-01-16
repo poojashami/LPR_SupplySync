@@ -32,7 +32,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutlined';
 
-const QuoteCompare = () => {
+const LPOCompare = () => {
   const [showTableHeading, setShowTableHeading] = useState({
     documentsList: true
   });
@@ -993,4 +993,4 @@ const QuoteCompare = () => {
   );
 };
 
-export default QuoteCompare;
+export default LPOCompare;

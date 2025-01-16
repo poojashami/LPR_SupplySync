@@ -81,7 +81,7 @@ const CreateLPRForm = ({ onSubmit, onCancel }) => {
     setFileArray(files);
   };
   const renderTableHeader = (sectionName, sectionLabel) => (
-    <TableHead>
+    <TableHead sx={{ backgroundColor: '#EAF1F6' }}>
       <TableRow>
         <TableCell sx={{ padding: 0 }} colSpan={12}>
           <Box display="flex" justifyContent="space-between" alignItems="center">

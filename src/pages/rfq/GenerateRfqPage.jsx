@@ -159,11 +159,7 @@ const GenerateRfqPage = () => {
     { id: 3, req_doc_name: 'Certificate Of Analysis' }
   ]);
 
-  // const doc_table_data = [
-  //   { id: 1, req_doc_name: 'Commercial Invoice' },
-  //   { id: 2, req_doc_name: 'Packing List' },
-  //   { id: 3, req_doc_name: 'Certificate Of Analysis' }
-  // ];
+
   const VendorColumn = [
     { field: 'lprNo', headerName: 'Sr No.', width: 100 },
     { field: 'vertical', headerName: 'Item Name', width: 100 },
@@ -222,7 +218,7 @@ const GenerateRfqPage = () => {
     }));
   };
   const renderTableHeader = (sectionName, sectionLabel) => (
-    <TableHead>
+    <TableHead sx={{ backgroundColor: '#EAF1F6' }}>
       <TableRow>
         <TableCell sx={{ padding: 0 }} colSpan={12}>
           <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -510,14 +506,14 @@ const GenerateRfqPage = () => {
                   display: 'flex'
                 },
                 '& .MuiDataGrid-checkboxInput': {
-                  padding: '0px' // To remove extra padding around the checkbox
+                  padding: '0px' 
                 },
                 '& .MuiCheckbox-root': {
                   width: '18px',
                   height: '18px'
                 },
                 '& .MuiSvgIcon-root': {
-                  fontSize: '20px' // Customize the size of the checkmark icon
+                  fontSize: '20px'
                 }
               }}
               rows={doc_table_data}
@@ -571,7 +567,6 @@ const GenerateRfqPage = () => {
           <Button variant="contained" color="primary">
             Issue RFQ
           </Button>
-          {/* <ConfirmForm isOpen={isDialogOpen} onClose={handleCloseDialog} onConfirm={() => handleSubmit()} type={'RFQ'} /> */}
         </Box>
       </Box>
     </MainCard>

@@ -3,130 +3,110 @@ import { DataGrid } from '@mui/x-data-grid';
 import { Box } from '@mui/material';
 import MainCard from 'components/MainCard';
 import PlusButton from 'components/CustomButton';
-import RFQForm from './QuoteForm';
+import QuoteView from './QuoteView';
 
 const QuoteList = () => {
   const [showQuoteForm, setShowQuoteForm] = useState(false);
+  const [selectedQuotation, setSelectedQuotation] = useState(null); // State to store selected quotation
+
+  const handleViewClick = (row) => {
+    setSelectedQuotation(row); // Set selected quotation data
+    setShowQuoteForm(false); // Hide the quote list to show the view page
+  };
+
   const QuoteColumn = [
-    { field: 'lprNo', headerName: 'Quote ID', width: 100 },
-    { field: 'vertical', headerName: 'Quote No.', width: 100 },
-    { field: 'company', headerName: 'RFQ No.', width: 150 },
-    { field: 'division', headerName: 'Vendor Name', width: 150 },
-    { field: 'lprCategory', headerName: 'RFQ Quote Date', width: 150 },
-    { field: 'shipmentMode', headerName: 'Quote Date', width: 150 },
-    { field: 'buyingThrough', headerName: 'Currency', width: 150 },
-    { field: 'leftForRFQ', headerName: 'Delivery Terms', width: 150 },
-    { field: 'deliveryTime', headerName: 'Country of Origin', width: 150 },
-    { field: 'requestedByDept', headerName: 'Country of Supply', width: 150 },
-    { field: 'requestedBy', headerName: 'Port of Loading', width: 150 },
-    { field: 'leadTime', headerName: 'Lead Time', width: 150 }
+    {
+      field: 'quo_id',
+      headerName: 'Quotation ID',
+      width: 100
+    },
+    {
+      field: 'quo_num',
+      headerName: 'Quotation Number',
+      width: 150,
+      renderCell: (params) => (
+        <div onClick={() => handleViewClick(params.row)} style={{ cursor: 'pointer', color: 'blue' }} aria-hidden="true">
+          {params.value}
+        </div>
+      )
+    },
+    { field: 'vendor_reference_no', headerName: 'Vendor Ref. No.', width: 150 },
+    { field: 'rfq_num', headerName: 'RFQ Number', width: 150 },
+    { field: 'vendor_name', headerName: 'Vendor Name', width: 150 },
+    { field: 'company_name', headerName: 'Company Name', width: 150 },
+    { field: 'referenceDate', headerName: 'RFQ Generate Date ', width: 150 },
+    { field: 'quo_date', headerName: 'Quotation Date', width: 150 },
+    { field: 'currency', headerName: 'Currency', width: 150 },
+    { field: 'delivery_terms', headerName: 'Delivery Terms', width: 150 },
+    { field: 'country_origin', headerName: 'Country of Origin', width: 150 },
+    { field: 'country_supply', headerName: 'Country of Supply', width: 150 },
+    { field: 'port_loading', headerName: 'Port of Loading', width: 150 },
+    { field: 'lead_time', headerName: 'Lead Time', width: 150 },
+    { field: 'payment_terms', headerName: 'Payment Terms', width: 250 },
+    { field: 'remarks', headerName: 'Remarks', width: 250 },
+    { field: 'total_cost', headerName: 'Total Cost', width: 150 }
   ];
 
   const QuoteData = [
     {
       id: 1,
-      lprNo: 'Q001',
-      vertical: 'Q-2024-001',
-      company: 'RFQ-101',
-      division: 'Vendor A',
-      lprCategory: '2024-01-01',
-      shipmentMode: '2024-01-05',
-      buyingThrough: 'USD',
-      leftForRFQ: 'FOB',
-      deliveryTime: 'USA',
-      requestedByDept: 'India',
-      requestedBy: 'Mumbai',
-      leadTime: '15 days'
+      quo_id: 1,
+      quo_num: 'Q-001',
+      vendor_reference_no: 'VRN-101',
+      rfq_num: 'RFQ-5001',
+      vendor_name: 'Vendor A',
+      company_name: 'Company X',
+      referenceDate: '2025-01-01',
+      quo_date: '2025-01-10',
+      currency: 'USD',
+      delivery_terms: 'FOB',
+      country_origin: 'USA',
+      country_supply: 'India',
+      port_loading: 'New York Port',
+      lead_time: '30 days',
+      payment_terms: '30% Advance, 70% on Delivery',
+      remarks: 'Urgent delivery required.',
+      total_cost: 5000
     },
     {
       id: 2,
-      lprNo: 'Q002',
-      vertical: 'Q-2024-002',
-      company: 'RFQ-102',
-      division: 'Vendor B',
-      lprCategory: '2024-01-02',
-      shipmentMode: '2024-01-06',
-      buyingThrough: 'EUR',
-      leftForRFQ: 'CIF',
-      deliveryTime: 'Germany',
-      requestedByDept: 'France',
-      requestedBy: 'Paris',
-      leadTime: '10 days'
+      quo_id: 2,
+      quo_num: 'Q-002',
+      vendor_reference_no: 'VRN-102',
+      rfq_num: 'RFQ-5002',
+      vendor_name: 'Vendor B',
+      company_name: 'Company Y',
+      referenceDate: '2025-01-02',
+      quo_date: '2025-01-12',
+      currency: 'EUR',
+      delivery_terms: 'CIF',
+      country_origin: 'Germany',
+      country_supply: 'UK',
+      port_loading: 'Hamburg Port',
+      lead_time: '25 days',
+      payment_terms: '50% Advance, 50% on Delivery',
+      remarks: 'Include insurance details.',
+      total_cost: 3000
     },
     {
       id: 3,
-      lprNo: 'Q003',
-      vertical: 'Q-2024-003',
-      company: 'RFQ-103',
-      division: 'Vendor C',
-      lprCategory: '2024-01-03',
-      shipmentMode: '2024-01-07',
-      buyingThrough: 'GBP',
-      leftForRFQ: 'EXW',
-      deliveryTime: 'UK',
-      requestedByDept: 'Italy',
-      requestedBy: 'Rome',
-      leadTime: '20 days'
-    },
-    {
-      id: 4,
-      lprNo: 'Q004',
-      vertical: 'Q-2024-004',
-      company: 'RFQ-104',
-      division: 'Vendor D',
-      lprCategory: '2024-01-04',
-      shipmentMode: '2024-01-08',
-      buyingThrough: 'INR',
-      leftForRFQ: 'DDP',
-      deliveryTime: 'India',
-      requestedByDept: 'China',
-      requestedBy: 'Shanghai',
-      leadTime: '30 days'
-    },
-    {
-      id: 5,
-      lprNo: 'Q004',
-      vertical: 'Q-2024-004',
-      company: 'RFQ-104',
-      division: 'Vendor D',
-      lprCategory: '2024-01-04',
-      shipmentMode: '2024-01-08',
-      buyingThrough: 'INR',
-      leftForRFQ: 'DDP',
-      deliveryTime: 'India',
-      requestedByDept: 'China',
-      requestedBy: 'Shanghai',
-      leadTime: '30 days'
-    },
-    {
-      id: 6,
-      lprNo: 'Q004',
-      vertical: 'Q-2024-004',
-      company: 'RFQ-104',
-      division: 'Vendor D',
-      lprCategory: '2024-01-04',
-      shipmentMode: '2024-01-08',
-      buyingThrough: 'INR',
-      leftForRFQ: 'DDP',
-      deliveryTime: 'India',
-      requestedByDept: 'China',
-      requestedBy: 'Shanghai',
-      leadTime: '30 days'
-    },
-    {
-      id: 7,
-      lprNo: 'Q004',
-      vertical: 'Q-2024-004',
-      company: 'RFQ-104',
-      division: 'Vendor D',
-      lprCategory: '2024-01-04',
-      shipmentMode: '2024-01-08',
-      buyingThrough: 'INR',
-      leftForRFQ: 'DDP',
-      deliveryTime: 'India',
-      requestedByDept: 'China',
-      requestedBy: 'Shanghai',
-      leadTime: '30 days'
+      quo_id: 3,
+      quo_num: 'Q-003',
+      vendor_reference_no: 'VRN-103',
+      rfq_num: 'RFQ-5003',
+      vendor_name: 'Vendor C',
+      company_name: 'Company Z',
+      referenceDate: '2025-01-03',
+      quo_date: '2025-01-15',
+      currency: 'INR',
+      delivery_terms: 'EXW',
+      country_origin: 'India',
+      country_supply: 'USA',
+      port_loading: 'Chennai Port',
+      lead_time: '20 days',
+      payment_terms: '100% on Delivery',
+      remarks: 'Payment on successful inspection.',
+      total_cost: 7000
     }
   ];
 
@@ -134,22 +114,20 @@ const QuoteList = () => {
     <MainCard
       title={
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span>{!showQuoteForm ? 'Quote List' : showQuoteForm && 'Create Quote'}</span>
-          {!showQuoteForm ? (
-            <PlusButton label="+Create Quote" onClick={() => setShowQuoteForm(true)} />
-          ) : (
+          <span>{!showQuoteForm && !selectedQuotation ? 'Quote List' : 'View Quotation'}</span>
+          {!showQuoteForm && selectedQuotation && (
             <PlusButton
               label="Back"
               onClick={() => {
-                setShowQuoteForm(false);
+                setSelectedQuotation(null);
               }}
             />
           )}
         </Box>
       }
     >
-      <Box>
-        {!showQuoteForm ? (
+      {!selectedQuotation ? (
+        <Box>
           <DataGrid
             getRowHeight={() => 'auto'}
             sx={{
@@ -166,25 +144,6 @@ const QuoteList = () => {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center'
-              },
-              '& .MuiCheckbox-root': {
-                padding: 0,
-                margin: '0 auto', // Center align the checkbox
-                width: '18px',
-                height: '18px'
-              },
-              '& .MuiSvgIcon-root': {
-                fontSize: '20px'
-              },
-              '& .MuiDataGrid-scrollbar': {
-                height: '8px'
-              },
-              // Add striped rows
-              '& .MuiDataGrid-row:nth-of-type(odd)': {
-                backgroundColor: '#f9f9f9'
-              },
-              '& .MuiDataGrid-row:nth-of-type(even)': {
-                backgroundColor: '#ffffff'
               }
             }}
             rows={QuoteData}
@@ -192,13 +151,11 @@ const QuoteList = () => {
             pageSize={5}
             rowsPerPageOptions={[5]}
             hideFooter
-            hideFooterPagination
-            hideFooterSelectedRowCount
           />
-        ) : (
-          showQuoteForm && <RFQForm />
-        )}
-      </Box>
+        </Box>
+      ) : (
+        <QuoteView data={selectedQuotation} />
+      )}
     </MainCard>
   );
 };

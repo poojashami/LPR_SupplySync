@@ -218,6 +218,7 @@ export default function NavCollapse({ menu, level, parentId, setSelectedItems, s
     <>
       {menuOrientation === MenuOrientation.VERTICAL || downLG ? (
         <>
+          {/* for white secondary.200 */}
           <ListItemButton
             id={`${menu.id}-button`}
             selected={isSelected}
@@ -228,10 +229,11 @@ export default function NavCollapse({ menu, level, parentId, setSelectedItems, s
               py: !drawerOpen && level === 1 ? 0.5 : 0.5,
               ...(drawerOpen && {
                 mx: 1.25,
-                my: 0.1,
+                my: 0,
                 borderRadius: 1,
-                '&:hover': { bgcolor: mode === ThemeMode.DARK ? 'divider' : 'secondary.200' },
-                '&.Mui-selected': { color: iconSelectedColor }
+                '&:hover': { bgcolor: mode === ThemeMode.DARK ? 'divider' : 'rgba(0, 0, 0, 0.12)' },
+
+                '&.Mui-selected': { color: iconSelectedColor, backgroundColor: '#fafbfb' }
               }),
               ...(!drawerOpen && {
                 px: 2.75,
@@ -255,8 +257,8 @@ export default function NavCollapse({ menu, level, parentId, setSelectedItems, s
               <ListItemIcon
                 onClick={handlerIconLink}
                 sx={{
-                  minWidth: 38,
-                  color: isSelected ? 'primary.main' : textColor,
+                  minWidth: 28,
+                  color: isSelected ? '#cd640d !important' : '#2c6095 !important',
                   ...(!drawerOpen && {
                     borderRadius: 1,
                     width: 30,
@@ -284,8 +286,17 @@ export default function NavCollapse({ menu, level, parentId, setSelectedItems, s
 
             {(drawerOpen || (!drawerOpen && level !== 1)) && (
               <ListItemText
+                sx={{
+                  marginTop: '0px',
+                  marginBottom: '0px',
+                  important: 'true'
+                }}
                 primary={
-                  <Typography variant="h6" color={isSelected ? 'primary' : textColor} sx={{ fontWeight: isSelected ? 600 : 600 }}>
+                  <Typography
+                    variant="h6"
+                    color={isSelected ? 'primary' : textColor}
+                    sx={{ fontWeight: isSelected ? 600 : 600, marginTop: 0, marginBottom: 0 }}
+                  >
                     {menu.title}
                   </Typography>
                 }

@@ -3,17 +3,16 @@ import { DataGrid } from '@mui/x-data-grid';
 import { Box, Chip } from '@mui/material';
 import MainCard from 'components/MainCard';
 import CreateIcon from '@mui/icons-material/Create';
-import LPOCompare from './LPOCompare';
 import PlusButton from 'components/CustomButton';
-import { color } from 'framer-motion';
+import LPOView from './LPOView';
 
-const POList = () => {
-  const [showLPOCompare, setShowLPOCompare] = useState(false);
-  const [selectedRow, setSelectedRow] = useState(null); // To store the selected row data
+const LPOViewList = () => {
+  const [showLPOView, setShowLPOView] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
 
   const handleCreateClick = (row) => {
-    setSelectedRow(row); // Set the selected row data
-    setShowLPOCompare(true); // Show the LPOCompare component
+    setSelectedRow(row);
+    setShowLPOView(true);
   };
 
   const columnDefs = [
@@ -21,32 +20,18 @@ const POList = () => {
       field: 'action',
       headerName: 'Create',
       width: 60,
-      renderCell: (params) => (
-        <CreateIcon
-          style={{ cursor: 'pointer' }}
-          onClick={() => handleCreateClick(params.row)} // Pass the row data
-        />
-      )
+      renderCell: (params) => <CreateIcon style={{ cursor: 'pointer' }} onClick={() => handleCreateClick(params.row)} />
     },
     {
       field: 'opr_num',
       headerName: 'OPR No.',
-      renderCell: (params) => (
-        <div
-          style={{
-            backgroundColor: params?.row?.status === '2' ? '#d4edda' : '#f8d7da',
-            paddingTop: '2px',
-            paddingBottom: '2px',
-            paddingLeft: '10px',
-            paddingRight: '10px',
-            borderRadius: '5px',
-            textAlign: 'center'
-          }}
-        >
-          {params.value}
-        </div>
-      ),
-      width: 150
+      renderCell: (params) =>
+        params?.row?.status === '2' ? (
+          <Chip label={params.value} sx={{ width: '200px' }} color={'success'} />
+        ) : (
+          <Chip label={params.value} sx={{ width: '200px' }} />
+        ),
+      width: '150'
     },
     {
       headerName: 'Procurement Status',
@@ -111,17 +96,16 @@ const POList = () => {
     }
   ];
 
-  // Render LPOCompare if showLPOCompare is true, else render DataGrid
   return (
     <MainCard
       title={
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span>{!showLPOCompare ? 'Create LPO - List of OPR with Quotes' : 'Quotes For Company: & OPR ID:OPR-324-OPR'}</span>
-          {showLPOCompare && (
+          <span>{!showLPOView ? 'Create LPO - List of OPR with Quotes' : 'Quotes For Company: & OPR ID:OPR-324-OPR'}</span>
+          {showLPOView && (
             <PlusButton
               label="Back"
               onClick={() => {
-                setShowLPOCompare(false);
+                setShowLPOView(false);
               }}
             />
           )}
@@ -129,8 +113,8 @@ const POList = () => {
       }
     >
       <Box sx={{ minHeight: 400, width: '100%' }}>
-        {showLPOCompare ? (
-          <LPOCompare rowData={selectedRow} onBack={() => setShowLPOCompare(false)} />
+        {showLPOView ? (
+          <LPOView rowData={selectedRow} onBack={() => setShowLPOView(false)} />
         ) : (
           <DataGrid
             getRowHeight={() => 'auto'}
@@ -165,4 +149,4 @@ const POList = () => {
   );
 };
 
-export default POList;
+export default LPOViewList;

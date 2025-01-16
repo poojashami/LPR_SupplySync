@@ -183,7 +183,7 @@ const ItemTable = () => {
 
   // Function to render table headers with toggle icons
   const renderTableHeader = (sectionName, sectionLabel) => (
-    <TableHead>
+    <TableHead sx={{ backgroundColor: '#EAF1F6' }}>
       <TableRow>
         <TableCell sx={{ padding: 0 }} colSpan={6}>
           <Box display="flex" justifyContent="space-between" alignItems="center">

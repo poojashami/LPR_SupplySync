@@ -34,11 +34,11 @@ const ViewGenerateRfqPage = () => {
   ];
   const rfqItemcolumns = [
     { field: 'item_code', headerName: 'Item Code', width: 100, flex: 1 },
-    { field: 'item_name', headerName: 'Item Name', width: 250, flex: 1 },
-    { field: 'item_description', headerName: 'Remarks', width: 250, flex: 1 },
+    { field: 'item_name', headerName: 'Item Name', width: 200, flex: 1 },
+    { field: 'item_description', headerName: 'Remarks', width: 450, flex: 1 },
     { field: 'company_name', headerName: 'Company', width: 200, flex: 1 },
-    { field: 'uom_name', headerName: 'UOM', width: 100, flex: 1 },
-    { field: 'qty', headerName: 'Req Qty', width: 100, flex: 1, renderCell: (params) => formatNumber(params.value) },
+    { field: 'uom_name', headerName: 'UOM', width: 70, flex: 1 },
+    { field: 'qty', headerName: 'Req Qty', width: 80, flex: 1, renderCell: (params) => formatNumber(params.value) },
 
     {
       field: 'tolerance',
@@ -54,16 +54,6 @@ const ViewGenerateRfqPage = () => {
       width: 100,
       renderCell: (params) => calcNet(Number(params?.row?.quantity), Number(params?.row?.qty)),
       flex: 1
-    },
-    {
-      field: 'action',
-      headerName: 'Action',
-      width: 80,
-      renderCell: (params) => (
-        <IconButton aria-label="delete" color="error" onClick={() => removeItem(params.id)}>
-          <DeleteIcon />
-        </IconButton>
-      )
     }
   ];
   const rfqItemData = [
@@ -194,7 +184,7 @@ const ViewGenerateRfqPage = () => {
     }));
   };
   const renderTableHeader = (sectionName, sectionLabel) => (
-    <TableHead>
+    <TableHead sx={{ backgroundColor: '#EAF1F6' }}>
       <TableRow>
         <TableCell sx={{ padding: 0 }} colSpan={12}>
           <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -260,12 +250,6 @@ const ViewGenerateRfqPage = () => {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center'
-            },
-            '& .MuiCheckbox-root': {
-              padding: 0,
-              margin: '0 auto', // Center align the checkbox
-              width: '18px',
-              height: '18px'
             },
             '& .MuiSvgIcon-root': {
               fontSize: '20px'

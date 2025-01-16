@@ -29,14 +29,14 @@ const Quote_Menu = {
           url: '/quote/compare',
           target: false
         },
-        {
-          id: 'quote_approve',
-          title: <FormattedMessage id="Approve" />,
-          type: 'item',
-          url: '/quote/approve',
-          target: false
-        },
         ,
+        // {
+        //   id: 'quote_approve',
+        //   title: <FormattedMessage id="Approve" />,
+        //   type: 'item',
+        //   url: '/quote/approve',
+        //   target: false
+        // },
         {
           id: 'quote_view',
           title: <FormattedMessage id="View" />,

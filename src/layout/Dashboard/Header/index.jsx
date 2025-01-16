@@ -53,7 +53,11 @@ export default function Header() {
     position: 'fixed',
     elevation: 0,
     sx: {
-      bgcolor: '#F0F8FF',
+      // bgcolor: '#B1C9DD',
+      // background:
+      //   'linear-gradient(180deg, rgba(204,220,235,1) 25%, rgba(197,215,232,1) 50%, rgba(187,207,227,1) 75%, rgba(176,199,221,1) 88%)',
+      background: 'linear-gradient(90deg, rgba(204,220,235,1) 25%, rgba(197,215,232,1) 50%, rgba(165,184,202,1) 60%)',
+
       backdropFilter: 'blur(8px)',
       // zIndex: 9999,
       width: isHorizontal
