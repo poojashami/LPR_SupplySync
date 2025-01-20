@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import MainCard from 'components/MainCard';
-import TreasuryApprove from './TreasuryApprove';
 import { Box, Button } from '@mui/material';
 import PlusButton from 'components/CustomButton';
+import PaymentForm from './PaymentForm';
 
 const TreasuryPayment = () => {
   const [showApprove, setShowApprove] = useState(false);
@@ -135,83 +135,61 @@ const TreasuryPayment = () => {
       advice_amount: 7000,
       advice_remarks: 'Payment pending',
       status: 4
-    },
-    {
-      id: 4,
-      index: 4,
-      payment_request_id: 'REQ004',
-      po_id: 'PO004',
-      po_number: 'PO-09876',
-      po_amount: 6000,
-      advice_date: '2025-01-13',
-      advice_amount: 3000,
-      advice_remarks: 'Partial payment received',
-      status: 2
-    },
-    {
-      id: 5,
-      index: 5,
-      payment_request_id: 'REQ005',
-      po_id: 'PO005',
-      po_number: 'PO-11223',
-      po_amount: 8000,
-      advice_date: '2025-01-14',
-      advice_amount: 0,
-      advice_remarks: 'No payment advised',
-      status: 5
     }
   ];
 
-  const handleViewClick = (purchaseOrder) => {
-    setSelectedPurchaseOrder(purchaseOrder); // Save selected PO data
-    setShowApprove(true); // Show TreasuryPayment component
+  const handleViewClick = (row) => {
+    setSelectedPurchaseOrder(row); // Set the selected row
+    setShowApprove(true); // Show the TreasuryApprove component
+  };
+
+  const handleBackClick = () => {
+    setSelectedPurchaseOrder(null);
+    setShowApprove(false); // Go back to the table view
   };
 
   return (
     <MainCard
       title={
-        <Box>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <span>{showApprove ? 'Approve Payment' : 'Treasury Payment'}</span>
-          {showApprove && <PlusButton onClick={setShowApprove(false)}>Back</PlusButton>}
+          {showApprove && <PlusButton label={'Back'} onClick={handleBackClick} />}
         </Box>
       }
     >
       {showApprove ? (
-        <TreasuryApprove purchaseOrder={selectedPurchaseOrder} />
+        <PaymentForm purchaseOrder={selectedPurchaseOrder} />
       ) : (
-        <>
-          <DataGrid
-            getRowHeight={() => 'auto'}
-            sx={{
-              '& .MuiDataGrid-cell': {
-                border: '1px solid rgba(224, 224, 224, 1)',
-                display: 'flex'
-              },
-              '& .MuiDataGrid-columnHeader': {
-                backgroundColor: '#f5f5f5',
-                border: '1px solid rgba(224, 224, 224, 1)',
-                height: '25px !important',
-                display: 'flex'
-              },
-              '& .MuiDataGrid-checkboxInput': {
-                padding: '0px'
-              },
-              '& .MuiCheckbox-root': {
-                width: '18px',
-                height: '18px'
-              },
-              '& .MuiSvgIcon-root': {
-                fontSize: '20px'
-              }
-            }}
-            rows={tableData}
-            columns={TableHeader}
-            pageSize={5}
-            rowsPerPageOptions={[5]}
-            hideFooter
-            // checkboxSelection
-          />
-        </>
+        <DataGrid
+          getRowHeight={() => 'auto'}
+          sx={{
+            '& .MuiDataGrid-cell': {
+              border: '1px solid rgba(224, 224, 224, 1)',
+              display: 'flex'
+            },
+            '& .MuiDataGrid-columnHeader': {
+              backgroundColor: '#f5f5f5',
+              border: '1px solid rgba(224, 224, 224, 1)',
+              height: '25px !important',
+              display: 'flex'
+            },
+            '& .MuiDataGrid-checkboxInput': {
+              padding: '0px'
+            },
+            '& .MuiCheckbox-root': {
+              width: '18px',
+              height: '18px'
+            },
+            '& .MuiSvgIcon-root': {
+              fontSize: '20px'
+            }
+          }}
+          rows={tableData}
+          columns={TableHeader}
+          pageSize={5}
+          rowsPerPageOptions={[5]}
+          hideFooter
+        />
       )}
     </MainCard>
   );

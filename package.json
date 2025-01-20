@@ -69,6 +69,7 @@
     "react-timer-hook": "^3.0.7",
     "react-toastify": "^10.0.5",
     "react18-input-otp": "^1.1.4",
+    "recharts": "^2.15.0",
     "simplebar": "^6.2.5",
     "simplebar-react": "^3.2.4",
     "slick-carousel": "^1.8.1",

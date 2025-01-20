@@ -1,171 +1,143 @@
 import React, { useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import MainCard from 'components/MainCard';
-import TreasuryPayment from './TreasuryPayment'; // Import the TreasuryPayment component
-import Typography from '@mui/material/Typography';
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
+import PlusButton from 'components/CustomButton';
+import TreasuryView from './TreasuryView';
 
 const TreasuryApprove = () => {
-  const [showPayment, setShowPayment] = useState(false); // State to toggle between components
-  const [selectedPurchaseOrder, setSelectedPurchaseOrder] = useState(null); // Store selected PO data
+  const [showApprove, setShowApprove] = useState(false);
+  const [selectedPurchaseOrder, setSelectedPurchaseOrder] = useState(null);
 
   const TableHeader = [
-    { field: 'index', headerName: 'S.No.', width: 80 },
-    { field: 'payment_request_id', headerName: 'Req.No.', width: 80 },
-    { headerName: 'PO.ID.', field: 'po_id', width: 80 },
     {
-      field: 'po_number',
-      headerName: 'Purchase Order',
-      width: 100,
+      field: 'opo_num',
+      headerName: 'OPO No.',
+      width: 120,
       renderCell: (params) => (
         <div onClick={() => handleViewClick(params.row)} style={{ cursor: 'pointer', color: 'blue' }} aria-hidden="true">
           {params.value}
         </div>
       )
     },
-    { field: 'po_amount', headerName: 'PO Amount', width: 100 },
-    { field: 'advice_date', headerName: 'Advise date', width: 100 },
-    { field: 'advice_amount', headerName: 'Advise Amount', width: 120 },
-    { field: 'advice_remarks', headerName: 'Advise Remark', width: 200 },
-    {
-      field: 'status',
-      headerName: 'Action',
-      width: 200,
-      renderCell: (params) => {
-        const { status } = params.row;
-
-        const renderProceedButton = () => (
-          <Button
-            variant="outlined"
-            style={{
-              color: status === 4 ? 'gray' : 'blue',
-              borderColor: status === 4 ? 'gray' : 'blue',
-              fontSize: '11px',
-              padding: '5px',
-              pointerEvents: status === 4 ? 'none' : 'auto'
-            }}
-            onClick={() => status !== 4 && handleAcceptPO(params.row)}
-          >
-            {status === 4 ? 'Proceed to pay' : 'Proceed to pay'}
-          </Button>
-        );
-
-        const renderRejectButton = () => {
-          if (status === 1 || status === 2) {
-            return (
-              <Button
-                variant="outlined"
-                color="error"
-                style={{ marginLeft: '10px', fontSize: '11px', padding: '5px' }}
-                onClick={() => handleReject(params.row)}
-              >
-                Reject
-              </Button>
-            );
-          } else if (status === 4) {
-            return (
-              <Button variant="outlined" color="error" style={{ marginLeft: '10px', fontSize: '11px', padding: '5px' }}>
-                Rejected
-              </Button>
-            );
-          }
-          return null;
-        };
-
-        return (
-          <>
-            {params.row.status === 3 || params.row.status === 5 ? (
-              <Button
-                variant="outlined"
-                style={{
-                  color: 'green',
-                  borderColor: 'green',
-                  fontSize: '11px',
-                  padding: '5px'
-                }}
-                onClick={() => status !== 4 && handleAcceptPO(params.row)}
-              >
-                Payment Done
-              </Button>
-            ) : (
-              <>
-                {renderProceedButton()}
-                {renderRejectButton()}
-              </>
-            )}
-          </>
-        );
-      }
-    }
+    { headerName: 'Quotation No.', field: 'quo_num', width: 120 },
+    { headerName: 'Vendor No.', field: 'vendor_num', width: 120 },
+    { headerName: 'Vendor Name', field: 'vendor_name', width: 180 },
+    { headerName: 'Delivery Term', field: 'delivery_term', width: 100 },
+    { headerName: 'Payment Term', field: 'payment_term', width: 250 },
+    { headerName: 'Lead time', field: 'lead_time', width: 100 },
+    { headerName: 'Quote Cost', field: 'total_cost', width: 150 }
   ];
 
   const tableData = [
     {
       id: 1,
-      index: 1,
-      payment_request_id: 'REQ001',
-      po_id: 'PO001',
-      po_number: 'PO-12345',
-      po_amount: 5000,
-      advice_date: '2025-01-10',
-      advice_amount: 4500,
-      advice_remarks: 'Partial payment advised',
-      status: 1
+      opo_num: 'OPO001',
+      quo_num: 'QUO001',
+      vendor_num: 'VND001',
+      vendor_name: 'Vendor A',
+      delivery_term: 'FOB',
+      payment_term: 'Net 30',
+      lead_time: '14 days',
+      total_cost: 15000
+    },
+    {
+      id: 2,
+      opo_num: 'OPO002',
+      quo_num: 'QUO002',
+      vendor_num: 'VND002',
+      vendor_name: 'Vendor B',
+      delivery_term: 'CIF',
+      payment_term: 'Net 45',
+      lead_time: '21 days',
+      total_cost: 20000
+    },
+    {
+      id: 3,
+      opo_num: 'OPO003',
+      quo_num: 'QUO003',
+      vendor_num: 'VND003',
+      vendor_name: 'Vendor C',
+      delivery_term: 'EXW',
+      payment_term: 'Net 15',
+      lead_time: '10 days',
+      total_cost: 18000
+    },
+    {
+      id: 4,
+      opo_num: 'OPO004',
+      quo_num: 'QUO004',
+      vendor_num: 'VND004',
+      vendor_name: 'Vendor D',
+      delivery_term: 'DAP',
+      payment_term: 'Net 60',
+      lead_time: '30 days',
+      total_cost: 25000
+    },
+    {
+      id: 5,
+      opo_num: 'OPO005',
+      quo_num: 'QUO005',
+      vendor_num: 'VND005',
+      vendor_name: 'Vendor E',
+      delivery_term: 'CPT',
+      payment_term: 'Net 20',
+      lead_time: '7 days',
+      total_cost: 12000
     }
-    // Other data rows...
   ];
 
-  const handleViewClick = (purchaseOrder) => {
-    setSelectedPurchaseOrder(purchaseOrder); // Save selected PO data
-    setShowPayment(true); // Show TreasuryPayment component
+  const handleViewClick = (row) => {
+    setSelectedPurchaseOrder(row);
+    setShowApprove(true);
   };
 
+  const handleBackClick = () => {
+    setSelectedPurchaseOrder(null);
+    setShowApprove(false);
+  };
   return (
-    <MainCard>
-      {showPayment ? (
-        <>
-          <Typography variant="h6" style={{ marginBottom: '16px' }}>
-            Treasury Payment
-          </Typography>
-          {/* <TreasuryPayment purchaseOrder={selectedPurchaseOrder} /> */}
-        </>
+    <MainCard
+      title={
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <span>{showApprove ? 'Approve Payment' : 'Treasury Payment'}</span>
+          {showApprove && <PlusButton label={'Back'} onClick={handleBackClick} />}
+        </Box>
+      }
+    >
+      {showApprove ? (
+        <TreasuryView purchaseOrder={selectedPurchaseOrder} />
       ) : (
-        <>
-          <Typography variant="h6" style={{ marginBottom: '16px' }}>
-            Treasury Approve
-          </Typography>
-          <DataGrid
-            getRowHeight={() => 'auto'}
-            sx={{
-              '& .MuiDataGrid-cell': {
-                border: '1px solid rgba(224, 224, 224, 1)',
-                display: 'flex'
-              },
-              '& .MuiDataGrid-columnHeader': {
-                backgroundColor: '#f5f5f5',
-                border: '1px solid rgba(224, 224, 224, 1)',
-                height: '25px !important',
-                display: 'flex'
-              },
-              '& .MuiDataGrid-checkboxInput': {
-                padding: '0px'
-              },
-              '& .MuiCheckbox-root': {
-                width: '18px',
-                height: '18px'
-              },
-              '& .MuiSvgIcon-root': {
-                fontSize: '20px'
-              }
-            }}
-            rows={tableData}
-            columns={TableHeader}
-            pageSize={5}
-            rowsPerPageOptions={[5]}
-            hideFooter
-            checkboxSelection
-          />
-        </>
+        <DataGrid
+          getRowHeight={() => 'auto'}
+          sx={{
+            '& .MuiDataGrid-cell': {
+              border: '1px solid rgba(224, 224, 224, 1)',
+              display: 'flex'
+            },
+            '& .MuiDataGrid-columnHeader': {
+              backgroundColor: '#f5f5f5',
+              border: '1px solid rgba(224, 224, 224, 1)',
+              height: '25px !important',
+              display: 'flex'
+            },
+            '& .MuiDataGrid-checkboxInput': {
+              padding: '0px'
+            },
+            '& .MuiCheckbox-root': {
+              width: '18px',
+              height: '18px'
+            },
+            '& .MuiSvgIcon-root': {
+              fontSize: '20px'
+            }
+          }}
+          rows={tableData}
+          columns={TableHeader}
+          pageSize={5}
+          rowsPerPageOptions={[5]}
+          hideFooter
+        />
       )}
     </MainCard>
   );

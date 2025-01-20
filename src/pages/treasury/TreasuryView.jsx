@@ -1,16 +1,29 @@
-import { Box, Button, Grid, Typography, TextField, Table, TableRow, TableHead, TableCell, IconButton } from '@mui/material';
-import React, { useState } from 'react';
-import MainCard from 'components/MainCard';
+import React, { useState, useEffect } from 'react';
+import {
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  DialogContentText,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+  Typography,
+  Box,
+  TableHead,
+  IconButton,
+  Button,
+  Dialog,
+  TextField,
+  Grid
+} from '@mui/material';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutlined';
-import LPRApprove from './LPRApprove';
-const LPRView = () => {
+const TreasuryView = () => {
   const [showTableHeading, setShowTableHeading] = useState({
-    viewLPR: true,
-    lprForm: true,
-    approvedlpr: true,
-    heading3: true
+    basicDetail: true
   });
+
   const toggleTableBody = (section) => {
     setShowTableHeading((prevState) => ({
       ...prevState,
@@ -18,11 +31,11 @@ const LPRView = () => {
     }));
   };
   const renderTableHeader = (sectionName, sectionLabel) => (
-    <TableHead sx={{ backgroundColor: '#EAF1F6' }}>
+    <TableHead>
       <TableRow>
-        <TableCell sx={{ padding: 0 }} colSpan={12}>
+        <TableCell sx={{ padding: 0 }} colSpan={6}>
           <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Typography variant="h6" fontWeight={500}>
+            <Typography variant="h7" fontWeight={600}>
               {sectionLabel}
             </Typography>
             <IconButton size="large" onClick={() => toggleTableBody(sectionName)} sx={{ height: '30px' }}>
@@ -50,11 +63,10 @@ const LPRView = () => {
     { label: 'Delivery Time', value: '10 days' },
     { label: 'Additional Remarks', value: 'Urgent shipment required' }
   ];
-
   return (
     <Box>
-      <Table>{renderTableHeader('viewLPR', 'View LPR')}</Table>
-      {showTableHeading.viewLPR && (
+      <Table>{renderTableHeader('basicDetail', 'Basic Detail')}</Table>
+      {showTableHeading.basicDetail && (
         <Grid item xs={12} sm={12} sx={{ padding: '10px' }}>
           <Grid container spacing={2}>
             {shipmentData
@@ -87,4 +99,4 @@ const LPRView = () => {
   );
 };
 
-export default LPRView;
+export default TreasuryView;
