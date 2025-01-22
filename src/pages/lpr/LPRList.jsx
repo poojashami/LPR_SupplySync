@@ -99,56 +99,47 @@ const LPRList = () => {
   return (
     <MainCard title={'LPR List'}>
       {viewLPR ? (
-        <AllLPRApproveData
-          lprData={selectedLPR}
-          onBack={() => setViewLPR(false)} // Function to go back to the list
-        />
+        <AllLPRApproveData lprData={selectedLPR} onBack={() => setViewLPR(false)} />
       ) : (
         <Box sx={{ width: '100%' }}>
-          {!showLPRForm && !viewLPR ? (
-            <DataGrid
-              getRowHeight={() => 'auto'}
-              sx={{
-                '& .MuiDataGrid-cell': {
-                  border: '1px solid rgba(224, 224, 224, 1)',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center'
-                },
-                '& .MuiDataGrid-columnHeader': {
-                  backgroundColor: '#f5f5f5',
-                  border: '1px solid rgba(224, 224, 224, 1)',
-                  height: '25px !important',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center'
-                },
-                '& .MuiCheckbox-root': {
-                  padding: 0,
-                  margin: '0 auto', // Center align the checkbox
-                  width: '18px',
-                  height: '18px'
-                },
-                '& .MuiSvgIcon-root': {
-                  fontSize: '20px'
-                },
-                '& .MuiDataGrid-scrollbar': {
-                  height: '8px'
-                }
-              }}
-              rows={LPRData}
-              columns={LPRColumn}
-              pageSize={5}
-              rowsPerPageOptions={[5]}
-              hideFooter
-              hideFooterPagination
-              hideFooterSelectedRowCount
-            />
-          ) : showLPRForm ? (
-            <CreateLPRForm />
-          ) : (
-            <LPRView />
-          )}
+          <DataGrid
+            getRowHeight={() => 'auto'}
+            sx={{
+              '& .MuiDataGrid-cell': {
+                border: '1px solid rgba(224, 224, 224, 1)',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+              },
+              '& .MuiDataGrid-columnHeader': {
+                backgroundColor: '#f5f5f5',
+                border: '1px solid rgba(224, 224, 224, 1)',
+                height: '25px !important',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+              },
+              '& .MuiCheckbox-root': {
+                padding: 0,
+                margin: '0 auto', // Center align the checkbox
+                width: '18px',
+                height: '18px'
+              },
+              '& .MuiSvgIcon-root': {
+                fontSize: '20px'
+              },
+              '& .MuiDataGrid-scrollbar': {
+                height: '8px'
+              }
+            }}
+            rows={LPRData}
+            columns={LPRColumn}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+            hideFooter
+            hideFooterPagination
+            hideFooterSelectedRowCount
+          />
         </Box>
       )}
     </MainCard>

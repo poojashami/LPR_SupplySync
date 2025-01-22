@@ -26,7 +26,7 @@ import { styled } from '@mui/material/styles';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutlined';
 
-const treasuryBHData = [
+const paymentData = [
   {
     title: 'Pending PO Payments',
     details: {
@@ -66,97 +66,52 @@ const treasuryBHData = [
 ];
 
 export default function SamplePage() {
-  const [selectedTitle, setSelectedTitle] = useState(treasuryBHData[0].title);
-  const [chartData, setChartData] = useState(treasuryBHData[0].details);
-  const [showTableHeading, setShowTableHeading] = useState({
-    treasuryBHCards: true,
-    treasuryPHCards: true,
-    treasuryBhChart: true,
-    approvedlpr: true,
-    heading3: true
-  });
-  //for pie dropdown
+  const [selectedTitle, setSelectedTitle] = useState(paymentData[0].title);
+  const [chartData, setChartData] = useState(paymentData[0].details);
+
   const handleSelectChange = (event) => {
     const selected = event.target.value;
     setSelectedTitle(selected);
-    const selectedData = treasuryBHData.find((item) => item.title === selected);
+
+    // Update chart data based on selected title
+    const selectedData = paymentData.find((item) => item.title === selected);
     setChartData(selectedData.details);
   };
   const getArcLabel = (data) => {
-    const totalValue = treasuryBHPieData.reduce((acc, item) => acc + item.value, 0);
-    const percentage = ((data.value / totalValue) * 100).toFixed(2);
+    const totalValue = pieData.reduce((acc, item) => acc + item.value, 0);
+    const percentage = ((data.value / totalValue) * 100).toFixed(2); // Calculate percentage with two decimals
     return `${percentage}%`;
   };
-  const treasuryBHPieData = [
+
+  const pieData = [
     { label: 'Within 1 Week', id: 'Within 1 Week', value: chartData.within1Week, color: '#B2BABB' },
     { label: 'Within 1 to 2 Weeks', id: 'Within 1 to 2 Weeks', value: chartData.within1To2Weeks, color: '#F1948A' },
     { label: 'More Than 2 Weeks', id: 'More Than 2 Weeks', value: chartData.moreThan2Weeks, color: '#F8C471' },
     { label: 'Pending PO Payments(Final)', id: 'Pending PO Payments(Final)', value: chartData.moreThan2Weeks, color: '#98D8EF' }
   ];
 
-  //For Bar Char
-  const treasuryPHData = [
+  const categories = paymentData.map((item) => item.title); // Extract titles for x-axis categories
+  const series = [
     {
-      title: 'Pending Duty Payments',
-      details: {
-        total: 800,
-        alreadyArrived: 500,
-        etaWithin1wk: 100,
-        etamoreThan2Weeks: 200
-      }
+      // label: 'Within 1 Week',
+      data: paymentData.map((item) => item.details.within1Week)
     },
     {
-      title: 'Pending Clearing Exp. Payments',
-      details: {
-        total: 430,
-        alreadyArrived: 130,
-        etaWithin1wk: 100,
-        etamoreThan2Weeks: 200
-      }
+      // label: 'Within 1 to 2 Weeks',
+      data: paymentData.map((item) => item.details.within1To2Weeks)
     },
     {
-      title: 'Pending Job Card Closure',
-      details: {
-        total: 450,
-        alreadyArrived: 110,
-        etaWithin1wk: 120,
-        etamoreThan2Weeks: 220
-      }
-    },
-    {
-      title: 'Pending Forex Purchase',
-      details: {
-        total: 400,
-        alreadyArrived: 100,
-        etaWithin1wk: 120,
-        etamoreThan2Weeks: 180
-      }
-    },
-    {
-      title: 'Pending Remittance',
-      details: {
-        total: 500,
-        alreadyArrived: 200,
-        etaWithin1wk: 120,
-        etamoreThan2Weeks: 180
-      }
+      // label: 'More Than 2 Weeks',
+      data: paymentData.map((item) => item.details.moreThan2Weeks)
     }
   ];
-  const treasuryPHBar = treasuryPHData.map((item) => item.title);
-  const treasuryPHSeries = [
-    {
-      name: 'Within 1 Week',
-      data: treasuryPHData.map((item) => item.details.alreadyArrived)
-    },
-    {
-      name: 'Within 1-2 Weeks',
-      data: treasuryPHData.map((item) => item.details.etaWithin1wk)
-    },
-    {
-      name: 'More than 2 Weeks',
-      data: treasuryPHData.map((item) => item.details.etamoreThan2Weeks)
-    }
-  ];
+
+  const [showTableHeading, setShowTableHeading] = useState({
+    treasuryBHCards: true,
+    treasuryBhChart: true,
+    approvedlpr: true,
+    heading3: true
+  });
   const toggleTableBody = (section) => {
     setShowTableHeading((prevState) => ({
       ...prevState,
@@ -193,10 +148,78 @@ export default function SamplePage() {
   const xLabels = ['Page A', 'Page B', 'Page C', 'Page D', 'Page E', 'Page F', 'Page G'];
   return (
     <MainCard title="Dashboard">
-      <Table sx={{ marginBottom: '10px' }}>{renderTableHeader('treasuryBHCards', ' Treasury at BH')}</Table>
+      {/* <Table sx={{ marginBottom: '10px' }}>{renderTableHeader('treasuryBHCards', ' Treasury at BH Card')}</Table>
+      {showTableHeading.treasuryBHCards && (
+        <Grid container spacing={3}>
+          {paymentData.map((payment, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <StyledCard>
+                <>
+                  <Typography
+                    gutterBottom
+                    variant="subtitle1"
+                    component="div"
+                    sx={{ fontSize: '12px', fontWeight: '600', color: '#185b9f', paddingLeft: '10px' }}
+                  >
+                    {payment.title}
+                  </Typography>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      gap: 1,
+                      margin: 1
+                    }}
+                  >
+                    <Card sx={{ flex: 1, p: 1, textAlign: 'center' }}>
+                      <Box>
+                        Total:
+                        <Box variant="h6" sx={{ fontWeight: '700', color: '#AF7AC5', fontSize: '20px' }}>
+                          {payment.details.total}
+                        </Box>
+                      </Box>
+                    </Card>
+                    <Card sx={{ flex: 1, p: 1, textAlign: 'center' }}>
+                      <Box>
+                        Within 1 wk:
+                        <Box variant="h6" sx={{ fontWeight: '700', color: '#B2BABB', fontSize: '20px' }}>
+                          {payment.details.within1Week}
+                        </Box>
+                      </Box>
+                    </Card>
+                  </Box>
+
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      gap: 1,
+                      margin: 1
+                    }}
+                  >
+                    <Card sx={{ flex: 1, p: 1, textAlign: 'center' }}>
+                      <Box>
+                        Within 1-2 wk:
+                        <Box sx={{ fontWeight: '700', color: '#F1948A', fontSize: '20px' }}>{payment.details.within1To2Weeks}</Box>
+                      </Box>
+                    </Card>
+                    <Card sx={{ flex: 1, p: 1, textAlign: 'center' }}>
+                      <Box>
+                        More than 2 wk:
+                        <Box sx={{ fontWeight: '700', color: '#F8C471', fontSize: '20px' }}>{payment.details.moreThan2Weeks}</Box>
+                      </Box>
+                    </Card>
+                  </Box>
+                </>
+              </StyledCard>
+            </Grid>
+          ))}
+        </Grid>
+      )} */}
+      <Table sx={{ marginBottom: '10px' }}>{renderTableHeader('treasuryBHCards', ' Treasury at BH Card')}</Table>
       {showTableHeading.treasuryBHCards && (
         <Grid container spacing={2}>
-          {treasuryBHData.map((payment, index) => (
+          {paymentData.map((payment, index) => (
             <Grid item xs={12} sm={6} md={3} key={index}>
               <>
                 <StyledCard style={{ paddingTop: '10px' }}>
@@ -205,7 +228,7 @@ export default function SamplePage() {
                       gutterBottom
                       variant="subtitle1"
                       component="div"
-                      sx={{ fontSize: '12px', fontWeight: '600', color: '#7149C6', paddingLeft: '10px' }}
+                      sx={{ fontSize: '12px', fontWeight: '600', color: '#185b9f', paddingLeft: '10px' }}
                     >
                       {payment.title}
                     </Typography>
@@ -223,7 +246,7 @@ export default function SamplePage() {
                       }}
                     >
                       <Box sx={{ fontWeight: '500', fontSize: '20x' }}>Total:</Box>
-                      <Box variant="h6" sx={{ fontWeight: '700', color: '#7149C6', fontSize: '20px' }}>
+                      <Box variant="h6" sx={{ fontWeight: '700', color: '#AF7AC5', fontSize: '20px' }}>
                         {payment.details.total}
                       </Box>
                     </Box>
@@ -288,7 +311,7 @@ export default function SamplePage() {
                       }
                     }}
                   >
-                    {treasuryBHData.map((item, index) => (
+                    {paymentData.map((item, index) => (
                       <MenuItem key={index} value={item.title}>
                         {item.title}
                       </MenuItem>
@@ -299,7 +322,7 @@ export default function SamplePage() {
                   series={[
                     {
                       outerRadius: 60,
-                      data: treasuryBHPieData,
+                      data: pieData,
                       arcLabel: getArcLabel
                     }
                   ]}
@@ -319,10 +342,10 @@ export default function SamplePage() {
           </Grid>
         </Grid>
       )}
-      <Table sx={{ marginBottom: '10px', marginTop: '10px' }}>{renderTableHeader('treasuryPHCards', ' Treasury at PH')}</Table>
-      {showTableHeading.treasuryPHCards && (
+      <Table sx={{ marginBottom: '10px', marginTop: '10px' }}>{renderTableHeader('treasuryBHCards', ' Treasury at BH Card')}</Table>
+      {showTableHeading.treasuryBHCards && (
         <Grid container spacing={2}>
-          {treasuryPHData.map((payment, index) => (
+          {paymentData.map((payment, index) => (
             <Grid item xs={12} sm={6} md={3} key={index}>
               <>
                 <StyledCard style={{ paddingTop: '10px' }}>
@@ -331,7 +354,7 @@ export default function SamplePage() {
                       gutterBottom
                       variant="subtitle1"
                       component="div"
-                      sx={{ fontSize: '12px', fontWeight: '600', color: '#3468C0', paddingLeft: '10px' }}
+                      sx={{ fontSize: '12px', fontWeight: '600', color: '#185b9f', paddingLeft: '10px' }}
                     >
                       {payment.title}
                     </Typography>
@@ -349,7 +372,7 @@ export default function SamplePage() {
                       }}
                     >
                       <Box sx={{ fontWeight: '500', fontSize: '20x' }}>Total:</Box>
-                      <Box variant="h6" sx={{ fontWeight: '700', color: '#3468C0', fontSize: '20px' }}>
+                      <Box variant="h6" sx={{ fontWeight: '700', color: '#AF7AC5', fontSize: '20px' }}>
                         {payment.details.total}
                       </Box>
                     </Box>
@@ -365,21 +388,21 @@ export default function SamplePage() {
                       }}
                     >
                       <Card sx={{ flex: 1, p: 1, textAlign: 'center' }}>
-                        <Box>Already Arrived</Box>
-                        <Box variant="h6" sx={{ fontWeight: '700', color: '#727D73', fontSize: '16px' }}>
-                          {payment.details.alreadyArrived}
+                        <Box>{'<'} 1 wk</Box>
+                        <Box variant="h6" sx={{ fontWeight: '700', color: '#B2BABB', fontSize: '16px' }}>
+                          {payment.details.within1Week}
                         </Box>
                       </Card>
                       <Card sx={{ flex: 1, p: 1, textAlign: 'center' }}>
                         <Box>
-                          ETA Within 1wk
-                          <Box sx={{ fontWeight: '700', color: '#754E1A', fontSize: '16px' }}>{payment.details.etaWithin1wk}</Box>
+                          1-2 wk
+                          <Box sx={{ fontWeight: '700', color: '#F1948A', fontSize: '16px' }}>{payment.details.within1To2Weeks}</Box>
                         </Box>
                       </Card>
                       <Card sx={{ flex: 1, p: 1, textAlign: 'center' }}>
                         <Box>
-                          ETA Within 1-2 wk
-                          <Box sx={{ fontWeight: '700', color: '#CBA35C', fontSize: '16px' }}>{payment.details.etamoreThan2Weeks}</Box>
+                          {'>'} 2 wk
+                          <Box sx={{ fontWeight: '700', color: '#F8C471', fontSize: '16px' }}>{payment.details.moreThan2Weeks}</Box>
                         </Box>
                       </Card>
                     </Box>
@@ -391,9 +414,9 @@ export default function SamplePage() {
           <Grid item xs={12} sm={6} md={3}>
             <StyledCard>
               <BarChart
-                xAxis={[{ scaleType: 'band', data: treasuryPHBar }]}
+                xAxis={[{ scaleType: 'band', data: categories }]}
                 colors={['#B2BABB', '#F1948A', '#F8C471']}
-                series={treasuryPHSeries}
+                series={series}
                 width={300}
                 height={180}
               />
@@ -401,24 +424,94 @@ export default function SamplePage() {
           </Grid>
         </Grid>
       )}
-      <Table sx={{ marginBottom: '10px', marginTop: '10px' }}>{renderTableHeader('heading3', 'Headings')}</Table>
-      {showTableHeading.heading3 && (
-        <Grid container spacing={2}>
+      <Table sx={{ marginBottom: '10px', marginTop: '10px' }}>{renderTableHeader('treasuryBhChart', ' Treasury at BH Chart')}</Table>
+      {showTableHeading.treasuryBhChart && (
+        <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={6}>
-            <LineChart
-              height={300}
-              series={[{ data: uData, label: 'uv', area: true, showMark: false }]}
-              xAxis={[{ scaleType: 'point', data: xLabels }]}
+            <Box
               sx={{
-                [`& .${lineElementClasses.root}`]: {
-                  display: 'none'
-                }
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                textAlign: 'center'
               }}
+            >
+              <FormControl>
+                <Select
+                  labelId="payment-select-label"
+                  value={selectedTitle}
+                  onChange={handleSelectChange}
+                  sx={{
+                    '& .MuiSelect-select': {
+                      padding: '4px',
+                      fontSize: '11px'
+                    },
+                    '& .MuiMenuItem-root': {
+                      fontSize: '11px'
+                    }
+                  }}
+                >
+                  {paymentData.map((item, index) => (
+                    <MenuItem key={index} value={item.title}>
+                      {item.title}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <PieChart
+                series={[
+                  {
+                    outerRadius: 100,
+                    data: pieData,
+                    arcLabel: getArcLabel // Use the updated arcLabel function
+                  }
+                ]}
+                sx={{
+                  [`& .${pieArcLabelClasses.root}`]: {
+                    fill: 'white',
+                    fontSize: 14
+                  }
+                }}
+                margin={{ right: 0 }}
+                width={250}
+                height={250}
+                legend={{ hidden: true }}
+              />
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+            <BarChart
+              xAxis={[{ scaleType: 'band', data: categories }]}
+              colors={['#B2BABB', '#F1948A', '#F8C471']}
+              series={series}
+              width={500}
+              height={300}
             />
           </Grid>
-          <Grid item xs={12} sm={6} md={6}></Grid>
         </Grid>
       )}
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={6} md={6}>
+          <LineChart
+            height={300}
+            series={[{ data: uData, label: 'uv', area: true, showMark: false }]}
+            xAxis={[{ scaleType: 'point', data: xLabels }]}
+            sx={{
+              [`& .${lineElementClasses.root}`]: {
+                display: 'none'
+              }
+            }}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} md={6}>
+          <MuiChart
+            xAxis={[{ scaleType: 'band', data: ['group A', 'group B', 'group C'] }]}
+            series={[{ data: [4, 3, 5] }, { data: [1, 6, 3] }, { data: [2, 5, 6] }]}
+            height={300}
+          />
+        </Grid>
+      </Grid>
     </MainCard>
   );
 }
