@@ -197,7 +197,7 @@ export default function SamplePage() {
       {showTableHeading.treasuryBHCards && (
         <Grid container spacing={2}>
           {treasuryBHData.map((payment, index) => (
-            <Grid item xs={12} sm={6} md={3} key={index}>
+            <Grid item xs={12} sm={6} md={4} key={index}>
               <>
                 <StyledCard style={{ paddingTop: '10px' }}>
                   <>
@@ -262,7 +262,7 @@ export default function SamplePage() {
               </>
             </Grid>
           ))}
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={4}>
             <StyledCard style={{ paddingTop: '10px' }}>
               <Box
                 sx={{
@@ -323,7 +323,7 @@ export default function SamplePage() {
       {showTableHeading.treasuryPHCards && (
         <Grid container spacing={2}>
           {treasuryPHData.map((payment, index) => (
-            <Grid item xs={12} sm={6} md={3} key={index}>
+            <Grid item xs={12} sm={6} md={4} key={index}>
               <>
                 <StyledCard style={{ paddingTop: '10px' }}>
                   <>
@@ -388,14 +388,14 @@ export default function SamplePage() {
               </>
             </Grid>
           ))}
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={4}>
             <StyledCard>
               <BarChart
                 xAxis={[{ scaleType: 'band', data: treasuryPHBar }]}
                 colors={['#B2BABB', '#F1948A', '#F8C471']}
                 series={treasuryPHSeries}
-                width={300}
-                height={180}
+                width={360}
+                height={170}
               />
             </StyledCard>
           </Grid>
