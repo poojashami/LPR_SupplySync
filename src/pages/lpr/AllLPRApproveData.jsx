@@ -27,7 +27,7 @@ const AllLPRApproveData = () => {
       <TableRow>
         <TableCell sx={{ padding: 0 }} colSpan={12}>
           <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Typography variant="h6" fontWeight={500}>
+            <Typography fontSize={'14px'} fontWeight={600}>
               {sectionLabel}
             </Typography>
             <IconButton size="large" onClick={() => toggleTableBody(sectionName)} sx={{ height: '30px' }}>
@@ -140,10 +140,11 @@ const AllLPRApproveData = () => {
             <Box>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={6}>
-                  <Box color={'#3f78ff'}>Requestor Detail</Box>
+                  <Box color={'navy'}>Requestor Detail</Box>
                   <DataGrid
                     getRowHeight={() => 'auto'}
                     sx={{
+                      fontSize: '11px',
                       '& .MuiDataGrid-cell': {
                         border: '1px solid rgba(224, 224, 224, 1)',
                         display: 'flex',
@@ -184,10 +185,11 @@ const AllLPRApproveData = () => {
                 </Grid>
 
                 <Grid item xs={12} md={6}>
-                  <Box color={'#3f78ff'}>Approval Log</Box>
+                  <Box color={'navy'}>Approval Log</Box>
                   <DataGrid
                     getRowHeight={() => 'auto'}
                     sx={{
+                      fontSize: '11px',
                       '& .MuiDataGrid-cell': {
                         border: '1px solid rgba(224, 224, 224, 1)',
                         display: 'flex',
@@ -241,7 +243,18 @@ const AllLPRApproveData = () => {
                 <Grid item xs={12} sm={5}></Grid>
 
                 <Grid item xs={12} sm={3} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                  <Button variant="contained" size="small" color="primary" onClick={handleSubmit}>
+                  <Button
+                    variant="contained"
+                    size="small"
+                    onClick={handleSubmit}
+                    sx={{
+                      backgroundColor: '#2c6095',
+                      color: '#fff',
+                      '&:hover': {
+                        backgroundColor: '#244b78'
+                      }
+                    }}
+                  >
                     Request For Approval
                   </Button>
                 </Grid>

@@ -22,7 +22,7 @@ const LPRView = () => {
       <TableRow>
         <TableCell sx={{ padding: 0 }} colSpan={12}>
           <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Typography variant="h6" fontWeight={500}>
+            <Typography fontSize={'14px'} fontWeight={600}>
               {sectionLabel}
             </Typography>
             <IconButton size="large" onClick={() => toggleTableBody(sectionName)} sx={{ height: '30px' }}>
@@ -69,7 +69,7 @@ const LPRView = () => {
                     <Grid item xs={3} key={itemIndex}>
                       {' '}
                       <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
-                        <Typography variant="h6" sx={{ marginRight: 1, fontWeight: '500', fontSize: '11px', color: '#333' }}>
+                        <Typography variant="h6" sx={{ marginRight: 1, fontWeight: '600', fontSize: '11px', color: '#333' }}>
                           {item.label}:
                         </Typography>
                         <Typography variant="body1" sx={{ color: '#555', fontSize: '11px' }}>

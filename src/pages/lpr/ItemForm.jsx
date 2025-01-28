@@ -22,15 +22,8 @@ import {
   DialogContentText,
   TextField
 } from '@mui/material';
-import axios from 'axios';
 import * as Yup from 'yup';
-import { styled } from '@mui/system';
-import { BASE_URL } from 'AppConstants';
-import formatNumber from 'utils/functions';
-import { DataGrid } from '@mui/x-data-grid';
-import { GetOpr } from 'Redux/Apis/GetApiCalls';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+
 import WarningIcon from '@mui/icons-material/Warning';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Formik, Form, Field, FieldArray, ErrorMessage } from 'formik';
@@ -129,7 +122,7 @@ const ItemForm = () => {
       <TableRow>
         <TableCell sx={{ padding: 0 }} colSpan={6}>
           <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Typography variant="h7" fontWeight={600}>
+            <Typography fontSize={'14px'} fontWeight={600}>
               {sectionLabel}
             </Typography>
             <Box>
@@ -378,7 +371,20 @@ const ItemForm = () => {
                         <TableRow>
                           <TableCell colSpan={6}>
                             <Box sx={{ display: 'flex', justifyContent: 'flex-end', padding: 1 }}>
-                              <Button variant="contained" size="small" color="primary" type="submit">
+                              <Button
+                                variant="contained"
+                                size="small"
+                                color="primary"
+                                type="submit"
+                                sx={{
+                                  marginBottom: '0',
+                                  backgroundColor: '#2c6095',
+                                  color: '#fff',
+                                  '&:hover': {
+                                    backgroundColor: '#244b78'
+                                  }
+                                }}
+                              >
                                 Add Items
                               </Button>
                             </Box>
@@ -398,6 +404,14 @@ const ItemForm = () => {
                       color="primary"
                       onClick={handleConfirmItems}
                       disabled={values.stockItems.length === 0}
+                      sx={{
+                        marginBottom: '0',
+                        backgroundColor: '#2c6095',
+                        color: '#fff',
+                        '&:hover': {
+                          backgroundColor: '#244b78'
+                        }
+                      }}
                     >
                       Create OPR
                     </Button>

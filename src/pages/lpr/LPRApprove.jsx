@@ -33,7 +33,7 @@ const LPRApprove = () => {
       <TableRow>
         <TableCell sx={{ padding: 0 }} colSpan={12}>
           <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Typography variant="h6" fontWeight={500}>
+            <Typography fontSize={'14px'} fontWeight={600}>
               {sectionLabel}
             </Typography>
             <IconButton size="large" onClick={() => toggleTableBody(sectionName)} sx={{ height: '30px' }}>
@@ -199,6 +199,7 @@ const LPRApprove = () => {
                 <DataGrid
                   getRowHeight={() => 'auto'}
                   sx={{
+                    fontSize: '11px',
                     '& .MuiDataGrid-cell': {
                       border: '1px solid rgba(224, 224, 224, 1)',
                       display: 'flex',
@@ -243,6 +244,7 @@ const LPRApprove = () => {
                 <DataGrid
                   getRowHeight={() => 'auto'}
                   sx={{
+                    fontSize: '11px',
                     '& .MuiDataGrid-cell': {
                       border: '1px solid rgba(224, 224, 224, 1)',
                       display: 'flex',
@@ -296,8 +298,20 @@ const LPRApprove = () => {
               <Grid item xs={12} sm={6}></Grid>
 
               <Grid item xs={12} sm={2} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                <Button variant="contained" size="small" color="primary" onClick={handleSubmit}>
-                  Submit Remark
+                <Button
+                  variant="contained"
+                  size="small"
+                  sx={{
+                    backgroundColor: '#2c6095',
+                    color: '#fff',
+                    '&:hover': {
+                      backgroundColor: '#244b78'
+                    }
+                  }}
+                  color="primary"
+                  onClick={handleSubmit}
+                >
+                  Submit fjgbjhbb
                 </Button>
               </Grid>
             </Grid>

@@ -225,7 +225,7 @@ const QuoteView = ({ selectedRFQ, onBack }) => {
     { label: 'Special Packaging', value: 'LPR1234' }
   ];
   return (
-    <MainCard>
+    <>
       <Table>{renderTableHeader('rfqDetail', 'Buying House Info')}</Table>
       {showTableHeading.rfqDetail && (
         <Grid item xs={12} sm={12} sx={{ padding: '10px' }}>
@@ -447,7 +447,7 @@ const QuoteView = ({ selectedRFQ, onBack }) => {
           hideFooterSelectedRowCount
         />
       )}
-    </MainCard>
+    </>
   );
 };
 

@@ -3,12 +3,12 @@ import React, { useState } from 'react';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutlined';
 import MainCard from 'components/MainCard';
-import VendorList from './VendorList';
 import AdditionalInformationView from './AdditionalInformationView';
 import ItemList from './ItemList';
 import { DataGrid } from '@mui/x-data-grid';
 import QuoteForm from './QuoteForm';
 import CreateIcon from '@mui/icons-material/Create';
+import PlusButton from 'components/CustomButton';
 
 const CreateQuotePage = ({ selectedRFQ, onBack }) => {
   const [showTableHeading, setShowTableHeading] = useState({
@@ -16,10 +16,10 @@ const CreateQuotePage = ({ selectedRFQ, onBack }) => {
     quotedetail: true,
     itemList: true
   });
-  const [showQuoteForm, setShowQuoteForm] = useState(false); // State to manage QuoteForm visibility
+  const [showQuoteForm, setShowQuoteForm] = useState(false);
   const handleCreateClick = (rowData) => {
-    console.log('Selected Vendor:', rowData); // Log the selected vendor's data (optional)
-    setShowQuoteForm(true); // Show the QuoteForm component
+    console.log('Selected Vendor:', rowData);
+    setShowQuoteForm(true);
   };
 
   const toggleTableBody = (section) => {
@@ -110,8 +110,6 @@ const CreateQuotePage = ({ selectedRFQ, onBack }) => {
       contact_person_email: 'chrisgreen@example.com'
     }
   ];
-
-  // Vendor columns configuration
   const VendorColumn = [
     { field: 'id', headerName: 'S.NO', width: 50 },
     {
@@ -135,62 +133,79 @@ const CreateQuotePage = ({ selectedRFQ, onBack }) => {
 
   if (showQuoteForm) {
     return (
-      <MainCard title={`Create Quote for RFQ No. (${selectedRFQ})`} onBack={() => setShowQuoteForm(false)}>
+      <MainCard
+        title={
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            {`Create Quote for RFQ No. (${selectedRFQ})`}
+            <PlusButton label={'Back'} onClick={() => setShowQuoteForm(false)} />
+          </Box>
+        }
+      >
         <QuoteForm />
       </MainCard>
     );
-  }
-  return (
-    <MainCard title={`View RFQ No. (${selectedRFQ})`} onBack={onBack}>
-      <Table>{renderTableHeader('rfqDetail', 'RFQ Details')}</Table>
-      {showTableHeading.rfqDetail && (
-        <Grid item xs={12} sm={12} sx={{ padding: '10px' }}>
-          <Grid container spacing={2}>
-            {shipmentData.map((item, index) => (
-              <Grid item xs={3} key={index}>
-                <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
-                  <Typography variant="h6" sx={{ marginRight: 1, fontWeight: '500', fontSize: '11px', color: '#333' }}>
-                    {item.label}:
-                  </Typography>
-                  <Typography variant="body1" sx={{ color: '#555', fontSize: '11px' }}>
-                    {item.value}
-                  </Typography>
-                </Box>
+  } else {
+    return (
+      <>
+        <MainCard
+          title={
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              View RFQ's
+              <PlusButton label={'Back'} onClick={onBack} />
+            </Box>
+          }
+        >
+          <Table>{renderTableHeader('rfqDetail', 'RFQ Details')}</Table>
+          {showTableHeading.rfqDetail && (
+            <Grid item xs={12} sm={12} sx={{ padding: '10px' }}>
+              <Grid container spacing={2}>
+                {shipmentData.map((item, index) => (
+                  <Grid item xs={3} key={index}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
+                      <Typography variant="h6" sx={{ marginRight: 1, fontWeight: '500', fontSize: '11px', color: '#333' }}>
+                        {item.label}:
+                      </Typography>
+                      <Typography variant="body1" sx={{ color: '#555', fontSize: '11px' }}>
+                        {item.value}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                ))}
               </Grid>
-            ))}
-          </Grid>
-        </Grid>
-      )}
-      <Table>{renderTableHeader('quotedetail', 'Vendor Details')}</Table>
-      {showTableHeading.quotedetail && (
-        <DataGrid
-          getRowHeight={() => 'auto'}
-          sx={{
-            '& .MuiDataGrid-cell': {
-              border: '1px solid rgba(224, 224, 224, 1)'
-            },
-            '& .MuiDataGrid-columnHeader': {
-              backgroundColor: '#f5f5f5',
-              border: '1px solid rgba(224, 224, 224, 1)',
-              height: '25px !important'
-            },
-            '& .MuiDataGrid-scrollbar': {
-              height: '8px'
-            }
-          }}
-          rows={VendorData}
-          columns={VendorColumn}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          hideFooterPagination
-          hideFooter
-        />
-      )}
-      <AdditionalInformationView />
-      <Table sx={{ paddingTop: '20px' }}>{renderTableHeader('itemList', 'Item Details')}</Table>
-      {showTableHeading.itemList && <ItemList />}
-    </MainCard>
-  );
+            </Grid>
+          )}
+          <Table>{renderTableHeader('quotedetail', 'Vendor Details')}</Table>
+          {showTableHeading.quotedetail && (
+            <DataGrid
+              getRowHeight={() => 'auto'}
+              sx={{
+                '& .MuiDataGrid-cell': {
+                  border: '1px solid rgba(224, 224, 224, 1)'
+                },
+                '& .MuiDataGrid-columnHeader': {
+                  backgroundColor: '#f5f5f5',
+                  border: '1px solid rgba(224, 224, 224, 1)',
+                  height: '25px !important'
+                },
+                '& .MuiDataGrid-scrollbar': {
+                  height: '8px'
+                }
+              }}
+              rows={VendorData}
+              columns={VendorColumn}
+              pageSize={5}
+              rowsPerPageOptions={[5]}
+              hideFooterPagination
+              hideFooter
+            />
+          )}
+          <AdditionalInformationView />
+          <Table sx={{ paddingTop: '20px' }}>{renderTableHeader('itemList', 'Item Details')}</Table>
+          {showTableHeading.itemList && <ItemList />}
+        </MainCard>
+      </>
+    );
+  }
 };
 
 export default CreateQuotePage;

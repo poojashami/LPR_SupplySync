@@ -1,7 +1,20 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { MenuItem, Button, Box, Typography, Grid, IconButton, Table, TableBody, TableCell, TableRow, TableHead } from '@mui/material';
+import {
+  MenuItem,
+  Button,
+  Box,
+  Typography,
+  Grid,
+  IconButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+  TableHead,
+  Tooltip
+} from '@mui/material';
 import MainCard from 'components/MainCard';
 import FieldPadding from 'components/FieldPadding';
 import ValidationStar from 'components/ValidationStar';
@@ -145,7 +158,7 @@ const PaymentForm = () => {
           {({ isSubmitting }) => (
             <Form>
               <Grid container spacing={2}>
-                <Grid item xs={12} sm={1}>
+                <Grid item xs={12} sm={2}>
                   <Typography variant="body" style={{ fontSize: '11px' }}>
                     Amount<ValidationStar>*</ValidationStar>
                   </Typography>
@@ -156,9 +169,11 @@ const PaymentForm = () => {
                 </Grid>
 
                 <Grid item xs={12} sm={2}>
-                  <Typography variant="body" style={{ fontSize: '11px' }}>
-                    Payment Processed through Bank Name<ValidationStar>*</ValidationStar>
-                  </Typography>
+                  <Tooltip title="Payment Processed through Bank Name" placement="right" arrow>
+                    <Typography variant="body" style={{ fontSize: '11px' }}>
+                      Pay. Proc. via Bank<ValidationStar>*</ValidationStar>
+                    </Typography>
+                  </Tooltip>
                 </Grid>
                 <Grid item xs={12} sm={2} paddingTop={'20px'}>
                   <Field name="method" as={SelectFieldPadding} fullWidth select variant="outlined">
@@ -170,7 +185,7 @@ const PaymentForm = () => {
                   <ErrorMessage name="lprDate" component="div" style={errorMessageStyle} />
                 </Grid>
 
-                <Grid item xs={12} sm={1}>
+                <Grid item xs={12} sm={2}>
                   <Typography variant="body" style={{ fontSize: '11px' }}>
                     Payment Date<ValidationStar>*</ValidationStar>
                   </Typography>
@@ -178,8 +193,7 @@ const PaymentForm = () => {
                 <Grid item xs={12} sm={2} paddingTop={'20px'}>
                   <Field name="date" as={FieldPadding} type="date" fullWidth variant="outlined" InputLabelProps={{ shrink: true }} />
                 </Grid>
-                <Grid item xs={12} sm={2}></Grid>
-                <Grid item xs={12} sm={1}>
+                <Grid item xs={12} sm={2}>
                   <Typography variant="body" style={{ fontSize: '11px' }}>
                     Amount Payable<ValidationStar>*</ValidationStar>
                   </Typography>
@@ -188,7 +202,7 @@ const PaymentForm = () => {
                   <Field name="amount" as={FieldPadding} fullWidth variant="outlined" size="small" />
                   <ErrorMessage name="lprDate" component="div" style={errorMessageStyle} />
                 </Grid>
-                <Grid item xs={12} sm={1}>
+                <Grid item xs={12} sm={2}>
                   <Typography variant="body" style={{ fontSize: '11px' }}>
                     Amount Requested<ValidationStar>*</ValidationStar>
                   </Typography>
@@ -197,7 +211,7 @@ const PaymentForm = () => {
                   <Field name="amount" as={FieldPadding} fullWidth variant="outlined" size="small" />
                   <ErrorMessage name="lprDate" component="div" style={errorMessageStyle} />
                 </Grid>
-                <Grid item xs={12} sm={1}>
+                <Grid item xs={12} sm={2}>
                   <Typography variant="body" style={{ fontSize: '11px' }}>
                     Amount Paid<ValidationStar>*</ValidationStar>
                   </Typography>
@@ -206,7 +220,7 @@ const PaymentForm = () => {
                   <Field name="amount" as={FieldPadding} fullWidth variant="outlined" size="small" />
                   <ErrorMessage name="lprDate" component="div" style={errorMessageStyle} />
                 </Grid>
-                <Grid item xs={12} sm={1}>
+                <Grid item xs={12} sm={2}>
                   <Typography variant="body" style={{ fontSize: '11px' }}>
                     Bank Charges<ValidationStar>*</ValidationStar>
                   </Typography>
@@ -215,7 +229,7 @@ const PaymentForm = () => {
                   <Field name="amount" as={FieldPadding} fullWidth variant="outlined" size="small" />
                   <ErrorMessage name="lprDate" component="div" style={errorMessageStyle} />
                 </Grid>
-                <Grid item xs={12} sm={1}>
+                <Grid item xs={12} sm={2}>
                   <Typography variant="body" style={{ fontSize: '11px' }}>
                     Value Date<ValidationStar>*</ValidationStar>
                   </Typography>
@@ -224,15 +238,17 @@ const PaymentForm = () => {
                   <Field name="date" as={FieldPadding} type="date" fullWidth variant="outlined" InputLabelProps={{ shrink: true }} />
                 </Grid>
                 <Grid item xs={12} sm={2}>
-                  <Typography variant="body" style={{ fontSize: '11px' }}>
-                    Payment Transaction Ref No<ValidationStar>*</ValidationStar>
-                  </Typography>
+                  <Tooltip title="Payment Transaction Ref No" placement="right" arrow>
+                    <Typography variant="body" style={{ fontSize: '11px' }}>
+                      Pay. Trans. Ref No* <ValidationStar>*</ValidationStar>
+                    </Typography>
+                  </Tooltip>
                 </Grid>
                 <Grid item xs={12} sm={2} paddingTop={'20px'}>
                   <Field name="amount" as={FieldPadding} fullWidth variant="outlined" size="small" />
                   <ErrorMessage name="lprDate" component="div" style={errorMessageStyle} />
                 </Grid>
-                <Grid item xs={12} sm={1}>
+                <Grid item xs={12} sm={2}>
                   <Typography variant="body" style={{ fontSize: '11px' }}>
                     Payment Telex<ValidationStar>*</ValidationStar>
                   </Typography>

@@ -18,17 +18,14 @@ import {
   TableBody,
   RadioGroup,
   FormControlLabel,
-  Radio
+  Radio,
+  Tooltip
 } from '@mui/material';
 import { errorMessageStyle } from 'components/StyleComponent';
 import ValidationStar from 'components/ValidationStar';
 import FieldPadding from 'components/FieldPadding';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutlined';
-import RFQView from './QuoteView';
-import ItemList from './ItemList';
-import VendorList from './VendorList';
-import DocumentDetail from './DocumentDetail';
 import MainCard from 'components/MainCard';
 import SelectFieldPadding from 'components/selectFieldPadding';
 import { useSelector } from 'react-redux';
@@ -500,7 +497,7 @@ const QuoteForm = () => {
     { label: 'Address', value: '123 Tech Street, North Division, Electronics City' }
   ];
   return (
-    <MainCard>
+    <>
       <Table>{renderTableHeader('createrfqForm', 'Buying House Info')}</Table>
       {showTableHeading.createrfqForm && (
         <Grid item xs={12} sm={12} sx={{ padding: '10px' }}>
@@ -525,10 +522,12 @@ const QuoteForm = () => {
         <Table>{renderTableHeader('createrfqForm', 'Create Quote')}</Table>
         {showTableHeading.createrfqForm && (
           <Grid container spacing={2} mt={'1px'}>
-            <Grid item xs={12} sm={1} paddingTop={'20px !important'}>
-              <Typography variant="body" style={{ fontSize: '11px' }}>
-                Shipment Mode<ValidationStar>*</ValidationStar>
-              </Typography>
+            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
+              <Tooltip title="Shipment Mode" placement="right" arrow>
+                <Typography variant="body" style={{ fontSize: '11px', cursor: 'pointer' }}>
+                  Shipment Mode<ValidationStar>*</ValidationStar>
+                </Typography>
+              </Tooltip>
             </Grid>
             <Grid item xs={12} sm={2} paddingTop={'20px'}>
               <TextField
@@ -546,10 +545,12 @@ const QuoteForm = () => {
                 size="small"
               />
             </Grid>
-            <Grid item xs={12} sm={1} paddingTop={'20px !important'}>
-              <Typography variant="body" style={{ fontSize: '11px' }}>
-                Shipment Type <ValidationStar>*</ValidationStar>
-              </Typography>
+            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
+              <Tooltip title="Shipment Type" placement="right" arrow>
+                <Typography variant="body" style={{ fontSize: '11px', cursor: 'pointer' }}>
+                  Shipment Type<ValidationStar>*</ValidationStar>
+                </Typography>
+              </Tooltip>
             </Grid>
             <Grid item xs={12} sm={2} paddingTop={'20px'}>
               <TextField
@@ -567,10 +568,12 @@ const QuoteForm = () => {
                 size="small"
               />
             </Grid>
-            <Grid item xs={12} sm={1} paddingTop={'20px !important'}>
-              <Typography variant="body" style={{ fontSize: '11px' }}>
-                Vendor Name<ValidationStar>*</ValidationStar>
-              </Typography>
+            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
+              <Tooltip title=" Vendor Name" placement="right" arrow>
+                <Typography variant="body" style={{ fontSize: '11px', cursor: 'pointer' }}>
+                  Vendor Name<ValidationStar>*</ValidationStar>
+                </Typography>
+              </Tooltip>
             </Grid>
             <Grid item xs={12} sm={2} paddingTop={'20px'}>
               <TextField
@@ -588,10 +591,12 @@ const QuoteForm = () => {
                 size="small"
               />
             </Grid>
-            <Grid item xs={12} sm={1} paddingTop={'20px !important'}>
-              <Typography variant="body" style={{ fontSize: '11px' }}>
-                Vendor Address<ValidationStar>*</ValidationStar>
-              </Typography>
+            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
+              <Tooltip title="Vendor Address" placement="right" arrow>
+                <Typography variant="body" style={{ fontSize: '11px', cursor: 'pointer' }}>
+                  Vendor Address<ValidationStar>*</ValidationStar>
+                </Typography>
+              </Tooltip>
             </Grid>
             <Grid item xs={12} sm={2} paddingTop={'20px'}>
               <TextField
@@ -610,10 +615,12 @@ const QuoteForm = () => {
               />
             </Grid>
 
-            <Grid item xs={12} sm={1} paddingTop={'20px !important'}>
-              <Typography variant="body" style={{ fontSize: '11px' }}>
-                Vendor Quote No<ValidationStar>*</ValidationStar>
-              </Typography>
+            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
+              <Tooltip title="Vendor Quote No" placement="right" arrow>
+                <Typography variant="body" style={{ fontSize: '11px', cursor: 'pointer' }}>
+                  Vendor Quote No<ValidationStar>*</ValidationStar>
+                </Typography>
+              </Tooltip>
             </Grid>
             <Grid item xs={12} sm={2} paddingTop={'20px'}>
               <TextField
@@ -632,10 +639,12 @@ const QuoteForm = () => {
               />
             </Grid>
 
-            <Grid item xs={12} sm={1} paddingTop={'20px !important'}>
-              <Typography variant="body" style={{ fontSize: '11px' }}>
-                Vendor Quote Date<ValidationStar>*</ValidationStar>
-              </Typography>
+            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
+              <Tooltip title="Vendor Quote Date" placement="right" arrow>
+                <Typography variant="body" style={{ fontSize: '11px', cursor: 'pointer' }}>
+                  Vendor Quote Date<ValidationStar>*</ValidationStar>
+                </Typography>
+              </Tooltip>
             </Grid>
             <Grid item xs={12} sm={2} paddingTop={'20px'}>
               <TextField
@@ -653,7 +662,7 @@ const QuoteForm = () => {
                 size="small"
               />
             </Grid>
-            <Grid item xs={12} sm={1} paddingTop={'20px !important'}>
+            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
               <Typography variant="body" style={{ fontSize: '11px' }}>
                 Currency<ValidationStar>*</ValidationStar>
               </Typography>
@@ -674,10 +683,12 @@ const QuoteForm = () => {
                 size="small"
               />
             </Grid>
-            <Grid item xs={12} sm={1} paddingTop={'20px !important'}>
-              <Typography variant="body" style={{ fontSize: '11px' }}>
-                Delivery Terms<ValidationStar>*</ValidationStar>
-              </Typography>
+            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
+              <Tooltip title="Delivery Terms" placement="right" arrow>
+                <Typography variant="body" style={{ fontSize: '11px', cursor: 'pointer' }}>
+                  Delivery Terms<ValidationStar>*</ValidationStar>
+                </Typography>
+              </Tooltip>
             </Grid>
             <Grid item xs={12} sm={2} paddingTop={'20px'}>
               <TextField
@@ -695,10 +706,12 @@ const QuoteForm = () => {
                 size="small"
               />
             </Grid>
-            <Grid item xs={12} sm={1} paddingTop={'20px !important'}>
-              <Typography variant="body" style={{ fontSize: '11px' }}>
-                Buyer Lead Time<ValidationStar>*</ValidationStar>
-              </Typography>
+            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
+              <Tooltip title="Buyer Lead Time" placement="right" arrow>
+                <Typography variant="body" style={{ fontSize: '11px', cursor: 'pointer' }}>
+                  Buyer Lead Time<ValidationStar>*</ValidationStar>
+                </Typography>
+              </Tooltip>
             </Grid>
             <Grid item xs={12} sm={2} paddingTop={'20px'}>
               <TextField
@@ -716,7 +729,7 @@ const QuoteForm = () => {
                 size="small"
               />
             </Grid>
-            <Grid item xs={12} sm={1} paddingTop={'20px !important'}>
+            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
               <Typography variant="body" style={{ fontSize: '11px' }}>
                 Lead Time<ValidationStar>*</ValidationStar>
               </Typography>
@@ -737,10 +750,12 @@ const QuoteForm = () => {
                 size="small"
               />
             </Grid>
-            <Grid item xs={12} sm={1} paddingTop={'20px !important'}>
-              <Typography variant="body" style={{ fontSize: '11px' }}>
-                Lead Initiation Point<ValidationStar>*</ValidationStar>
-              </Typography>
+            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
+              <Tooltip title="Lead Initiation Point" placement="right" arrow>
+                <Typography variant="body" style={{ fontSize: '11px', cursor: 'pointer' }}>
+                  Lead Initiation Point<ValidationStar>*</ValidationStar>
+                </Typography>
+              </Tooltip>
             </Grid>
             <Grid item xs={12} sm={2} paddingTop={'20px'}>
               <TextField
@@ -758,10 +773,12 @@ const QuoteForm = () => {
                 size="small"
               />
             </Grid>
-            <Grid item xs={12} sm={1} paddingTop={'20px !important'}>
-              <Typography variant="body" style={{ fontSize: '11px' }}>
-                Country of Origin<ValidationStar>*</ValidationStar>
-              </Typography>
+            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
+              <Tooltip title="Country of Origin" placement="right" arrow>
+                <Typography variant="body" style={{ fontSize: '11px', cursor: 'pointer' }}>
+                  Country of Origin<ValidationStar>*</ValidationStar>
+                </Typography>
+              </Tooltip>
             </Grid>
             <Grid item xs={12} sm={2} paddingTop={'20px'}>
               <TextField
@@ -780,10 +797,12 @@ const QuoteForm = () => {
               />
             </Grid>
 
-            <Grid item xs={12} sm={1} paddingTop={'20px !important'}>
-              <Typography variant="body" style={{ fontSize: '11px' }}>
-                Country of Supply
-              </Typography>
+            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
+              <Tooltip title="Country of Supply" placement="right" arrow>
+                <Typography variant="body" style={{ fontSize: '11px', cursor: 'pointer' }}>
+                  Country of Supply<ValidationStar>*</ValidationStar>
+                </Typography>
+              </Tooltip>
             </Grid>
             <Grid item xs={12} sm={2} paddingTop={'20px'}>
               <TextField
@@ -801,10 +820,12 @@ const QuoteForm = () => {
                 size="small"
               />
             </Grid>
-            <Grid item xs={12} sm={1} paddingTop={'20px !important'}>
-              <Typography variant="body" style={{ fontSize: '11px' }}>
-                Port of Loading
-              </Typography>
+            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
+              <Tooltip title="Port of Loading" placement="right" arrow>
+                <Typography variant="body" style={{ fontSize: '11px', cursor: 'pointer' }}>
+                  Port of Loading<ValidationStar>*</ValidationStar>
+                </Typography>
+              </Tooltip>
             </Grid>
             <Grid item xs={12} sm={2} paddingTop={'20px'}>
               <TextField
@@ -822,10 +843,12 @@ const QuoteForm = () => {
                 size="small"
               />
             </Grid>
-            <Grid item xs={12} sm={1} paddingTop={'20px !important'}>
-              <Typography variant="body" style={{ fontSize: '11px' }}>
-                Port of Delivery
-              </Typography>
+            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
+              <Tooltip title="Port of Delivery" placement="right" arrow>
+                <Typography variant="body" style={{ fontSize: '11px', cursor: 'pointer' }}>
+                  Port of Delivery<ValidationStar>*</ValidationStar>
+                </Typography>
+              </Tooltip>
             </Grid>
             <Grid item xs={12} sm={2} paddingTop={'20px'}>
               <TextField
@@ -843,10 +866,12 @@ const QuoteForm = () => {
                 size="small"
               />
             </Grid>
-            <Grid item xs={12} sm={1} paddingTop={'20px !important'}>
-              <Typography variant="body" style={{ fontSize: '11px' }}>
-                Quote Valid Till
-              </Typography>
+            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
+              <Tooltip title="Quote Valid Till" placement="right" arrow>
+                <Typography variant="body" style={{ fontSize: '11px', cursor: 'pointer' }}>
+                  Quote Valid Till<ValidationStar>*</ValidationStar>
+                </Typography>
+              </Tooltip>
             </Grid>
             <Grid item xs={12} sm={2} paddingTop={'20px'}>
               <TextField
@@ -864,7 +889,7 @@ const QuoteForm = () => {
                 size="small"
               />
             </Grid>
-            <Grid item xs={12} sm={1} paddingTop={'20px !important'}>
+            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
               <Typography variant="body" style={{ fontSize: '11px' }}>
                 Remarks
               </Typography>
@@ -887,10 +912,10 @@ const QuoteForm = () => {
             </Grid>
           </Grid>
         )}
-        <Table>{renderTableHeader('paymentTerms', 'Payment Terms')}</Table>
+        <Table sx={{ marginTop: '10px' }}>{renderTableHeader('paymentTerms', 'Payment Terms')}</Table>
         {showTableHeading.paymentTerms && (
           <Box mb={1}>
-            <Grid item xs={12} sm={1}>
+            <Grid item xs={12} sm={2}>
               <Typography variant="body" style={{ fontSize: '11px' }}>
                 Payment Terms<span style={{ color: 'red' }}>*</span>{' '}
               </Typography>
@@ -918,7 +943,7 @@ const QuoteForm = () => {
             </Grid>
 
             <Grid container spacing={2} sx={{ marginTop: '20px' }}>
-              <Grid item xs={12} sm={4}>
+              <Grid item xs={12} sm={3}>
                 <Typography variant="body" style={{ fontSize: '11px' }}>
                   MileStone
                 </Typography>
@@ -1002,14 +1027,14 @@ const QuoteForm = () => {
                     ))}
                   </Select>
                 </Grid>
-                <Grid item xs={12} sm={1}>
+                <Grid item xs={12} sm={2}>
                   <Box>
                     <Button variant="contained" size="small" color="primary" onClick={handleAdd}>
                       Add
                     </Button>
                   </Box>
                 </Grid>
-                <Grid item xs={12} sm={1}>
+                <Grid item xs={12} sm={2}>
                   <Button fullWidth variant="outlined" size="small" color="error" onClick={() => handleRemove(index)}>
                     Remove
                   </Button>
@@ -1123,7 +1148,7 @@ const QuoteForm = () => {
                         }}
                       />
                     </Grid>
-                    <Grid item xs={12} sm={1}>
+                    <Grid item xs={12} sm={2}>
                       <Typography variant="body" style={{ fontSize: '11px' }}>
                         Amount
                         <ValidationStar>*</ValidationStar>
@@ -1144,14 +1169,14 @@ const QuoteForm = () => {
                     </Grid>
 
                     {index === FreightArray.length - 1 && (
-                      <Grid item xs={12} sm={1}>
+                      <Grid item xs={12} sm={2}>
                         <IconButton aria-label="add" size="small" onClick={addFreightEntry}>
                           <AddIcon color="success" />
                         </IconButton>
                       </Grid>
                     )}
                     {index === FreightArray.length - 1 && index !== 0 && (
-                      <Grid item xs={12} sm={1}>
+                      <Grid item xs={12} sm={2}>
                         <IconButton aria-label="delete" size="small" onClick={() => removeFreightEntry(index)}>
                           <DeleteIcon color="error" />
                         </IconButton>
@@ -1459,20 +1484,7 @@ const QuoteForm = () => {
           </Button>
         </Box>
       </form>
-
-      {/* <Box mt={'10px'}>
-        <Table>{renderTableHeader('itemListRfq', 'Item List to Create RFQ')}</Table>
-        {showTableHeading.itemListRfq && <ItemList />}
-      </Box>
-      <Box mt={'10px'}>
-        <Table>{renderTableHeader('vendorlist', 'Select Vendor')}</Table>
-        {showTableHeading.vendorlist && <VendorList />}
-      </Box>
-      <Box mt={'10px'}>
-        <Table>{renderTableHeader('requireDoc', 'Required Document at The Time of Shipping')}</Table>
-        {showTableHeading.requireDoc && <DocumentDetail />}
-      </Box> */}
-    </MainCard>
+    </>
   );
 };
 

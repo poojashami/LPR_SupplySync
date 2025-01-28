@@ -187,7 +187,7 @@ const ItemTable = () => {
       <TableRow>
         <TableCell sx={{ padding: 0 }} colSpan={6}>
           <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Typography variant="h7" fontWeight={600}>
+            <Typography fontSize={'14px'} fontWeight={600}>
               {sectionLabel}
             </Typography>
             <Box>
@@ -226,6 +226,7 @@ const ItemTable = () => {
                     <DataGrid
                       getRowHeight={() => 'auto'}
                       sx={{
+                        fontSize: '11px',
                         '& .MuiDataGrid-cell': {
                           border: '1px solid rgba(224, 224, 224, 1)',
                           display: 'flex',

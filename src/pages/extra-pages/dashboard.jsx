@@ -84,7 +84,7 @@ export default function SamplePage() {
   };
   const getArcLabel = (data) => {
     const totalValue = treasuryBHPieData.reduce((acc, item) => acc + item.value, 0);
-    const percentage = ((data.value / totalValue) * 100).toFixed(2);
+    const percentage = Math.round((data.value / totalValue) * 100);
     return `${percentage}%`;
   };
   const treasuryBHPieData = [
@@ -187,7 +187,9 @@ export default function SamplePage() {
       transform: 'scale(1.05)',
       boxShadow: '0 6px 25px rgba(0, 0, 0, 0.15)'
     },
-    backgroundColor: theme.palette.background.paper
+    // backgroundColor: theme.palette.background.paper
+    backgroundColor: '#d3d9e8'
+    // backgroundColor: '#ccdceb'
   }));
   const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
   const xLabels = ['Page A', 'Page B', 'Page C', 'Page D', 'Page E', 'Page F', 'Page G'];

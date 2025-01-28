@@ -6,18 +6,17 @@ const Dashboard = Loadable(lazy(() => import('pages/extra-pages/dashboard')));
 import LPRList from 'pages/lpr/LPRList';
 import RfqList from 'pages/rfq/RfqList';
 import POList from 'pages/po/POList';
-import QuoteApprove from 'pages/quote/QuoteApprove';
 import POReqPayment from 'pages/po/POReqPayment';
 import TreasuryPayment from 'pages/treasury/TreasuryPayment';
 import TreasuryApprove from 'pages/treasury/TreasuryApprove';
 import CreateLPRForm from 'pages/lpr/CreateLPRForm';
 import ViewLPRList from 'pages/lpr/ViewLPRList';
 import ViewGenerateRfqPage from 'pages/rfq/ViewGenerateRfqPage';
-import CreateQuote from 'pages/quote/CreateQuote';
 import QuoteList from 'pages/quote/QuoteList';
 import QuoteComparelist from 'pages/quote/QuoteComparelist';
 import LPOView from 'pages/po/LPOView';
 import LPOApproveList from 'pages/po/LPOApproveList';
+import CreateQuoteList from 'pages/quote/CreateQuoteList';
 
 const MainRoutes = {
   path: '/',
@@ -70,16 +69,13 @@ const MainRoutes = {
       children: [
         {
           path: 'quote/create',
-          element: <CreateQuote />
+          element: <CreateQuoteList />
         },
         {
           path: 'quote/compare',
           element: <QuoteComparelist />
         },
-        {
-          path: 'quote/approve',
-          element: <QuoteApprove />
-        },
+       
         {
           path: 'quote/view',
           element: <QuoteList />

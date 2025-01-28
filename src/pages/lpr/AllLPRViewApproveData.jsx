@@ -24,7 +24,7 @@ const AllLPRViewApproveData = () => {
       <TableRow>
         <TableCell sx={{ padding: 0 }} colSpan={12}>
           <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Typography variant="h6" fontWeight={500}>
+            <Typography fontSize={'14px'} fontWeight={500}>
               {sectionLabel}
             </Typography>
             <IconButton size="large" onClick={() => toggleTableBody(sectionName)} sx={{ height: '30px' }}>
@@ -130,10 +130,11 @@ const AllLPRViewApproveData = () => {
             <Box>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={6}>
-                  <Box color={'#3f78ff'}>Requestor Detail</Box>
+                  <Box color={'navy'}>Requestor Detail</Box>
                   <DataGrid
                     getRowHeight={() => 'auto'}
                     sx={{
+                      fontSize: '11px',
                       '& .MuiDataGrid-cell': {
                         border: '1px solid rgba(224, 224, 224, 1)',
                         display: 'flex',
@@ -174,10 +175,11 @@ const AllLPRViewApproveData = () => {
                 </Grid>
 
                 <Grid item xs={12} md={6}>
-                  <Box color={'#3f78ff'}>Approval Log</Box>
+                  <Box color={'navy'}>Approval Log</Box>
                   <DataGrid
                     getRowHeight={() => 'auto'}
                     sx={{
+                      fontSize: '11px',
                       '& .MuiDataGrid-cell': {
                         border: '1px solid rgba(224, 224, 224, 1)',
                         display: 'flex',
@@ -211,11 +213,15 @@ const AllLPRViewApproveData = () => {
             <Box mt={3}>
               <Grid container spacing={2} alignItems="center">
                 <Grid item xs={12} sm={1}>
-                  <Typography variant="body2">Remark</Typography>
+                  <Typography variant="h6" sx={{ marginRight: 1, fontWeight: '600', fontSize: '11px', color: '#333' }}>
+                    Remark
+                  </Typography>
                 </Grid>
 
                 <Grid item xs={12} sm={3}>
-                  jhfjhhdfjhdbfjhbjhbj
+                  <Typography variant="body1" sx={{ color: '#555', fontSize: '11px' }}>
+                    Remarksss
+                  </Typography>
                 </Grid>
 
                 <Grid item xs={12} sm={6}></Grid>
