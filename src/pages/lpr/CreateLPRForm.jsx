@@ -806,7 +806,6 @@ const CreateLPRForm = ({ onSubmit, onCancel }) => {
     company: '',
     division: '',
     lprCategory: '',
-    leftForRFQ: '',
     deliveryTime: '',
     requestedByDept: '',
     requestedBy: '',
@@ -815,7 +814,6 @@ const CreateLPRForm = ({ onSubmit, onCancel }) => {
     noMinQuote: '',
     quotationEmailAlert: '',
     deliveryType: '',
-    oprDescription: ''
   });
 
   const [errors, setErrors] = useState({});
@@ -854,7 +852,6 @@ const CreateLPRForm = ({ onSubmit, onCancel }) => {
     if (!formValues.company) newErrors.company = 'Company is required';
     if (!formValues.division) newErrors.division = 'Division is required';
     if (!formValues.lprCategory) newErrors.lprCategory = 'LPR Category is required';
-    if (!formValues.leftForRFQ) newErrors.leftForRFQ = 'Left for RFQ is required';
     if (!formValues.deliveryTime) newErrors.deliveryTime = 'Delivery Time is required';
     if (!formValues.requestedByDept) newErrors.requestedByDept = 'Requested By Department is required';
     if (!formValues.requestedBy) newErrors.requestedBy = 'Requested By is required';
@@ -872,7 +869,6 @@ const CreateLPRForm = ({ onSubmit, onCancel }) => {
         company: '',
         division: '',
         lprCategory: '',
-        leftForRFQ: '',
         deliveryTime: '',
         requestedByDept: '',
         requestedBy: '',
@@ -881,19 +877,33 @@ const CreateLPRForm = ({ onSubmit, onCancel }) => {
         noMinQuote: '',
         quotationEmailAlert: '',
         deliveryType: '',
-        oprDescription: ''
       });
     }
   };
 
   const handleAddItems = async () => {
     try {
+      const payload = {
+        vertical: formValues.vertical,
+        company: formValues.company,
+        division: formValues.division,
+        lpr_category: formValues.lprCategory, // Change to match backend
+        delivery_time: formValues.deliveryTime, // Change to match backend
+        requested_dept: formValues.requestedByDept, // Change to match backend
+        requested_by: formValues.requestedBy, // Change to match backend
+        lpr_date: formValues.lprDate, // Change to match backend
+        additional_remarks: formValues.additionalRemarks,
+        no_min_quote: formValues.noMinQuote,
+        quotation_email_alert: formValues.quotationEmailAlert,
+        delivery_type: formValues.deliveryType,
+      };
+
       const response = await fetch('http://localhost:5000/api/create/lpr-item', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(formValues)
+        body: JSON.stringify(payload)
       });
 
       if (!response.ok) {
@@ -903,7 +913,6 @@ const CreateLPRForm = ({ onSubmit, onCancel }) => {
       const data = await response.json();
       console.log('Data posted successfully:', data);
 
-      // Optionally, you can set the showItemForm state to true after successful post
       setShowItemForm(true);
     } catch (error) {
       console.error('There was a problem with the fetch operation:', error);
@@ -1160,7 +1169,7 @@ const CreateLPRForm = ({ onSubmit, onCancel }) => {
                                   <MenuItem value="Factory Delivered">Factory Delivered</MenuItem>
                                   <MenuItem value="Courier">Courier</MenuItem>
                                 </SelectFieldPadding>
-                                
+
                               </Grid>
                               <Grid item xs={12} sm={4}>
                                 <Typography variant="body2">
@@ -1188,9 +1197,9 @@ const CreateLPRForm = ({ onSubmit, onCancel }) => {
                               <Grid item xs={12} sm={4}>
                                 <Typography variant="body2">LPR Category</Typography>
                                 <SelectFieldPadding
-                                  name="deliveryType"
+                                  name="lprCategory"
                                   variant="outlined"
-                                  value={formValues.deliveryType}
+                                  value={formValues.lprCategory}
                                   onChange={handleChange}
                                   fullWidth
                                 >
@@ -1198,7 +1207,6 @@ const CreateLPRForm = ({ onSubmit, onCancel }) => {
                                   <MenuItem value="Factory Delivered">Factory Delivered</MenuItem>
                                   <MenuItem value="Courier">Courier</MenuItem>
                                 </SelectFieldPadding>
-                                {errors.oprDescription && <div style={errorMessageStyle}>{errors.oprDescription}</div>}
                               </Grid>
 
                               <Grid item xs={12} sm={8}>
@@ -1225,7 +1233,7 @@ const CreateLPRForm = ({ onSubmit, onCancel }) => {
                     variant="contained"
                     size="small"
                     type="button"
-                    onClick={handleAddItems} // Updated onClick handler
+                    onClick={handleAddItems}
                     sx={{
                       backgroundColor: '#2c6095',
                       color: '#fff',
