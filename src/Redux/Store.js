@@ -16,6 +16,7 @@ import StaticSlice from './Slices/StaticSlice';
 import CompanySlice from './Slices/CompanySlice';
 import ApprovalsSlice from './Slices/ApprovalsSlice';
 import PFISlice from './Slices/PFISlice';
+import lprReducer from './Slices/LprSlice';
 
 export default configureStore({
   reducer: {
@@ -35,6 +36,7 @@ export default configureStore({
     mail: MailSlice,
     static: StaticSlice,
     company: CompanySlice,
+    lpr: lprReducer,
     Approvals: ApprovalsSlice
   }
 });

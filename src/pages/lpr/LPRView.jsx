@@ -1,22 +1,35 @@
-import { Box, Button, Grid, Typography, TextField, Table, TableRow, TableHead, TableCell, IconButton } from '@mui/material';
-import React, { useState } from 'react';
-import MainCard from 'components/MainCard';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import {
+  Box,
+  Grid,
+  Typography,
+  Table,
+  TableRow,
+  TableHead,
+  TableCell,
+  IconButton
+}
+  from '@mui/material';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutlined';
-import LPRApprove from './LPRApprove';
+
 const LPRView = () => {
-  const [showTableHeading, setShowTableHeading] = useState({
+  const formValues = useSelector((state) => state.lpr.formValues);
+  const [showTableHeading, setShowTableHeading] = React.useState({
     viewLPR: true,
     lprForm: true,
     approvedlpr: true,
-    heading3: true
+    heading3: true,
   });
+
   const toggleTableBody = (section) => {
     setShowTableHeading((prevState) => ({
       ...prevState,
-      [section]: !prevState[section]
+      [section]: !prevState[section],
     }));
   };
+
   const renderTableHeader = (sectionName, sectionLabel) => (
     <TableHead sx={{ backgroundColor: '#EAF1F6' }}>
       <TableRow>
@@ -33,23 +46,23 @@ const LPRView = () => {
       </TableRow>
     </TableHead>
   );
+
   const shipmentData = [
-    { label: 'LPR No', value: 'LPR001JBJKKJ878' },
-    { label: 'LPR Date', value: '2024-10-09' },
-    { label: 'Vertical', value: 'Engineering' },
-    { label: 'Company', value: 'Tech Corp' },
-    { label: 'Division', value: 'North Division' },
-    { label: 'Requested By Department', value: 'Procurement' },
-    { label: 'Requested By', value: 'John Doe' },
-    { label: ' Quotations Email Alert', value: 'Air' },
-    { label: 'No. Min Quotation', value: '3' },
-    { label: 'LPR Category', value: 'Electronics' },
-    { label: 'Buying Through', value: 'Direct Purchase' },
-    { label: 'OPR Category', value: '5 days' },
-    { label: ' Delivery Type', value: '5 days' },
-    { label: 'Delivery Time', value: '10 days' },
-    { label: 'Additional Remarks', value: 'Urgent shipment required' }
+    { label: 'LPR No', value: 'LPR001JBJKKJ878' }, // You can add LPR No logic if needed
+    { label: 'LPR Date', value: formValues.lprDate },
+    { label: 'Vertical', value: formValues.vertical },
+    { label: 'Company', value: formValues.company },
+    { label: 'Division', value: formValues.division },
+    { label: 'Requested By Department', value: formValues.requestedByDept },
+    { label: 'Requested By', value: formValues.requestedBy },
+    { label: 'Quotations Email Alert', value: formValues.quotationEmailAlert },
+    { label: 'No. Min Quotation', value: formValues.noMinQuote },
+    { label: 'LPR Category', value: formValues.lprCategory },
+    { label: 'Delivery Type', value: formValues.deliveryType },
+    { label: 'Delivery Time', value: formValues.deliveryTime },
+    { label: 'Additional Remarks', value: formValues.additionalRemarks },
   ];
+
 
   return (
     <Box>
@@ -67,7 +80,6 @@ const LPRView = () => {
                 <Grid container item xs={12} key={rowIndex} spacing={2}>
                   {row.map((item, itemIndex) => (
                     <Grid item xs={3} key={itemIndex}>
-                      {' '}
                       <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
                         <Typography variant="h6" sx={{ marginRight: 1, fontWeight: '600', fontSize: '11px', color: '#333' }}>
                           {item.label}:
@@ -85,6 +97,9 @@ const LPRView = () => {
       )}
     </Box>
   );
+
+  // Rest of the component remains unchanged
+  // ...
 };
 
 export default LPRView;
