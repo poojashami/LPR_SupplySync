@@ -26,7 +26,7 @@ export default function HeaderContent() {
       {!downLG && <Search />}
       {downLG && <Box sx={{ width: '100%', ml: 1 }} />}
       <div style={{ display: 'flex', width: '250px', textTransform: 'capitalize' }}>
-        Welcome, {JSON.parse(localStorage.getItem('userInfo')).role}
+        Welcome, {JSON.parse(localStorage.getItem('userInfo'))?.role || 'Not Found'}
       </div>
       <Notification />
       <FullScreen />
