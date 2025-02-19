@@ -116,7 +116,7 @@ const CreateLPRForm = ({ onSubmit, onCancel }) => {
         delivery_type: formValues.deliveryType,
       };
 
-      const response = await fetch('http://localhost:5000/api/create/lpr-item', {
+      const response = await fetch('http://localhost:5000/api/create/lpr-master', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
