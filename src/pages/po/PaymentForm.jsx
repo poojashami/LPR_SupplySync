@@ -42,11 +42,11 @@ const PaymentForm = () => {
     }));
   };
   const renderTableHeader = (sectionName, sectionLabel) => (
-    <TableHead>
+    <TableHead sx={{ backgroundColor: '#EAF1F6' }}>
       <TableRow>
-        <TableCell sx={{ padding: 0 }} colSpan={6}>
+        <TableCell sx={{ padding: 0, paddingLeft: '8px !important' }} colSpan={12}>
           <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Typography variant="h7" fontWeight={600}>
+            <Typography fontSize={'14px'} fontWeight={600} textTransform={'none'}>
               {sectionLabel}
             </Typography>
             <IconButton size="large" onClick={() => toggleTableBody(sectionName)} sx={{ height: '30px' }}>
@@ -255,7 +255,18 @@ const PaymentForm = () => {
                 </Grid>
                 <Grid item xs={12} sm={2} paddingTop={'20px'}>
                   <div>
-                    <Button component="label" sx={{ marginBottom: '0' }} variant="contained" startIcon={<CloudUploadIcon />}>
+                    <Button
+                      component="label"
+                      sx={{
+                        backgroundColor: '#2c6095',
+                        color: '#fff',
+                        '&:hover': {
+                          backgroundColor: '#244b78'
+                        }
+                      }}
+                      variant="contained"
+                      startIcon={<CloudUploadIcon />}
+                    >
                       Upload
                       <VisuallyHiddenInput
                         type="file"
@@ -274,10 +285,36 @@ const PaymentForm = () => {
                 </Grid>
               </Grid>
               <Box display="flex" justifyContent="end">
-                <Button type="submit" variant="contained" color="primary" size="small" disabled={isSubmitting}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  sx={{
+                    backgroundColor: '#2c6095',
+                    color: '#fff',
+                    '&:hover': {
+                      backgroundColor: '#244b78'
+                    }
+                  }}
+                  color="primary"
+                  size="small"
+                  disabled={isSubmitting}
+                >
                   Submit
                 </Button>
-                <Button type="reset" variant="contained" size="small" className="btn btn-danger" style={{ marginLeft: '10px' }}>
+                <Button
+                  type="reset"
+                  variant="contained"
+                  size="small"
+                  className="btn btn-danger"
+                  style={{
+                    marginLeft: '10px',
+                    backgroundColor: '#cd640d',
+                    color: '#fff',
+                    '&:hover': {
+                      backgroundColor: '#cd640d'
+                    }
+                  }}
+                >
                   Cancel
                 </Button>
               </Box>

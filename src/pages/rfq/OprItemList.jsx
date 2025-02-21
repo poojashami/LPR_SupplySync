@@ -29,21 +29,26 @@ const OprItemList = ({ showItems, setShowItems }) => {
     </Box>
   );
   const columns = [
-    { field: 'id', headerName: 'Sl. No.', width: 80, filterable: false },
-    { field: 'opr_id', headerName: 'OPR Number', width: 150, filterable: false },
+    { field: 'id', headerName: 'Sr. No.', width: 80, filterable: false },
+    { field: 'opr_id', headerName: 'LPR No.', width: 150, filterable: false },
+    { field: 'lpr_date', headerName: 'LPR Date', width: 150, filterable: false },
     { field: 'company_name', headerName: 'Company Name', width: 150, filterable: false },
     { field: 'item_code', headerName: 'Item Code', width: 150, filterable: true },
     { field: 'item_name', headerName: 'Item Name', width: 200, filterable: false },
+    { field: 'delivery_term', headerName: 'Delivery Term', width: 200, filterable: false },
     {
       field: 'delivery_timeline_id',
-      headerName: 'Delivery Timeline',
+      headerName: 'Delivery Time',
       width: 200,
       filterable: true,
       renderCell: (params) => <span>{params.value} Weeks</span>
     },
     // { field: 'item_description', headerName: 'Item Description', width: 250, filterable: false },
+    { field: 'uom_name', headerName: 'UOM', width: 120, filterable: false },
     { field: 'qty', headerName: 'Req Qty', width: 120, filterable: false },
-    { field: 'uom_name', headerName: 'UOM', width: 120, filterable: false }
+    { field: 'requestedByDept', headerName: 'Req. By Dept.', width: 150 },
+    { field: 'requestedBy', headerName: 'Req. By', width: 150 },
+    { field: 'delivery_time', headerName: 'Delivery Time', width: 120, filterable: false },
   ];
   const rowData = [
     {
@@ -113,7 +118,6 @@ const OprItemList = ({ showItems, setShowItems }) => {
               '& .MuiDataGrid-cell': {
                 border: '1px solid rgba(224, 224, 224, 1)',
                 display: 'flex',
-                justifyContent: 'center',
                 alignItems: 'center'
               },
               '& .MuiDataGrid-columnHeader': {
@@ -121,7 +125,6 @@ const OprItemList = ({ showItems, setShowItems }) => {
                 border: '1px solid rgba(224, 224, 224, 1)',
                 height: '25px !important',
                 display: 'flex',
-                justifyContent: 'center',
                 alignItems: 'center'
               },
               '& .MuiDataGrid-checkboxInput': {

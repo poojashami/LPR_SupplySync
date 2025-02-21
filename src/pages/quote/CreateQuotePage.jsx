@@ -32,9 +32,9 @@ const CreateQuotePage = ({ selectedRFQ, onBack }) => {
   const renderTableHeader = (sectionName, sectionLabel) => (
     <TableHead sx={{ backgroundColor: '#EAF1F6' }}>
       <TableRow>
-        <TableCell sx={{ padding: 0 }} colSpan={12}>
+        <TableCell sx={{ padding: 0, paddingLeft: '8px !important' }} colSpan={12}>
           <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Typography variant="h6" fontWeight={500}>
+            <Typography fontSize={'14px'} fontWeight={600} textTransform={'none'}>
               {sectionLabel}
             </Typography>
             <IconButton size="large" onClick={() => toggleTableBody(sectionName)} sx={{ height: '30px' }}>
@@ -45,18 +45,23 @@ const CreateQuotePage = ({ selectedRFQ, onBack }) => {
       </TableRow>
     </TableHead>
   );
-
-  const shipmentData = [
-    { label: 'RFQ Num', value: 'Tech Corp' },
-    { label: 'Port of Destination', value: 'LPR1234' },
-    { label: 'Respond Time(Days)', value: '+1 123-456-7890' },
-    { label: 'Delivery_time', value: 'example@techcorp.com' },
-    { label: 'Created On', value: '123 Tech Street, North Division, Electronics City' },
-    { label: 'Consignee Name', value: 'Tech Corp' },
-    { label: 'Consignee Code', value: 'LPR1234' },
-    { label: 'Contact Number', value: '+1 123-456-7890' },
+  const cansignieeData=[
+    { label: 'Company Code', value: 'LPR1234' },
+    { label: 'Company Name', value: 'Tech Corp' },
+    { label: 'Contact Person', value: '+1 123-456-7890' },
+    { label: 'Contact No.', value: '+1 123-456-7890' },
     { label: 'Contact Email', value: 'example@techcorp.com' },
-    { label: 'Address', value: '123 Tech Street, North Division, Electronics City' }
+    { label: 'Address', value: '123 Tech Street, North Division, Electronics City' },
+  ]
+  const shipmentData = [
+    { label: 'RFQ N0.', value: 'Tech Corp' },
+    { label: 'RFQ Dt', value: 'Tech Corp' },
+    { label: 'LPR Category', value: 'Tech Corp' },
+    { label: 'Delivery Term', value: 'example@techcorp.com' },
+    { label: 'Delivery Time', value: 'example@techcorp.com' },
+    { label: 'Respond Time (Days)', value: '+1 123-456-7890' },
+   
+    { label: 'Created By', value: '123 Tech Street, North Division, Electronics City' }
   ];
   const VendorData = [
     {
@@ -122,7 +127,7 @@ const CreateQuotePage = ({ selectedRFQ, onBack }) => {
         </IconButton>
       )
     },
-    { field: 'vendor_series', headerName: 'Vendor Num', width: 120 },
+    { field: 'vendor_series', headerName: 'Vendor Code', width: 120 },
     { field: 'vendor_name', headerName: 'Vendor Name', width: 250 },
     { field: 'phone_number', headerName: 'Vendor Ph. No.', width: 150 },
     { field: 'email', headerName: 'Vendor Email', width: 200 },
@@ -135,7 +140,7 @@ const CreateQuotePage = ({ selectedRFQ, onBack }) => {
     return (
       <MainCard
         title={
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontWeight: 600, fontSize: '16px' }}>
             {`Create Quote for RFQ No. (${selectedRFQ})`}
             <PlusButton label={'Back'} onClick={() => setShowQuoteForm(false)} />
           </Box>
@@ -149,12 +154,28 @@ const CreateQuotePage = ({ selectedRFQ, onBack }) => {
       <>
         <MainCard
           title={
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              View RFQ's
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontWeight: 600, fontSize: '16px' }}>
+              View RFQ No.
               <PlusButton label={'Back'} onClick={onBack} />
             </Box>
           }
         >
+             <Grid item xs={12} sm={12} sx={{ padding: '10px' }}>
+              <Grid container spacing={2}>
+                {cansignieeData.map((item, index) => (
+                  <Grid item xs={3} key={index}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
+                      <Typography variant="h6" sx={{ marginRight: 1, fontWeight: '500', fontSize: '11px', color: '#333' }}>
+                        {item.label}:
+                      </Typography>
+                      <Typography variant="body1" sx={{ color: '#555', fontSize: '11px' }}>
+                        {item.value}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                ))}
+              </Grid>
+            </Grid>
           <Table>{renderTableHeader('rfqDetail', 'RFQ Details')}</Table>
           {showTableHeading.rfqDetail && (
             <Grid item xs={12} sm={12} sx={{ padding: '10px' }}>
@@ -174,18 +195,24 @@ const CreateQuotePage = ({ selectedRFQ, onBack }) => {
               </Grid>
             </Grid>
           )}
-          <Table>{renderTableHeader('quotedetail', 'Vendor Details')}</Table>
+          <Table sx={{ mb: 1 }}>{renderTableHeader('quotedetail', 'Vendor Details')}</Table>
           {showTableHeading.quotedetail && (
             <DataGrid
               getRowHeight={() => 'auto'}
               sx={{
+                height: '30vh',
+                mb: 1,
                 '& .MuiDataGrid-cell': {
-                  border: '1px solid rgba(224, 224, 224, 1)'
+                  border: '1px solid rgba(224, 224, 224, 1)',
+                  display: 'flex',
+                  alignItems: 'center'
                 },
                 '& .MuiDataGrid-columnHeader': {
                   backgroundColor: '#f5f5f5',
                   border: '1px solid rgba(224, 224, 224, 1)',
-                  height: '25px !important'
+                  height: '25px !important',
+                  display: 'flex',
+                  alignItems: 'center'
                 },
                 '& .MuiDataGrid-scrollbar': {
                   height: '8px'
@@ -199,8 +226,9 @@ const CreateQuotePage = ({ selectedRFQ, onBack }) => {
               hideFooter
             />
           )}
-          <AdditionalInformationView />
-          <Table sx={{ paddingTop: '20px' }}>{renderTableHeader('itemList', 'Item Details')}</Table>
+          <Table sx={{ mb: 1 }}>{renderTableHeader('quotedetail', 'Required Documents at the Time of Shipment')}</Table>
+          {/* <AdditionalInformationView /> */}
+          <Table sx={{ mt: '20px' }}>{renderTableHeader('itemList', 'Item List of RFQ')}</Table>
           {showTableHeading.itemList && <ItemList />}
         </MainCard>
       </>

@@ -4,9 +4,8 @@ import MainCard from 'components/MainCard';
 import { DataGrid } from '@mui/x-data-grid';
 import PlusButton from 'components/CustomButton';
 import LPOView from './LPOView';
-import LPOApprove from './LPOApprove';
 
-const LPOApproveList = () => {
+const IssueLPO = () => {
   const [viewLPO, setViewLPO] = useState(false);
 
   const cols = [
@@ -23,7 +22,28 @@ const LPOApproveList = () => {
       )
     },
     { headerName: 'LPO Dt.', field: 'lpo_date', width: 120 },
-    { headerName: 'LPO status', field: 'lpo_status', width: 120 },
+    {
+      headerName: 'LPO status',
+      field: 'lpo_status',
+      width: 150,
+      renderCell: (params) => {
+        let color;
+        switch (params.value) {
+          case 'Send to Vendor':
+            color = 'green';
+            break;
+          case 'Pending Acceptance':
+            color = 'orange';
+            break;
+          case 'Pending Payment':
+            color = 'red';
+            break;
+          default:
+            color = 'black';
+        }
+        return <span style={{ color, fontWeight: 'bold' }}>{params.value}</span>;
+      }
+    },
 
     { headerName: 'Quotation No.', field: 'quo_num', width: 120 },
     { headerName: 'LPR No.', field: 'lpr_no', width: 120 },
@@ -42,58 +62,57 @@ const LPOApproveList = () => {
   const lpoData = [
     {
       id: 1,
-      opo_num: 'LPO001',
-      quo_num: 'QUO123',
-      vendor_num: 'V001',
-      vendor_name: 'Vendor A',
-      delivery_term: 'FOB',
-      payment_term: 'Net 30 Days',
-      lead_time: '2 Weeks',
-      total_cost: '5000 USD'
+      opo_num: 'LPO123',
+      lpo_date: '2025-02-19',
+      lpo_status: 'Send to Vendor',
+      quo_num: 'Q123',
+      lpr_no: 'LPR001',
+      rfq_no: 'RFQ123',
+      rfq_date: '2025-02-10',
+      vendor_code: 'V001',
+      vendor_name: 'Vendor One',
+      delivery_type: 'Air',
+      payment_term: 'Net 30',
+      rfq_lead_time: '5 days',
+      vendor_lead_time: '7 days',
+      quote_currency: 'USD',
+      quote_amt: '$1,200'
     },
     {
       id: 2,
-      opo_num: 'LPO002',
-      quo_num: 'QUO124',
-      vendor_num: 'V002',
-      vendor_name: 'Vendor B',
-      delivery_term: 'CIF',
-      payment_term: 'Net 15 Days',
-      lead_time: '1 Month',
-      total_cost: '7500 USD'
+      opo_num: 'LPO124',
+      lpo_date: '2025-02-18',
+      lpo_status: 'Pending Acceptance',
+      quo_num: 'Q124',
+      lpr_no: 'LPR002',
+      rfq_no: 'RFQ124',
+      rfq_date: '2025-02-09',
+      vendor_code: 'V002',
+      vendor_name: 'Vendor Two',
+      delivery_type: 'Sea',
+      payment_term: 'Net 60',
+      rfq_lead_time: '10 days',
+      vendor_lead_time: '14 days',
+      quote_currency: 'EUR',
+      quote_amt: '€900'
     },
     {
       id: 3,
-      opo_num: 'LPO003',
-      quo_num: 'QUO125',
-      vendor_num: 'V003',
-      vendor_name: 'Vendor C',
-      delivery_term: 'EXW',
-      payment_term: 'Net 45 Days',
-      lead_time: '3 Weeks',
-      total_cost: '3000 USD'
-    },
-    {
-      id: 4,
-      opo_num: 'LPO004',
-      quo_num: 'QUO126',
-      vendor_num: 'V004',
-      vendor_name: 'Vendor D',
-      delivery_term: 'FOB',
-      payment_term: 'Net 30 Days',
-      lead_time: '1 Week',
-      total_cost: '4200 USD'
-    },
-    {
-      id: 5,
-      opo_num: 'LPO005',
-      quo_num: 'QUO127',
-      vendor_num: 'V005',
-      vendor_name: 'Vendor E',
-      delivery_term: 'CIF',
-      payment_term: 'Advance Payment',
-      lead_time: '1 Month',
-      total_cost: '8900 USD'
+      opo_num: 'LPO125',
+      lpo_date: '2025-02-17',
+      lpo_status: 'Pending Payment',
+      quo_num: 'Q125',
+      lpr_no: 'LPR003',
+      rfq_no: 'RFQ125',
+      rfq_date: '2025-02-08',
+      vendor_code: 'V003',
+      vendor_name: 'Vendor Three',
+      delivery_type: 'Road',
+      payment_term: 'Net 45',
+      rfq_lead_time: '8 days',
+      vendor_lead_time: '10 days',
+      quote_currency: 'GBP',
+      quote_amt: '£700'
     }
   ];
 
@@ -127,17 +146,17 @@ const LPOApproveList = () => {
     >
       <div>
         {viewLPO ? (
-          <LPOApprove />
+          <LPOView />
         ) : (
           <Box sx={{ height: '50vh', width: '100%', marginBottom: '50px' }}>
             <DataGrid
               getRowHeight={() => 'auto'}
               sx={{
-                marginBottom: '20px',
+                height: '85vh',
                 '& .MuiDataGrid-cell': {
                   border: '1px solid rgba(224, 224, 224, 1)',
                   display: 'flex',
-                  
+
                   alignItems: 'center'
                 },
                 '& .MuiDataGrid-columnHeader': {
@@ -145,20 +164,14 @@ const LPOApproveList = () => {
                   border: '1px solid rgba(224, 224, 224, 1)',
                   height: '25px !important',
                   display: 'flex',
-                  
+
                   alignItems: 'center',
                   minHeight: '30px'
                 },
                 '& .MuiDataGrid-checkboxInput': {
                   padding: '0px'
                 },
-                '& .MuiCheckbox-root': {
-                  width: '18px',
-                  height: '18px'
-                },
-                '& .MuiSvgIcon-root': {
-                  fontSize: '20px'
-                },
+
                 '& .MuiDataGrid-scrollbar': {
                   height: '8px'
                 }
@@ -167,9 +180,6 @@ const LPOApproveList = () => {
               pageSize={5}
               columns={cols}
               rowsPerPageOptions={[5]}
-              hideFooter
-              hideFooterPagination
-              hideFooterSelectedRowCount
             />
           </Box>
         )}
@@ -178,4 +188,4 @@ const LPOApproveList = () => {
   );
 };
 
-export default LPOApproveList;
+export default IssueLPO;

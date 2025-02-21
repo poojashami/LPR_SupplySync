@@ -17,21 +17,21 @@ const LPR = {
       children: [
         {
           id: 'create_lpr',
-          title: <FormattedMessage id="Create" />,
+          title: <FormattedMessage id="Create LPR" />,
           type: 'item',
           url: '/lpr/create',
           target: false
         },
         {
           id: 'approve_lpr',
-          title: <FormattedMessage id="Approve" />,
+          title: <FormattedMessage id="Approve LPR" />,
           type: 'item',
           url: '/lpr/approve',
           target: false
         },
         {
           id: 'view_lpr',
-          title: <FormattedMessage id="View" />,
+          title: <FormattedMessage id="View LPR" />,
           type: 'item',
           url: '/lpr/view',
           target: false

@@ -206,7 +206,18 @@ const PaymentForm = () => {
                   </Grid>
                   <Grid item xs={12} sm={2}>
                     <div>
-                      <Button component="label" sx={{ marginBottom: '0' }} variant="contained" startIcon={<CloudUploadIcon />}>
+                      <Button
+                        component="label"
+                        sx={{
+                          backgroundColor: '#2c6095',
+                          color: '#fff',
+                          '&:hover': {
+                            backgroundColor: '#244b78'
+                          }
+                        }}
+                        variant="contained"
+                        startIcon={<CloudUploadIcon />}
+                      >
                         Upload
                         <VisuallyHiddenInput
                           type="file"
@@ -229,10 +240,30 @@ const PaymentForm = () => {
 
             {showTableBodies.paymentForm && (
               <Box sx={{ display: 'flex', justifyContent: 'flex-end', padding: 1 }}>
-                <Button variant="outlined" size="small" color="error" sx={{ mr: 2 }}>
+                <Button
+                  size="small"
+                  sx={{
+                    backgroundColor: '#cd640d',
+                    color: '#fff',
+                    '&:hover': {
+                      backgroundColor: '#cd640d'
+                    },
+                    mr: 2
+                  }}
+                >
                   Cancel
                 </Button>
-                <Button variant="contained" size="small" color="primary" type="submit">
+                <Button
+                  size="small"
+                  type="submit"
+                  sx={{
+                    backgroundColor: '#2c6095',
+                    color: '#fff',
+                    '&:hover': {
+                      backgroundColor: '#244b78'
+                    }
+                  }}
+                >
                   Submit
                 </Button>
               </Box>

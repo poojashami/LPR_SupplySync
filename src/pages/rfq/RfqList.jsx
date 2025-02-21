@@ -11,9 +11,11 @@ const RfqList = () => {
   const [generateRFQ, setGenerateRFQ] = useState(false);
 
   const rfqColumn = [
+    { headerName: 'Sr. No.', field: 'id', width: 60 },
+
     {
       field: 'opr_num',
-      headerName: 'OPR No.',
+      headerName: 'LPR No.',
       renderCell: (params) => (
         <div style={{ cursor: 'pointer', color: 'blue' }} aria-hidden="true">
           {params.value}
@@ -21,19 +23,18 @@ const RfqList = () => {
       ),
       width: 120
     },
+    { headerName: 'LPR Date', field: 'lpr_date', width: 120 },
+    { headerName: 'LPR Category', field: 'opr_description', width: 150 },
     { headerName: 'Vertical', field: 'vertical_name', width: 120 },
     { headerName: 'Company', field: 'company_name', width: 120 },
     { headerName: 'Division', field: 'division_name', width: 120 },
-    { headerName: 'OPR Category', field: 'opr_description', width: 150 },
-    { headerName: 'Shipment Mode', field: 'shipment_mode_name', width: 120 },
-    { headerName: 'Buying From', field: 'buy_from', width: 120 },
-    { headerName: 'Buying House', field: 'buying_house_name', width: 120 },
+    { headerName: 'Delivery Term', field: 'delivery_term', width: 150 },
+
     { headerName: 'Left for RFQ', field: 'remaining_item_count', width: 120 },
     { headerName: 'Delivery Time', field: 'd_timeline_name', width: 120 },
     { headerName: 'Requested By Department', field: 'dept_name', width: 180 },
     { headerName: 'Requested By', field: 'requested_by', width: 120 },
-    { headerName: 'Date', field: 'opr_date', width: 120 },
-    { headerName: 'Additional Remarks', field: 'remarks', width: 150 }
+    { headerName: 'LPR Remark', field: 'remarks', width: 150 }
   ];
 
   const rfqData = [
@@ -78,7 +79,7 @@ const RfqList = () => {
       title={
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <span>
-            {showOprItemList ? (generateRFQ ? 'Generate RFQ' : 'Create RFQ - Item List in Selected OPR') : 'Create RFQ - Pending OPR List'}
+            {showOprItemList ? (generateRFQ ? 'Generate RFQ' : 'Create RFQ - Item List in Selected OPR') : 'Create RFQ - Pending LPR List'}
           </span>
           <div style={{ display: 'flex', gap: '5px' }}>
             <PlusButton
@@ -104,6 +105,7 @@ const RfqList = () => {
           <DataGrid
             getRowHeight={() => 'auto'}
             sx={{
+              height: '85vh',
               '& .MuiDataGrid-cell': {
                 border: '1px solid rgba(224, 224, 224, 1)',
                 display: 'flex'
@@ -123,13 +125,15 @@ const RfqList = () => {
               },
               '& .MuiSvgIcon-root': {
                 fontSize: '20px' // Customize the size of the checkmark icon
+              },
+              '& .MuiDataGrid-scrollbar': {
+                height: '8px'
               }
             }}
             rows={rfqData}
             columns={rfqColumn}
             pageSize={5}
             rowsPerPageOptions={[5]}
-            hideFooter
             checkboxSelection
           />
         )}

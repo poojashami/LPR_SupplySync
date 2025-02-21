@@ -57,9 +57,9 @@ const QuoteCompare = () => {
   const renderTableHeader = (sectionName, sectionLabel) => (
     <TableHead sx={{ backgroundColor: '#EAF1F6' }}>
       <TableRow>
-        <TableCell sx={{ padding: 0 }} colSpan={12}>
+        <TableCell sx={{ padding: 0, paddingLeft: '8px !important' }} colSpan={12}>
           <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Typography variant="h6" fontWeight={500}>
+            <Typography fontSize={'14px'} fontWeight={600} textTransform={'none'}>
               {sectionLabel}
             </Typography>
             <IconButton size="large" onClick={() => toggleTableBody(sectionName)} sx={{ height: '30px' }}>
@@ -953,16 +953,17 @@ const QuoteCompare = () => {
           </div>
         </Grid>
       </Grid>
-      <Grid container spacing={2}>
-        <Table>{renderTableHeader('documentsList', 'Documents List')}</Table>
-        {showTableHeading.documentsList && (
+
+      <Table>{renderTableHeader('documentsList', 'Documents List')}</Table>
+      {showTableHeading.documentsList && (
+        <Box padding={1}>
           <DataGrid
             getRowHeight={() => 'auto'}
             sx={{
               '& .MuiDataGrid-cell': {
                 border: '1px solid rgba(224, 224, 224, 1)',
                 display: 'flex',
-                justifyContent: 'start',
+
                 alignItems: 'center'
               },
               '& .MuiDataGrid-columnHeader': {
@@ -970,7 +971,7 @@ const QuoteCompare = () => {
                 border: '1px solid rgba(224, 224, 224, 1)',
                 height: '25px !important',
                 display: 'flex',
-                justifyContent: 'center',
+
                 alignItems: 'center'
               },
               '& .MuiDataGrid-scrollbar': {
@@ -986,9 +987,12 @@ const QuoteCompare = () => {
               { headerName: 'Notes', field: 'notes', width: 300 }
             ]}
             rows={doc_list}
+            hideFooter
+            hideFooterPagination
+            hideFooterSelectedRowCount
           />
-        )}
-      </Grid>
+        </Box>
+      )}
     </div>
   );
 };

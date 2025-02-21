@@ -20,40 +20,43 @@ const ViewGenerateRfqPage = () => {
   const calcNet = (val1, val2) => {
     return val1 + val2;
   };
-  const shipmentData = [
-    { label: 'Consignee Name', value: 'Tech Corp' },
-    { label: 'Consignee Code', value: 'LPR1234' },
-    { label: 'Contact Number', value: '+1 123-456-7890' },
+  const consinerData = [
+    { label: 'Company Code', value: 'LPR1234' },
+    { label: 'Company Name', value: 'Tech Corp' },
+    { label: 'Contact Person', value: '+1 123-456-7890' },
     { label: 'Contact Email', value: 'example@techcorp.com' },
-    { label: 'Address', value: '123 Tech Street, North Division, Electronics City' },
-    { label: ' OPR Lead time', value: '12:00' },
-    { label: 'Delivery Timeline', value: 'hdh' },
-    { label: 'Port of Delivery', value: 'hdsbjh' },
-    { label: 'Respond Time(Days)', value: 'djhjdh' },
-    { label: ' Additional Remarks', value: ' Additional Remarks Additional Remarks' }
+    { label: 'Comapany Address', value: '123 Tech Street, North Division, Electronics City' }
+  ];
+  const shipmentData = [
+    { label: ' LPR Lead time', value: '12:00' },
+    { label: ' RFQ Lead time', value: '12:00' },
+    { label: 'Delivery Term', value: 'hdh' },
+    { label: 'Delivery Address', value: 'hdh' },
+    { label: 'Response Time (Days)', value: 'djhjdh' },
+    { label: 'Email Sent Dt.', value: ' ' },
+    { label: ' RFQ Remarks', value: ' Additional Remarks Additional Remarks' }
   ];
   const rfqItemcolumns = [
-    { field: 'item_code', headerName: 'Item Code', width: 100, flex: 1 },
-    { field: 'item_name', headerName: 'Item Name', width: 200, flex: 1 },
-    { field: 'item_description', headerName: 'Remarks', width: 450, flex: 1 },
-    { field: 'company_name', headerName: 'Company', width: 200, flex: 1 },
-    { field: 'uom_name', headerName: 'UOM', width: 70, flex: 1 },
-    { field: 'qty', headerName: 'Req Qty', width: 80, flex: 1, renderCell: (params) => formatNumber(params.value) },
+    { field: 'item_code', headerName: 'Item Code', width: 100 },
+    { field: 'item_name', headerName: 'Item Name', width: 200 },
+    { field: 'item_description', headerName: 'Remarks', width: 450 },
+    { field: 'company_name', headerName: 'Company', width: 200 },
+    { field: 'uom_name', headerName: 'UOM', width: 70 },
+    { field: 'qty', headerName: 'Req Qty', width: 80, renderCell: (params) => formatNumber(params.value) },
 
     {
       field: 'tolerance',
       headerName: 'Tolerance %',
       width: 150,
       editable: true,
-      flex: 1,
+
       renderCell: (params) => formatNumber(params.value || '')
     },
     {
       field: 'net_qty',
       headerName: 'Net Qty',
       width: 100,
-      renderCell: (params) => calcNet(Number(params?.row?.quantity), Number(params?.row?.qty)),
-      flex: 1
+      renderCell: (params) => calcNet(Number(params?.row?.quantity), Number(params?.row?.qty))
     }
   ];
   const rfqItemData = [
@@ -186,9 +189,9 @@ const ViewGenerateRfqPage = () => {
   const renderTableHeader = (sectionName, sectionLabel) => (
     <TableHead sx={{ backgroundColor: '#EAF1F6' }}>
       <TableRow>
-        <TableCell sx={{ padding: 0 }} colSpan={12}>
+        <TableCell sx={{ padding: 0, paddingLeft: '8px !important' }} colSpan={12}>
           <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Typography variant="h6" fontWeight={500}>
+            <Typography fontSize={'14px'} fontWeight={600} textTransform={'none'}>
               {sectionLabel}
             </Typography>
             <IconButton size="large" onClick={() => toggleTableBody(sectionName)} sx={{ height: '30px' }}>
@@ -200,9 +203,35 @@ const ViewGenerateRfqPage = () => {
     </TableHead>
   );
   return (
-    <MainCard>
+    <>
       <Box>
-        <Table>{renderTableHeader('rfqView', 'View RFQ')}</Table>
+        <Grid item xs={12} sm={12} sx={{ padding: '10px' }}>
+          <Grid container spacing={2}>
+            {consinerData
+              .reduce((acc, item, index) => {
+                if (index % 4 === 0) acc.push([]);
+                acc[acc.length - 1].push(item);
+                return acc;
+              }, [])
+              .map((row, rowIndex) => (
+                <Grid container item xs={12} key={rowIndex} spacing={2}>
+                  {row.map((item, itemIndex) => (
+                    <Grid item xs={3} key={itemIndex}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
+                        <Typography variant="h6" sx={{ marginRight: 1, fontWeight: '500', fontSize: '11px', color: '#333' }}>
+                          {item.label}:
+                        </Typography>
+                        <Typography variant="body1" sx={{ color: '#555', fontSize: '11px' }}>
+                          {item.value}
+                        </Typography>
+                      </Box>
+                    </Grid>
+                  ))}
+                </Grid>
+              ))}
+          </Grid>
+        </Grid>
+        <Table>{renderTableHeader('rfqView', 'Basic Info')}</Table>
         {showTableHeading.rfqView && (
           <Grid item xs={12} sm={12} sx={{ padding: '10px' }}>
             <Grid container spacing={2}>
@@ -232,49 +261,18 @@ const ViewGenerateRfqPage = () => {
           </Grid>
         )}
       </Box>
-      <Table>{renderTableHeader('createrfqForm', 'Item List to Create RFQ')}</Table>
-      {showTableHeading.createrfqForm && (
-        <DataGrid
-          getRowHeight={() => 'auto'}
-          sx={{
-            '& .MuiDataGrid-cell': {
-              border: '1px solid rgba(224, 224, 224, 1)',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center'
-            },
-            '& .MuiDataGrid-columnHeader': {
-              backgroundColor: '#f5f5f5',
-              border: '1px solid rgba(224, 224, 224, 1)',
-              height: '25px !important',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center'
-            },
-            '& .MuiSvgIcon-root': {
-              fontSize: '20px'
-            },
-            '& .MuiDataGrid-scrollbar': {
-              height: '8px'
-            }
-          }}
-          pageSize={5}
-          columns={rfqItemcolumns}
-          rows={rfqItemData}
-          hideFooterPagination
-          rowsPerPageOptions={[5, 10, 20]}
-        />
-      )}
-      <Box mt={'10px'}>
-        <Table>{renderTableHeader('itemListRfq', 'Selected Vendor')}</Table>
+
+      <Box>
+        <Table sx={{ mb: 1 }}>{renderTableHeader('itemListRfq', 'Vendor Detail')}</Table>
         {showTableHeading.itemListRfq && (
           <DataGrid
             getRowHeight={() => 'auto'}
             sx={{
+              height: '20vh',
               '& .MuiDataGrid-cell': {
                 border: '1px solid rgba(224, 224, 224, 1)',
                 display: 'flex',
-                justifyContent: 'center',
+
                 alignItems: 'center'
               },
               '& .MuiDataGrid-columnHeader': {
@@ -282,7 +280,7 @@ const ViewGenerateRfqPage = () => {
                 border: '1px solid rgba(224, 224, 224, 1)',
                 height: '25px !important',
                 display: 'flex',
-                justifyContent: 'center',
+
                 alignItems: 'center'
               },
               '& .MuiSvgIcon-root': {
@@ -303,16 +301,17 @@ const ViewGenerateRfqPage = () => {
         )}
       </Box>
       <Box mt={'10px'}>
-        <Table>{renderTableHeader('vendorlist', 'Required Documents at the time of Shipping')}</Table>
+        <Table sx={{ mb: 1 }}>{renderTableHeader('vendorlist', 'Required Documents at the time of Shipment')}</Table>
         {showTableHeading.vendorlist && (
           <Box>
             <DataGrid
               getRowHeight={() => 'auto'}
               sx={{
+                height: '20vh',
                 '& .MuiDataGrid-cell': {
                   border: '1px solid rgba(224, 224, 224, 1)',
                   display: 'flex',
-                  justifyContent: 'start',
+
                   alignItems: 'start'
                 },
                 '& .MuiDataGrid-columnHeader': {
@@ -320,7 +319,7 @@ const ViewGenerateRfqPage = () => {
                   border: '1px solid rgba(224, 224, 224, 1)',
                   height: '25px !important',
                   display: 'flex',
-                  justifyContent: 'start',
+
                   alignItems: 'start'
                 },
 
@@ -346,7 +345,41 @@ const ViewGenerateRfqPage = () => {
           </Box>
         )}
       </Box>
-    </MainCard>
+      <Table sx={{ mb: 1 }}>{renderTableHeader('createrfqForm', 'Item List of RFQ')}</Table>
+      {showTableHeading.createrfqForm && (
+        <DataGrid
+          getRowHeight={() => 'auto'}
+          sx={{
+            height: '30vh',
+            '& .MuiDataGrid-cell': {
+              border: '1px solid rgba(224, 224, 224, 1)',
+              display: 'flex',
+
+              alignItems: 'center'
+            },
+            '& .MuiDataGrid-columnHeader': {
+              backgroundColor: '#f5f5f5',
+              border: '1px solid rgba(224, 224, 224, 1)',
+              height: '25px !important',
+              display: 'flex',
+
+              alignItems: 'center'
+            },
+            '& .MuiSvgIcon-root': {
+              fontSize: '20px'
+            },
+            '& .MuiDataGrid-scrollbar': {
+              height: '8px'
+            }
+          }}
+          pageSize={5}
+          columns={rfqItemcolumns}
+          rows={rfqItemData}
+          hideFooterPagination
+          rowsPerPageOptions={[5, 10, 20]}
+        />
+      )}
+    </>
   );
 };
 

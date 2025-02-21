@@ -51,12 +51,12 @@ const RFQView = () => {
   const renderTableHeader = (sectionName, sectionLabel) => (
     <TableHead sx={{ backgroundColor: '#EAF1F6' }}>
       <TableRow>
-        <TableCell sx={{ padding: 0 }} colSpan={12}>
+        <TableCell sx={{ padding: 0, paddingLeft: '8px !important' }} colSpan={12}>
           <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Typography variant="h6" fontWeight={500}>
+            <Typography fontSize={'14px'} fontWeight={600} textTransform={'none'}>
               {sectionLabel}
             </Typography>
-            <IconButton size="small" onClick={() => toggleTableBody(sectionName)} sx={{ height: '30px' }}>
+            <IconButton size="large" onClick={() => toggleTableBody(sectionName)} sx={{ height: '30px' }}>
               {showTableHeading[sectionName] ? <KeyboardArrowUpOutlinedIcon /> : <KeyboardArrowDownOutlinedIcon />}
             </IconButton>
           </Box>

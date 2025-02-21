@@ -70,20 +70,19 @@ const ItemTable = () => {
   });
 
   const itemcolumns = [
-    { field: 'id', headerName: 'Sr. No.', width: 50 },
-    { field: 'sub_group', headerName: 'Category', width: 100 },
-    { field: 'item_type', headerName: 'Sub Category', width: 100 },
+    { field: 'id', headerName: 'Sr. No.', width: 60 },
+    { field: 'item_cat', headerName: 'Item Category', width: 100 },
+    { field: 'group', headerName: 'Group', width: 100 },
+    { field: 'sub_group', headerName: 'Sub Group', width: 100 },
     { field: 'city', headerName: 'Factory', width: 100 },
     { field: 'item_code', headerName: 'Item Code', width: 100 },
     { field: 'item_name', headerName: 'Item Name', width: 200 },
-    { field: 'hsn_code', headerName: 'HSN Code', width: 100 },
-
     { field: 'uom', headerName: 'UOM', width: 100 },
     { field: 'quantity', headerName: 'Qty', width: 100 },
     { field: 'stock_in_transit', headerName: 'Stock In Transit', width: 100 },
     { field: 'stock_in_hand', headerName: 'Stock In Hand', width: 100 },
     { field: 'monthly_consumption', headerName: 'Monthly Consumption', width: 120 },
-    { field: 'item_description', headerName: 'Remarks', width: 100 },
+    { field: 'item_description', headerName: 'Item Remarks', width: 100 },
     {
       field: 'actions',
       headerName: 'Actions',
@@ -183,11 +182,11 @@ const ItemTable = () => {
 
   // Function to render table headers with toggle icons
   const renderTableHeader = (sectionName, sectionLabel) => (
-    <TableHead sx={{ backgroundColor: '#EAF1F6' }}>
+   <TableHead sx={{ backgroundColor: '#EAF1F6' }}>
       <TableRow>
-        <TableCell sx={{ padding: 0 }} colSpan={6}>
+        <TableCell sx={{ padding: 0, paddingLeft: '8px !important' }} colSpan={12}>
           <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Typography fontSize={'14px'} fontWeight={600}>
+            <Typography fontSize={'14px'} fontWeight={600} textTransform={'none'}>
               {sectionLabel}
             </Typography>
             <Box>
@@ -204,7 +203,7 @@ const ItemTable = () => {
                   <EditOutlinedIcon />
                 </IconButton>
               )}
-              <IconButton size="large" onClick={() => toggleTableBody(sectionName)} sx={{ height: '30px' }}>
+             <IconButton size="large" onClick={() => toggleTableBody(sectionName)} sx={{ height: '30px' }}>
                 {showTableBodies[sectionName] ? <KeyboardArrowUpOutlinedIcon /> : <KeyboardArrowDownOutlinedIcon />}
               </IconButton>
             </Box>
@@ -215,22 +214,19 @@ const ItemTable = () => {
   );
   return (
     <div>
-      <TableContainer sx={{ marginTop: 2, borderRadius: '0' }}>
-        <Table>
-          {renderTableHeader('itemsTable', 'Items Table')}
+        <Table sx={{mb:1}}>
+          {renderTableHeader('itemsTable', 'Items Table')}</Table>
           {showTableBodies.itemsTable && (
-            <TableBody>
-              <TableRow>
-                <TableCell colSpan={6}>
-                  <div style={{ width: '100%' }}>
                     <DataGrid
                       getRowHeight={() => 'auto'}
                       sx={{
+                        height:'30vh',
+                        mb:1,
                         fontSize: '11px',
                         '& .MuiDataGrid-cell': {
                           border: '1px solid rgba(224, 224, 224, 1)',
                           display: 'flex',
-                          justifyContent: 'center',
+                          
                           alignItems: 'center',
                           padding: 'none'
                         },
@@ -239,7 +235,7 @@ const ItemTable = () => {
                           border: '1px solid rgba(224, 224, 224, 1)',
                           height: '25px !important',
                           display: 'flex',
-                          justifyContent: 'center',
+                         
                           alignItems: 'center'
                         },
                         '& .MuiDataGrid-scrollbar': {
@@ -250,15 +246,11 @@ const ItemTable = () => {
                       columns={itemcolumns}
                       pageSize={5}
                       rowsPerPageOptions={[5]}
-                    />
-                  </div>
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          )}
-        </Table>
-      </TableContainer>
-    </div>
+                      hideFooter
+                      hideFooterPagination
+                      hideFooterSelectedRowCount
+                    /> )}
+         </div>
   );
 };
 

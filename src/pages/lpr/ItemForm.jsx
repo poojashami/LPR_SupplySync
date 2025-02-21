@@ -456,16 +456,6 @@
 
 // export default ItemForm;
 
-
-
-
-
-
-
-
-
-
-
 // import React, { useState } from 'react';
 // import {
 //   TableContainer,
@@ -711,46 +701,6 @@
 
 // export default ItemForm;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import React, { useState } from 'react';
 import {
   TableContainer,
@@ -899,7 +849,23 @@ const ItemForm = () => {
                         </SelectFieldPadding>
                       </div>
                     </Grid>
-
+                    <Grid item xs={12} sm={2}>
+                      <Typography variant="body" style={{ fontSize: '11px' }}>
+                        Stock Item Code
+                      </Typography>
+                      <SelectFieldPadding
+                        variant="outlined"
+                        fullWidth
+                        name="stock_item_code"
+                        value={formData.stock_item_code}
+                        onChange={handleChange}
+                      >
+                        <MenuItem value="">
+                          <em>select</em>
+                        </MenuItem>
+                        {/* Add other MenuItem components as needed */}
+                      </SelectFieldPadding>
+                    </Grid>
                     <Grid item xs={12} sm={2}>
                       <Typography variant="body" style={{ fontSize: '11px' }}>
                         Stock Item<ValidationStar>*</ValidationStar>
@@ -919,25 +885,19 @@ const ItemForm = () => {
                         </SelectFieldPadding>
                       </div>
                     </Grid>
-
                     <Grid item xs={12} sm={2}>
                       <Typography variant="body" style={{ fontSize: '11px' }}>
-                        Stock Item Code
+                        UOM<ValidationStar>*</ValidationStar>
                       </Typography>
-                      <SelectFieldPadding
-                        variant="outlined"
-                        fullWidth
-                        name="stock_item_code"
-                        value={formData.stock_item_code}
-                        onChange={handleChange}
-                      >
-                        <MenuItem value="">
-                          <em>select</em>
-                        </MenuItem>
-                        {/* Add other MenuItem components as needed */}
-                      </SelectFieldPadding>
+                      <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <SelectFieldPadding variant="outlined" fullWidth name="uom" value={formData.uom} onChange={handleChange}>
+                          <MenuItem value="">
+                            <em>select</em>
+                          </MenuItem>
+                          {/* Add other MenuItem components as needed */}
+                        </SelectFieldPadding>
+                      </div>
                     </Grid>
-
                     <Grid item xs={12} sm={2}>
                       <Typography variant="body" style={{ fontSize: '11px' }}>
                         LPR Qty<ValidationStar>*</ValidationStar>
@@ -952,25 +912,7 @@ const ItemForm = () => {
                       />
                     </Grid>
 
-                    <Grid item xs={12} sm={2}>
-                      <Typography variant="body" style={{ fontSize: '11px' }}>
-                        UOM<ValidationStar>*</ValidationStar>
-                      </Typography>
-                      <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <SelectFieldPadding
-                          variant="outlined"
-                          fullWidth
-                          name="uom"
-                          value={formData.uom}
-                          onChange={handleChange}
-                        >
-                          <MenuItem value="">
-                            <em>select</em>
-                          </MenuItem>
-                          {/* Add other MenuItem components as needed */}
-                        </SelectFieldPadding>
-                      </div>
-                    </Grid>
+                    
 
                     <Grid item xs={12} sm={2}>
                       <Typography variant="body" style={{ fontSize: '11px' }}>
@@ -1016,15 +958,9 @@ const ItemForm = () => {
 
                     <Grid item xs={12} sm={4}>
                       <Typography variant="body" style={{ fontSize: '11px' }}>
-                        Remarks
+                        Item Remark
                       </Typography>
-                      <FieldPadding
-                        variant="outlined"
-                        fullWidth
-                        name="remarks"
-                        value={formData.remarks}
-                        onChange={handleChange}
-                      />
+                      <FieldPadding variant="outlined" fullWidth name="remarks" value={formData.remarks} onChange={handleChange} />
                     </Grid>
                   </Grid>
                 </TableCell>
@@ -1074,7 +1010,7 @@ const ItemForm = () => {
               }
             }}
           >
-            Create OPR
+            Create LPR
           </Button>
         </Box>
       </form>

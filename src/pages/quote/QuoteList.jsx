@@ -17,12 +17,12 @@ const QuoteList = () => {
   const QuoteColumn = [
     {
       field: 'quo_id',
-      headerName: 'Quotation ID',
-      width: 100
+      headerName: 'Sr. No.',
+      width: 60
     },
     {
       field: 'quo_num',
-      headerName: 'Quotation Number',
+      headerName: 'Quotation No.',
       width: 150,
       renderCell: (params) => (
         <div onClick={() => handleViewClick(params.row)} style={{ cursor: 'pointer', color: 'blue' }} aria-hidden="true">
@@ -30,21 +30,21 @@ const QuoteList = () => {
         </div>
       )
     },
-    { field: 'vendor_reference_no', headerName: 'Vendor Ref. No.', width: 150 },
-    { field: 'rfq_num', headerName: 'RFQ Number', width: 150 },
-    { field: 'vendor_name', headerName: 'Vendor Name', width: 150 },
+    { field: 'quote_dt', headerName: 'Quotetion Dt.', width: 150 },
+
+    { field: 'rfq_num', headerName: 'RFQ No.', width: 150 },
+    { field: 'rfq_dt', headerName: 'RFQ Dt.', width: 150 },
+    { field: 'lpr_no', headerName: 'LPR No.', width: 150 },
+    { field: 'quote_status', headerName: 'Quotation Status', width: 150 },
     { field: 'company_name', headerName: 'Company Name', width: 150 },
-    { field: 'referenceDate', headerName: 'RFQ Generate Date ', width: 150 },
-    { field: 'quo_date', headerName: 'Quotation Date', width: 150 },
-    { field: 'currency', headerName: 'Currency', width: 150 },
+    { field: 'vendor_name', headerName: 'Vendor Name', width: 150 },
+    { field: 'rfq_lead_time', headerName: 'RFQ Lead Time', width: 150 },
+    { field: 'vendor_lead_time', headerName: 'Vendor Lead Time', width: 150 },
     { field: 'delivery_terms', headerName: 'Delivery Terms', width: 150 },
-    { field: 'country_origin', headerName: 'Country of Origin', width: 150 },
-    { field: 'country_supply', headerName: 'Country of Supply', width: 150 },
-    { field: 'port_loading', headerName: 'Port of Loading', width: 150 },
-    { field: 'lead_time', headerName: 'Lead Time', width: 150 },
     { field: 'payment_terms', headerName: 'Payment Terms', width: 250 },
-    { field: 'remarks', headerName: 'Remarks', width: 250 },
-    { field: 'total_cost', headerName: 'Total Cost', width: 150 }
+    { field: 'currency', headerName: 'Currency', width: 150 },
+    { field: 'total_cost', headerName: 'Total Cost', width: 150 },
+    { field: 'remarks', headerName: 'Remark', width: 250 }
   ];
 
   const QuoteData = [
@@ -113,8 +113,8 @@ const QuoteList = () => {
   return (
     <MainCard
       title={
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span>{!showQuoteForm && !selectedQuotation ? 'Quote List' : 'View Quotation'}</span>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontWeight: 600, fontSize: '16px' }}>
+          <span>{!showQuoteForm && !selectedQuotation ? 'Quotation List' : 'View Quotation'}</span>
           {!showQuoteForm && selectedQuotation && (
             <PlusButton
               label="Back"
@@ -131,10 +131,11 @@ const QuoteList = () => {
           <DataGrid
             getRowHeight={() => 'auto'}
             sx={{
+              height: '85vh',
               '& .MuiDataGrid-cell': {
                 border: '1px solid rgba(224, 224, 224, 1)',
                 display: 'flex',
-                justifyContent: 'center',
+
                 alignItems: 'center'
               },
               '& .MuiDataGrid-columnHeader': {
@@ -142,15 +143,17 @@ const QuoteList = () => {
                 border: '1px solid rgba(224, 224, 224, 1)',
                 height: '25px !important',
                 display: 'flex',
-                justifyContent: 'center',
+
                 alignItems: 'center'
+              },
+              '& .MuiDataGrid-scrollbar': {
+                height: '8px'
               }
             }}
             rows={QuoteData}
             columns={QuoteColumn}
             pageSize={5}
             rowsPerPageOptions={[5]}
-            hideFooter
           />
         </Box>
       ) : (

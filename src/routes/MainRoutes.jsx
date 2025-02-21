@@ -17,6 +17,10 @@ import QuoteComparelist from 'pages/quote/QuoteComparelist';
 import LPOView from 'pages/po/LPOView';
 import LPOApproveList from 'pages/po/LPOApproveList';
 import CreateQuoteList from 'pages/quote/CreateQuoteList';
+import DraftPO from 'pages/po/Draft';
+import GRNList from 'pages/grn/GRNList';
+import IssueLPO from 'pages/po/IssueLPO';
+import RfqViewList from 'pages/rfq/RfqViewList';
 
 const MainRoutes = {
   path: '/',
@@ -59,7 +63,7 @@ const MainRoutes = {
         },
         {
           path: 'rfq/rfqview',
-          element: <ViewGenerateRfqPage />
+          element: <RfqViewList />
         }
       ]
     },
@@ -75,7 +79,7 @@ const MainRoutes = {
           path: 'quote/compare',
           element: <QuoteComparelist />
         },
-       
+
         {
           path: 'quote/view',
           element: <QuoteList />
@@ -91,9 +95,17 @@ const MainRoutes = {
           element: <POList />
         },
         {
-          path: 'po/view',
-          element: <LPOView />
+          path: 'po/draft',
+          element: <DraftPO />
         },
+        {
+          path: 'po/view',
+          element: <IssueLPO />
+        },
+        // {
+        //   path: 'po/view',
+        //   element: <LPOView />
+        // },
         {
           path: 'po/approve',
           element: <LPOApproveList />
@@ -101,6 +113,24 @@ const MainRoutes = {
         {
           path: '/po/request-payment',
           element: <POReqPayment />
+        }
+      ]
+    },
+    {
+      path: '/',
+      element: <DashboardLayout />,
+      children: [
+        {
+          path: 'grn/create',
+          element: <GRNList />
+        },
+        {
+          path: 'grn/approve',
+          element: <LPRList />
+        },
+        {
+          path: 'grn/view',
+          element: <ViewLPRList />
         }
       ]
     },

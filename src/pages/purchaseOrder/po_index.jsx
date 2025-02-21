@@ -105,19 +105,33 @@ export default function QuotationPage() {
           <QuotationView oprViewData={quotationItems} onClose={handleViewClose} />
         ) : (
           <div>
-            <DataGrid getRowHeight={() => 'auto'}
-          sx={{
-            '& .MuiDataGrid-cell': {
-              border: '1px solid rgba(224, 224, 224, 1)',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center'
-            },
-            '& .MuiDataGrid-columnHeader': {
-              backgroundColor: '#f5f5f5',
-              borderBottom: '2px solid rgba(224, 224, 224, 1)'
-            }
-          }} rows={quotationData} columns={TableHeader} pageSize={5} rowsPerPageOptions={[5]} />
+            <DataGrid
+              getRowHeight={() => 'auto'}
+              sx={{
+                height: '85vh',
+                '& .MuiDataGrid-cell': {
+                  border: '1px solid rgba(224, 224, 224, 1)',
+                  display: 'flex',
+
+                  alignItems: 'center'
+                },
+                '& .MuiDataGrid-columnHeader': {
+                  backgroundColor: '#f5f5f5',
+                  border: '1px solid rgba(224, 224, 224, 1)',
+                  height: '25px !important',
+                  display: 'flex',
+
+                  alignItems: 'center'
+                },
+                '& .MuiDataGrid-scrollbar': {
+                  height: '8px'
+                }
+              }}
+              rows={quotationData}
+              columns={TableHeader}
+              pageSize={5}
+              rowsPerPageOptions={[5]}
+            />
           </div>
         )}
       </MainCard>

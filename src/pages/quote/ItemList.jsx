@@ -3,19 +3,18 @@ import { DataGrid } from '@mui/x-data-grid';
 import { Box, Checkbox } from '@mui/material';
 const ItemList = () => {
   const ItemColumns = [
-    { field: 'id', headerName: 'S.NO', width: 50 },
-    { field: 'item_type', headerName: 'Category', width: 120 },
-    { field: 'sub_category', headerName: 'Sub Category', width: 120 },
+    { field: 'id', headerName: 'Sr. No.', width: 60 },
+    { field: 'item_type', headerName: 'Item Category', width: 120 },
+    { field: 'group', headerName: 'Group', width: 120 },
+    { field: 'sub_group', headerName: 'Sub Group', width: 120 },
+    { field: 'lpr_no', headerName: 'LPR No.', width: 120 },
+    { field: 'lpr_dt', headerName: 'LPR Dt.', width: 120 },
     { field: 'item_code', headerName: 'Item Code', width: 100 },
     { field: 'item_name', headerName: 'Item Name', width: 200 },
-    { field: 'tolerance', headerName: 'Tolerance', width: 100 },
-    { field: 'quantity', headerName: 'Qty', width: 100 },
     { field: 'uom_name', headerName: 'UOM', width: 100 },
-    { field: 'nafdac_required', headerName: 'Nafdac Req.', width: 50 },
-    { field: 'nafdac_require', headerName: 'SON Req.', width: 50 },
-    { field: 'cria_required', headerName: 'CRIA Req.', width: 50 },
-    { field: 'address', headerName: 'Delivery Location', width: 200 },
-    { field: 'item_remark', headerName: 'Remark', width: 300 }
+    { field: 'quantity', headerName: 'Qty', width: 100 },
+    { field: 'tolerance', headerName: 'Tolerance', width: 100 },
+    { field: 'item_remark', headerName: 'LPR Item Remark', width: 300 }
   ];
   const itemData = [
     {
@@ -171,14 +170,13 @@ const ItemList = () => {
   ];
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: '100%', padding: 1 }}>
       <DataGrid
         getRowHeight={() => 'auto'}
         sx={{
           '& .MuiDataGrid-cell': {
             border: '1px solid rgba(224, 224, 224, 1)',
             display: 'flex',
-            justifyContent: 'center',
             alignItems: 'center'
           },
           '& .MuiDataGrid-columnHeader': {
@@ -186,18 +184,9 @@ const ItemList = () => {
             border: '1px solid rgba(224, 224, 224, 1)',
             height: '25px !important',
             display: 'flex',
-            justifyContent: 'center',
             alignItems: 'center'
           },
-          '& .MuiCheckbox-root': {
-            padding: 0,
-            margin: '0 auto', // Center align the checkbox
-            width: '18px',
-            height: '18px'
-          },
-          '& .MuiSvgIcon-root': {
-            fontSize: '20px'
-          },
+
           '& .MuiDataGrid-scrollbar': {
             height: '8px'
           }

@@ -86,21 +86,38 @@ const POReqPayment = () => {
       headerName: 'Status',
       width: 180,
       renderCell: (params) => (
-        <div>
-          {params.value === 3 ? (
-            <Chip onClick={() => handlePaymentPO(params.row)} label="Request For Payment" color="info" sx={{ width: '160px' }} />
-          ) : params.value === 1 ? (
-            <Chip label="Send to Vendor" sx={{ width: '160px', color: 'white', backgroundColor: '#de5b37' }} />
-          ) : params.value === 6 ? (
-            <Chip label="Payment Done" color="success" sx={{ width: '160px' }} />
-          ) : params.value === 10 ? (
-            <Chip label="Final Payment" sx={{ width: '160px', color: 'white', backgroundColor: 'cadetblue', cursor: 'pointer' }} />
-          ) : (
-            <Chip label="Ready for dispatch" sx={{ width: '160px', color: 'white', backgroundColor: '#e9723e' }} />
-          )}
+        <div
+          style={{
+           
+           
+            cursor: params.value === 3 || params.value === 10 ? 'pointer' : 'default',
+            color:
+              params.value === 3
+                ? '#1976d2' // Info color
+                : params.value === 1
+                ? '#de5b37'
+                : params.value === 6
+                ? '#388e3c' // Success color
+                : params.value === 10
+                ? 'cadetblue'
+                : '#e9723e' // Default color for "Ready for dispatch"
+          }}
+          onClick={
+            params.value === 3 ? () => handlePaymentPO(params.row) : undefined
+          }
+        >
+          {params.value === 3
+            ? 'Request For Payment'
+            : params.value === 1
+            ? 'Send to Vendor'
+            : params.value === 6
+            ? 'Payment Done'
+            : params.value === 10
+            ? 'Final Payment'
+            : 'Ready for dispatch'}
         </div>
       )
-    },
+    },    
     {
       field: 'po_num',
       headerName: 'Purchase Order No.',
@@ -128,7 +145,7 @@ const POReqPayment = () => {
   return (
     <MainCard
       title={
-        <Box display={'flex'} alignItems={'center'} justifyContent={'space-between'}>
+        <Box display={'flex'} alignItems={'center'} justifyContent={'space-between'} fontWeight={600} fontSize={'16px'}>
           <span>{openPaymentForm ? 'Payment Form' : 'Treasury List'}</span>
 
           {openPaymentForm && (
@@ -150,10 +167,11 @@ const POReqPayment = () => {
         <DataGrid
           getRowHeight={() => 'auto'}
           sx={{
+            height:'85vh',
             '& .MuiDataGrid-cell': {
               border: '1px solid rgba(224, 224, 224, 1)',
               display: 'flex',
-              // justifyContent: 'center',
+            
               alignItems: 'center'
             },
             '& .MuiDataGrid-columnHeader': {
@@ -161,12 +179,12 @@ const POReqPayment = () => {
               border: '1px solid rgba(224, 224, 224, 1)',
               height: '25px !important',
               display: 'flex',
-              // justifyContent: 'center',
+
               alignItems: 'center'
             },
             '& .MuiCheckbox-root': {
               padding: 0,
-              margin: '0 auto', // Center align the checkbox
+              margin: '0 auto', 
               width: '18px',
               height: '18px'
             },
@@ -181,9 +199,6 @@ const POReqPayment = () => {
           columns={paymentTreasuryColumns}
           pageSize={5}
           rowsPerPageOptions={[5]}
-          hideFooter
-          hideFooterPagination
-          hideFooterSelectedRowCount
         />
       )}
     </MainCard>

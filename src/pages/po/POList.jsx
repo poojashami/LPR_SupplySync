@@ -29,18 +29,12 @@ const POList = () => {
       )
     },
     {
-      field: 'opr_num',
-      headerName: 'OPR No.',
+      field: 'rfq_no',
+      headerName: 'RFQ No.',
       renderCell: (params) => (
         <div
           style={{
-            backgroundColor: params?.row?.status === '2' ? '#d4edda' : '#f8d7da',
-            paddingTop: '2px',
-            paddingBottom: '2px',
-            paddingLeft: '10px',
-            paddingRight: '10px',
-            borderRadius: '5px',
-            textAlign: 'center'
+            color: params?.row?.status === '2' ? 'navy' : 'red'
           }}
         >
           {params.value}
@@ -49,25 +43,27 @@ const POList = () => {
       width: 150
     },
     {
-      headerName: 'Procurement Status',
-      field: 'status_procurement',
-      width: 150,
-      renderCell: (params) =>
-        params?.row?.status === '10' ? <span>Recommended By BH</span> : params?.row?.status === '11' && <span>LPO Created</span>
+      field: 'rfq_dt',
+      headerName: 'RFQ Dt.',
+
+      width: 150
     },
-    { headerName: 'Quote Status #', field: 'quote_status', width: 120 },
+    {
+      field: 'opr_num',
+      headerName: 'LPR No.',
+
+      width: 150
+    },
+    { headerName: 'LPR Category', field: 'opr_description', width: 150 },
+
+   
+    { headerName: 'Quote Status', field: 'quote_status', width: 120 },
+    { headerName: 'Quote Received', field: 'quote_rev', width: 120 },
     { headerName: 'Vertical', field: 'vertical_name', width: 120 },
     { headerName: 'Company', field: 'company_name', width: 120 },
     { headerName: 'Division', field: 'division_name', width: 120 },
-    { headerName: 'Buying From', field: 'buy_from', width: 120 },
-    { headerName: 'Buying House', field: 'buying_house_name', width: 120 },
-    { headerName: 'Shipment Mode', field: 'shipment_mode_name', width: 120 },
-    { headerName: 'Delivery Time', field: 'd_timeline_name', width: 120 },
-    { headerName: 'Requested By Department', field: 'dept_name', width: 180 },
-    { headerName: 'Requested By', field: 'requested_by', width: 120 },
-    { headerName: 'Date', field: 'opr_date', width: 120 },
-    { headerName: 'Additional Remarks', field: 'remarks', width: 150 },
-    { headerName: 'OPR Category', field: 'opr_description', width: 150 }
+       { headerName: 'RFQ Lead Time', field: 'd_timeline_name', width: 120 },
+    { headerName: 'RFQ Remark', field: 'remarks', width: 150 },
   ];
 
   const oprData = [
@@ -115,7 +111,7 @@ const POList = () => {
   return (
     <MainCard
       title={
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '16px', fontWeight: 600 }}>
           <span>{!showLPOCompare ? 'Create LPO - List of OPR with Quotes' : 'Quotes For Company: & OPR ID:OPR-324-OPR'}</span>
           {showLPOCompare && (
             <PlusButton
@@ -135,11 +131,11 @@ const POList = () => {
           <DataGrid
             getRowHeight={() => 'auto'}
             sx={{
-              minHeight: '70vh',
+              minHeight: '85vh',
               '& .MuiDataGrid-cell': {
                 border: '1px solid rgba(224, 224, 224, 1)',
                 display: 'flex',
-                justifyContent: 'center',
+
                 alignItems: 'center'
               },
               '& .MuiDataGrid-columnHeader': {
@@ -147,7 +143,7 @@ const POList = () => {
                 border: '1px solid rgba(224, 224, 224, 1)',
                 height: '25px !important',
                 display: 'flex',
-                justifyContent: 'center',
+
                 alignItems: 'center'
               },
               '& .MuiDataGrid-scrollbar': {

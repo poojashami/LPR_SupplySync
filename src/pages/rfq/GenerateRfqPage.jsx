@@ -54,16 +54,20 @@ const GenerateRfqPage = () => {
     return val1 + val2;
   };
   const shipmentData = [
-    { label: 'Consignee Name', value: 'Tech Corp' },
-    { label: 'Consignee Code', value: 'LPR1234' },
-    { label: 'Contact Number', value: '+1 123-456-7890' },
+    { label: 'Company Code', value: 'LPR1234' },
+    { label: 'Company Name', value: 'Tech Corp' },
+    { label: 'Contact Person', value: '+1 123-456-7890' },
     { label: 'Contact Email', value: 'example@techcorp.com' },
-    { label: 'Address', value: '123 Tech Street, North Division, Electronics City' }
+    { label: 'Company Address', value: '123 Tech Street, North Division, Electronics City' }
   ];
   const rfqItemcolumns = [
+    { field: 'item_cat', headerName: 'Item Category', width: 100, flex: 1 },
+    { field: 'group', headerName: 'Group', width: 100, flex: 1 },
+    { field: 'sub_group', headerName: 'Sub Group', width: 100, flex: 1 },
+    { field: 'lpr_no', headerName: 'LPR No.', width: 100, flex: 1 },
+    { field: 'lpr_date', headerName: 'LPR Date', width: 100, flex: 1 },
     { field: 'item_code', headerName: 'Item Code', width: 100, flex: 1 },
     { field: 'item_name', headerName: 'Item Name', width: 250, flex: 1 },
-    { field: 'item_description', headerName: 'Remarks', width: 250, flex: 1 },
     { field: 'company_name', headerName: 'Company', width: 200, flex: 1 },
     { field: 'uom_name', headerName: 'UOM', width: 100, flex: 1 },
     { field: 'qty', headerName: 'Req Qty', width: 100, flex: 1, renderCell: (params) => formatNumber(params.value) },
@@ -83,6 +87,7 @@ const GenerateRfqPage = () => {
       renderCell: (params) => calcNet(Number(params?.row?.quantity), Number(params?.row?.qty)),
       flex: 1
     },
+    { field: 'item_description', headerName: 'LPR Item Remark', width: 250, flex: 1 },
     {
       field: 'action',
       headerName: 'Action',
@@ -159,11 +164,9 @@ const GenerateRfqPage = () => {
     { id: 3, req_doc_name: 'Certificate Of Analysis' }
   ]);
 
-
   const VendorColumn = [
     { field: 'lprNo', headerName: 'Sr No.', width: 100 },
-    { field: 'vertical', headerName: 'Item Name', width: 100 },
-    { field: 'company', headerName: 'Vendor Serial', width: 150 },
+    { field: 'company', headerName: 'Vendor Code', width: 150 },
     { field: 'division', headerName: 'Vendor Name', width: 150 },
     { field: 'lprCategory', headerName: 'Contact Person', width: 150 },
     { field: 'shipmentMode', headerName: 'Compliance Status', width: 150 }
@@ -220,9 +223,9 @@ const GenerateRfqPage = () => {
   const renderTableHeader = (sectionName, sectionLabel) => (
     <TableHead sx={{ backgroundColor: '#EAF1F6' }}>
       <TableRow>
-        <TableCell sx={{ padding: 0 }} colSpan={12}>
+        <TableCell sx={{ padding: 0, paddingLeft: '8px !important' }} colSpan={12}>
           <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Typography variant="h6" fontWeight={500}>
+            <Typography fontSize={'14px'} fontWeight={600} textTransform={'none'}>
               {sectionLabel}
             </Typography>
             <IconButton size="large" onClick={() => toggleTableBody(sectionName)} sx={{ height: '30px' }}>
@@ -234,7 +237,7 @@ const GenerateRfqPage = () => {
     </TableHead>
   );
   return (
-    <MainCard>
+    <>
       <Box>
         <Table>{renderTableHeader('rfqView', 'View RFQ')}</Table>
         {showTableHeading.rfqView && (
@@ -265,7 +268,7 @@ const GenerateRfqPage = () => {
 
               <Grid item xs={12} sm={3}>
                 <Typography variant="body" style={{ fontSize: '11px' }}>
-                  OPR Lead time
+                  LPR Lead time
                 </Typography>
                 <TextField
                   fullWidth
@@ -284,7 +287,7 @@ const GenerateRfqPage = () => {
 
               <Grid item xs={12} sm={3}>
                 <Typography variant="body" style={{ fontSize: '11px' }}>
-                  OPR Lead time
+                  RFQ Lead time
                 </Typography>
                 <TextField
                   fullWidth
@@ -308,7 +311,7 @@ const GenerateRfqPage = () => {
 
               <Grid item xs={12} sm={3}>
                 <Typography variant="body" style={{ fontSize: '11px' }}>
-                  Port of Delivery
+                  Delivery Term
                 </Typography>
 
                 <Select
@@ -340,7 +343,7 @@ const GenerateRfqPage = () => {
 
               <Grid item xs={12} sm={3}>
                 <Typography variant="body" style={{ fontSize: '11px' }}>
-                  Respond Time(Days)
+                  Response Time (Days)
                 </Typography>
                 <TextField
                   fullWidth
@@ -348,6 +351,27 @@ const GenerateRfqPage = () => {
                   id="respond_time"
                   name="respond_time"
                   placeholder="From RFQ Issue Date"
+                  value={respond_time}
+                  onChange={(e) => setRespondTime(e.target.value)}
+                  sx={{
+                    '& .MuiInputBase-input': {
+                      padding: '5px'
+                    },
+                    '& .MuiInputBase-input.Mui-disabled': {
+                      WebkitTextFillColor: '#000000'
+                    }
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={3}>
+                <Typography variant="body" style={{ fontSize: '11px' }}>
+                  Delivery Address
+                </Typography>
+                <TextField
+                  fullWidth
+                  id="respond_time"
+                  name="respond_time"
+                  placeholder=""
                   value={respond_time}
                   onChange={(e) => setRespondTime(e.target.value)}
                   sx={{
@@ -372,7 +396,7 @@ const GenerateRfqPage = () => {
                   >
                     <Grid item xs={12} sm={6}>
                       <Typography variant="body" style={{ fontSize: '11px' }}>
-                        Additional Remarks
+                        RFQ Remarks
                       </Typography>
                       <TextField
                         fullWidth
@@ -409,15 +433,15 @@ const GenerateRfqPage = () => {
           </Grid>
         )}
       </Box>
-      <Table>{renderTableHeader('createrfqForm', 'Item List to Create RFQ')}</Table>
+      <Table sx={{ mb: 1 }}>{renderTableHeader('createrfqForm', 'Item List to Create RFQ')}</Table>
       {showTableHeading.createrfqForm && (
         <DataGrid
           getRowHeight={() => 'auto'}
           sx={{
+            height: '30vh',
             '& .MuiDataGrid-cell': {
               border: '1px solid rgba(224, 224, 224, 1)',
               display: 'flex',
-              justifyContent: 'center',
               alignItems: 'center'
             },
             '& .MuiDataGrid-columnHeader': {
@@ -425,7 +449,6 @@ const GenerateRfqPage = () => {
               border: '1px solid rgba(224, 224, 224, 1)',
               height: '25px !important',
               display: 'flex',
-              justifyContent: 'center',
               alignItems: 'center'
             },
             '& .MuiDataGrid-checkboxInput': {
@@ -447,7 +470,7 @@ const GenerateRfqPage = () => {
         />
       )}
       <Box mt={'10px'}>
-        <Table>{renderTableHeader('itemListRfq', 'Selected Vendor')}</Table>
+        <Table sx={{ mb: 1 }}>{renderTableHeader('itemListRfq', 'Select Vendors')}</Table>
         {showTableHeading.itemListRfq && (
           <DataGrid
             getRowHeight={() => 'auto'}
@@ -455,7 +478,7 @@ const GenerateRfqPage = () => {
               '& .MuiDataGrid-cell': {
                 border: '1px solid rgba(224, 224, 224, 1)',
                 display: 'flex',
-                justifyContent: 'center',
+
                 alignItems: 'center'
               },
               '& .MuiDataGrid-columnHeader': {
@@ -463,7 +486,7 @@ const GenerateRfqPage = () => {
                 border: '1px solid rgba(224, 224, 224, 1)',
                 height: '25px !important',
                 display: 'flex',
-                justifyContent: 'center',
+
                 alignItems: 'center'
               },
               '& .MuiDataGrid-checkboxInput': {
@@ -489,7 +512,7 @@ const GenerateRfqPage = () => {
         )}
       </Box>
       <Box mt={'10px'}>
-        <Table>{renderTableHeader('vendorlist', 'Required Documents at the time of Shipping')}</Table>
+        <Table sx={{ mb: 1 }}>{renderTableHeader('vendorlist', 'Required Documents at the time of Shipment')}</Table>
         {showTableHeading.vendorlist && (
           <Box>
             <DataGrid
@@ -506,7 +529,7 @@ const GenerateRfqPage = () => {
                   display: 'flex'
                 },
                 '& .MuiDataGrid-checkboxInput': {
-                  padding: '0px' 
+                  padding: '0px'
                 },
                 '& .MuiCheckbox-root': {
                   width: '18px',
@@ -561,15 +584,33 @@ const GenerateRfqPage = () => {
       </Box>
       <Box display="flex" justifyContent="flex-end" mx={'20px'}>
         <Box display="flex" flexDirection={'row'} gap={'10px'} my={'10px'}>
-          <Button variant="outlined" color="error">
+          <Button
+            size="small"
+            sx={{
+              backgroundColor: '#cd640d',
+              color: '#fff',
+              '&:hover': {
+                backgroundColor: '#cd640d'
+              }
+            }}
+          >
             Cancel
           </Button>
-          <Button variant="contained" color="primary">
-            Issue RFQ
+          <Button
+            size="small"
+            sx={{
+              backgroundColor: '#2c6095',
+              color: '#fff',
+              '&:hover': {
+                backgroundColor: '#244b78'
+              }
+            }}
+          >
+            Send Mail to Vendor
           </Button>
         </Box>
       </Box>
-    </MainCard>
+    </>
   );
 };
 

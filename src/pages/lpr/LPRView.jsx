@@ -1,16 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import {
-  Box,
-  Grid,
-  Typography,
-  Table,
-  TableRow,
-  TableHead,
-  TableCell,
-  IconButton
-}
-  from '@mui/material';
+import { Box, Grid, Typography, Table, TableRow, TableHead, TableCell, IconButton } from '@mui/material';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutlined';
 
@@ -20,22 +10,22 @@ const LPRView = () => {
     viewLPR: true,
     lprForm: true,
     approvedlpr: true,
-    heading3: true,
+    heading3: true
   });
 
   const toggleTableBody = (section) => {
     setShowTableHeading((prevState) => ({
       ...prevState,
-      [section]: !prevState[section],
+      [section]: !prevState[section]
     }));
   };
 
   const renderTableHeader = (sectionName, sectionLabel) => (
     <TableHead sx={{ backgroundColor: '#EAF1F6' }}>
       <TableRow>
-        <TableCell sx={{ padding: 0 }} colSpan={12}>
+        <TableCell sx={{ padding: 0, paddingLeft: '8px !important' }} colSpan={12}>
           <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Typography fontSize={'14px'} fontWeight={600}>
+            <Typography fontSize={'14px'} fontWeight={600} textTransform={'none'}>
               {sectionLabel}
             </Typography>
             <IconButton size="large" onClick={() => toggleTableBody(sectionName)} sx={{ height: '30px' }}>
@@ -50,19 +40,18 @@ const LPRView = () => {
   const shipmentData = [
     { label: 'LPR No', value: 'LPR001JBJKKJ878' }, // You can add LPR No logic if needed
     { label: 'LPR Date', value: formValues.lprDate },
+    { label: 'LPR Category', value: formValues.lprCategory },
     { label: 'Vertical', value: formValues.vertical },
     { label: 'Company', value: formValues.company },
     { label: 'Division', value: formValues.division },
-    { label: 'Requested By Department', value: formValues.requestedByDept },
-    { label: 'Requested By', value: formValues.requestedBy },
-    { label: 'Quotations Email Alert', value: formValues.quotationEmailAlert },
-    { label: 'No. Min Quotation', value: formValues.noMinQuote },
-    { label: 'LPR Category', value: formValues.lprCategory },
-    { label: 'Delivery Type', value: formValues.deliveryType },
-    { label: 'Delivery Time', value: formValues.deliveryTime },
-    { label: 'Additional Remarks', value: formValues.additionalRemarks },
+    { label: 'Req. By Dept.', value: formValues.requestedByDept },
+    { label: 'Req. By', value: formValues.requestedBy },
+    // { label: 'Quotations Email Alert', value: formValues.quotationEmailAlert },
+    // { label: 'No. Min Quotation', value: formValues.noMinQuote },
+    { label: 'Delivery Term', value: formValues.deliveryType },
+    { label: 'Delivery Time (in days)', value: formValues.deliveryTime },
+    { label: 'LPR Remarks', value: formValues.additionalRemarks }
   ];
-
 
   return (
     <Box>

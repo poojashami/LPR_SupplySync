@@ -31,9 +31,9 @@ const AdditionalInformationView = () => {
   const renderTableHeader = (sectionName, sectionLabel) => (
     <TableHead sx={{ backgroundColor: '#EAF1F6' }}>
       <TableRow>
-        <TableCell sx={{ padding: 0 }} colSpan={12}>
+        <TableCell sx={{ padding: 0, paddingLeft: '8px !important' }} colSpan={12}>
           <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Typography variant="h6" fontWeight={500}>
+            <Typography fontSize={'14px'} fontWeight={600} textTransform={'none'}>
               {sectionLabel}
             </Typography>
             <IconButton size="large" onClick={() => toggleTableBody(sectionName)} sx={{ height: '30px' }}>
@@ -46,7 +46,7 @@ const AdditionalInformationView = () => {
   );
   const rfqDocListColumns = [
     { field: 'id', headerName: 'S.NO', width: 50 },
-    { field: 'rfq_req_doc_master_name', headerName: 'Document Name', width: 300 }
+    { field: 'rfq_req_doc_master_name', headerName: 'Document Name', width: 300 , flex:1}
   ];
   const rfqDocListData = [
     { id: 1, rfq_req_doc_master_name: 'Technical Specification Document' },
@@ -91,18 +91,19 @@ const AdditionalInformationView = () => {
       <Table>{renderTableHeader('approvedlpr', 'Approval Details')}</Table>
       {showTableHeading.approvedlpr && (
         <>
-          <Box>
+          <Box padding={1}>
             <Grid container spacing={2}>
               {/* First DataGrid */}
               <Grid item xs={12} md={6}>
-                <Box color={'#3f78ff'}>Required Documents</Box>
+                <Box color={'navy'} fontWeight={'600'} fontSize={'13px'}>
+                  Required Documents
+                </Box>
                 <DataGrid
                   getRowHeight={() => 'auto'}
                   sx={{
                     '& .MuiDataGrid-cell': {
                       border: '1px solid rgba(224, 224, 224, 1)',
                       display: 'flex',
-                      justifyContent: 'center',
                       alignItems: 'center'
                     },
                     '& .MuiDataGrid-columnHeader': {
@@ -110,7 +111,6 @@ const AdditionalInformationView = () => {
                       border: '1px solid rgba(224, 224, 224, 1)',
                       height: '25px !important',
                       display: 'flex',
-                      justifyContent: 'center',
                       alignItems: 'center'
                     },
                     '& .MuiCheckbox-root': {
@@ -138,14 +138,15 @@ const AdditionalInformationView = () => {
 
               {/* Second DataGrid */}
               <Grid item xs={12} md={6}>
-                <Box color={'#3f78ff'}>Additional Remarks</Box>
+                <Box color={'navy'} fontWeight={'600'} fontSize={'13px'}>
+                  Additional Remarks
+                </Box>
                 <DataGrid
                   getRowHeight={() => 'auto'}
                   sx={{
                     '& .MuiDataGrid-cell': {
                       border: '1px solid rgba(224, 224, 224, 1)',
                       display: 'flex',
-                      justifyContent: 'center',
                       alignItems: 'center'
                     },
                     '& .MuiDataGrid-columnHeader': {
@@ -153,7 +154,6 @@ const AdditionalInformationView = () => {
                       border: '1px solid rgba(224, 224, 224, 1)',
                       height: '25px !important',
                       display: 'flex',
-                      justifyContent: 'center',
                       alignItems: 'center'
                     },
                     '& .MuiDataGrid-scrollbar': {

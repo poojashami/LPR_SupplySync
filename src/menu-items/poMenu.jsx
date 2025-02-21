@@ -24,26 +24,33 @@ const PO_Menu = {
           target: false
         },
         {
+          id: 'po_create',
+          title: <FormattedMessage id="Draft" />,
+          type: 'item',
+          url: '/po/draft',
+          target: false
+        },
+        {
           id: 'po_approve',
-          title: <FormattedMessage id="Approve" />,
+          title: <FormattedMessage id="Approve LPO" />,
           type: 'item',
           url: '/po/approve',
           target: false
         },
         {
           id: 'po_view',
-          title: <FormattedMessage id="View" />,
+          title: <FormattedMessage id="Issued LPO" />,
           type: 'item',
           url: '/po/view',
           target: false
-        },
-        {
-          id: 'po_req_payemnt',
-          title: <FormattedMessage id="Request Payment(Vendor)" />,
-          type: 'item',
-          url: '/po/request-payment',
-          target: false
         }
+        // {
+        //   id: 'po_req_payemnt',
+        //   title: <FormattedMessage id="Request Payment(Vendor)" />,
+        //   type: 'item',
+        //   url: '/po/request-payment',
+        //   target: false
+        // }
       ]
     }
   ]

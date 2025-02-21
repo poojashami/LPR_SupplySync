@@ -11,7 +11,7 @@ const Quote_Menu = {
   children: [
     {
       id: 'quotecreate',
-      title: <FormattedMessage id="Quote" />,
+      title: <FormattedMessage id="Quotation" />,
       type: 'collapse',
       icon: icons.Quote_Icon,
       children: [
@@ -22,14 +22,14 @@ const Quote_Menu = {
           url: '/quote/create',
           target: false
         },
-        {
-          id: 'quote_compare',
-          title: <FormattedMessage id="Compare" />,
-          type: 'item',
-          url: '/quote/compare',
-          target: false
-        },
         ,
+        // {
+        //   id: 'quote_compare',
+        //   title: <FormattedMessage id="Compare" />,
+        //   type: 'item',
+        //   url: '/quote/compare',
+        //   target: false
+        // },
         // {
         //   id: 'quote_approve',
         //   title: <FormattedMessage id="Approve" />,

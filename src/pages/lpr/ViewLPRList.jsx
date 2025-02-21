@@ -96,42 +96,39 @@ const ViewLPRList = () => {
   };
 
   const LPRColumn = [
+    { field: 'sr_no', headerName: 'Sr. No.', width: 100 },
     {
       field: 'lprNo',
       headerName: 'LPR No.',
       renderCell: (params) => (
-        <Chip
-          label={params.value}
+        <Box
           sx={{
-            width: '200px', // Fixed width
-            bgcolor: '#cecece', // Background color
-            color: 'black', // Text color
-            fontWeight: 'bold', // Bold text
+            width: '170px',
+            color: 'navy',
+            fontWeight: 'bold',
             fontSize: '11px',
-            '&:hover': {
-              bgcolor: '#b3b3b3' // Hover effect
-            },
-            '& .MuiChip-label': {
-              color: 'black' // Label text color
-            }
+            padding: '4px',
+            borderRadius: '4px',
+            cursor: 'pointer'
           }}
           onClick={() => handleLprClick(params.row)}
-        />
+        >
+          {params.value}
+        </Box>
       ),
-      width: 150 // Adjusted to match Chip's width
+      width: 170
     },
+    { field: 'lpr_date', headerName: 'LPR Date', width: 100 },
 
-    { field: 'status', headerName: 'Status', width: 100 },
+    { field: 'lprCategory', headerName: 'LPR Category', width: 150 },
+    { field: 'status', headerName: 'LPR Status', width: 100 },
     { field: 'vertical', headerName: 'Vertical', width: 100 },
     { field: 'company', headerName: 'Company', width: 150 },
     { field: 'division', headerName: 'Division', width: 150 },
-    { field: 'lprCategory', headerName: 'LPR Category', width: 150 },
-    { field: 'shipmentMode', headerName: 'Shipment Mode', width: 150 },
-    { field: 'buyingThrough', headerName: 'Buying Through', width: 150 },
-    { field: 'leftForRFQ', headerName: 'Left for RFQ', width: 150 },
-    { field: 'deliveryTime', headerName: 'Delivery Time', width: 150 },
-    { field: 'requestedByDept', headerName: 'Requested By Department', width: 150 },
-    { field: 'requestedBy', headerName: 'Requested By', width: 150 }
+    { field: 'deliveryTime', headerName: 'Delivery Term', width: 150 },
+    { field: 'requestedByDept', headerName: 'Req. By Dept.', width: 150 },
+    { field: 'requestedBy', headerName: 'Req. By', width: 150 },
+    { field: 'delivery_time', headerName: 'Delivery Time', width: 150 }
   ];
   const filterDataByStatus = (status) => {
     return LPRData.filter((item) => item.status === status);
@@ -144,11 +141,11 @@ const ViewLPRList = () => {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            fontSize: '14px',
+            fontSize: '16px',
             fontWeight: 600
           }}
         >
-          <div>LPR List</div>
+          <div>View LPR List</div>
         </Box>
       }
     >
@@ -167,11 +164,12 @@ const ViewLPRList = () => {
             <DataGrid
               getRowHeight={() => 'auto'}
               sx={{
+                height: '75vh',
                 fontSize: '11px',
                 '& .MuiDataGrid-cell': {
                   border: '1px solid rgba(224, 224, 224, 1)',
                   display: 'flex',
-                  justifyContent: 'center',
+
                   alignItems: 'center'
                 },
                 '& .MuiDataGrid-columnHeader': {
@@ -179,7 +177,7 @@ const ViewLPRList = () => {
                   border: '1px solid rgba(224, 224, 224, 1)',
                   height: '25px !important',
                   display: 'flex',
-                  justifyContent: 'center',
+
                   alignItems: 'center'
                 },
                 '& .MuiCheckbox-root': {
@@ -199,9 +197,6 @@ const ViewLPRList = () => {
               columns={LPRColumn}
               pageSize={5}
               rowsPerPageOptions={[5]}
-              hideFooter
-              hideFooterPagination
-              hideFooterSelectedRowCount
             />
           )}
 
@@ -210,10 +205,11 @@ const ViewLPRList = () => {
               getRowHeight={() => 'auto'}
               sx={{
                 fontSize: '11px',
+                height: '75vh',
                 '& .MuiDataGrid-cell': {
                   border: '1px solid rgba(224, 224, 224, 1)',
                   display: 'flex',
-                  justifyContent: 'center',
+
                   alignItems: 'center'
                 },
                 '& .MuiDataGrid-columnHeader': {
@@ -221,7 +217,7 @@ const ViewLPRList = () => {
                   border: '1px solid rgba(224, 224, 224, 1)',
                   height: '25px !important',
                   display: 'flex',
-                  justifyContent: 'center',
+
                   alignItems: 'center'
                 },
                 '& .MuiCheckbox-root': {
@@ -252,10 +248,11 @@ const ViewLPRList = () => {
               getRowHeight={() => 'auto'}
               sx={{
                 fontSize: '11px',
+                height: '75vh',
                 '& .MuiDataGrid-cell': {
                   border: '1px solid rgba(224, 224, 224, 1)',
                   display: 'flex',
-                  justifyContent: 'center',
+
                   alignItems: 'center'
                 },
                 '& .MuiDataGrid-columnHeader': {
@@ -263,7 +260,7 @@ const ViewLPRList = () => {
                   border: '1px solid rgba(224, 224, 224, 1)',
                   height: '25px !important',
                   display: 'flex',
-                  justifyContent: 'center',
+
                   alignItems: 'center'
                 },
                 '& .MuiCheckbox-root': {
@@ -293,10 +290,11 @@ const ViewLPRList = () => {
               getRowHeight={() => 'auto'}
               sx={{
                 fontSize: '11px',
+                height: '75vh',
                 '& .MuiDataGrid-cell': {
                   border: '1px solid rgba(224, 224, 224, 1)',
                   display: 'flex',
-                  justifyContent: 'center',
+
                   alignItems: 'center'
                 },
                 '& .MuiDataGrid-columnHeader': {
@@ -304,7 +302,7 @@ const ViewLPRList = () => {
                   border: '1px solid rgba(224, 224, 224, 1)',
                   height: '25px !important',
                   display: 'flex',
-                  justifyContent: 'center',
+
                   alignItems: 'center'
                 },
                 '& .MuiCheckbox-root': {

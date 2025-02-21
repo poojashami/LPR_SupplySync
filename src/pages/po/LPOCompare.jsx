@@ -57,9 +57,9 @@ const LPOCompare = () => {
   const renderTableHeader = (sectionName, sectionLabel) => (
     <TableHead sx={{ backgroundColor: '#EAF1F6' }}>
       <TableRow>
-        <TableCell sx={{ padding: 0 }} colSpan={12}>
+        <TableCell sx={{ padding: 0, paddingLeft: '8px !important' }} colSpan={12}>
           <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Typography variant="h6" fontWeight={500}>
+            <Typography fontSize={'14px'} fontWeight={600} textTransform={'none'}>
               {sectionLabel}
             </Typography>
             <IconButton size="large" onClick={() => toggleTableBody(sectionName)} sx={{ height: '30px' }}>
@@ -146,9 +146,11 @@ const LPOCompare = () => {
   ];
 
   const vendorDetailsCols = [
-    { headerName: 'Lead Time', field: 'lead_time' },
-    { headerName: 'Payment Terms', field: 'payment_terms', width: 120 },
-    { headerName: 'Quote Curr', field: 'currency', width: 100 },
+    { headerName: 'RFQ Lead Time', field: 'rfq_lead_time' },
+
+    { headerName: 'Vendor Lead Time', field: 'vendor_lead_time' },
+    { headerName: 'Payment Term', field: 'payment_terms', width: 120 },
+    { headerName: 'Quote Curr.', field: 'currency', width: 100 },
 
     {
       headerName: 'Product Cost',
@@ -157,17 +159,18 @@ const LPOCompare = () => {
       // renderCell: (params) => <span>{formatNumber(params.value)}</span>
     },
     {
-      headerName: 'Supp Freight costs',
-      field: 'supp_freight_costs',
-      // renderCell: (params) => <span>{formatNumber(params.value)}</span>,
-      width: 120
-    },
-    {
-      headerName: 'Supp Add costs',
+      headerName: 'Vendor Add. costs',
       field: 'supp_additional_costs',
       // renderCell: (params) => <span>{formatNumber(params.value)}</span>,
       width: 120
     },
+    {
+      headerName: 'Transportation Ch.',
+      field: 'supp_freight_costs',
+      // renderCell: (params) => <span>{formatNumber(params.value)}</span>,
+      width: 120
+    },
+
     {
       headerName: 'Convert to Compare(DT)',
       field: 'delivery',
@@ -202,25 +205,14 @@ const LPOCompare = () => {
       headerAlign: 'center'
     },
     {
-      headerName: 'Inland Charges',
+      headerName: 'Transportation Ch. for Compare',
       field: 'inland_charges',
-      renderCell: (params) => {
+      renderCell: () => {
         // return <span>{formatNumber(params.value)}</span>;
       },
       width: 120
     },
-    {
-      headerName: 'FOB Charges',
-      field: 'fob_charges',
-      // renderCell: (params) => <span>{formatNumber(params.value)}</span>,
-      width: 100
-    },
-    {
-      headerName: 'Freight Charges',
-      field: 'Freight_Charges',
-      // renderCell: (params) => <span>{formatNumber(params.value)}</span>,
-      width: 120
-    },
+
     {
       headerName: 'BH Add. Costs',
       field: 'additional_costs',
@@ -402,11 +394,11 @@ const LPOCompare = () => {
     }
   ];
   const vendorDetailsColsMain = [
-    { headerName: 'Quote ID', field: 'quoteNum', width: 100 },
+    { headerName: 'Quotation No.', field: 'quoteNum', width: 100 },
+    { headerName: 'Quotation Date', field: 'quote_received_date', width: 100 },
     { headerName: 'Vendor', field: 'vendor_name', width: 100 },
-    { headerName: 'Date', field: 'quote_received_date', width: 100 },
-    { headerName: 'Delivery Terms', field: 'delivery_term', width: 110 },
-    { headerName: 'Remarks', field: 'remarks', width: 200 }
+    { headerName: 'Delivery Term', field: 'delivery_term', width: 110 },
+    { headerName: 'Quotation Remark', field: 'remarks', width: 200 }
   ];
   const itemColumn = [
     { headerName: 'No. Packs', field: 'no_packs', renderCell: (params) => <span>{formatNumber(params.value)}</span> },
@@ -835,17 +827,13 @@ const LPOCompare = () => {
                     </Typography>
                     <div style={{ flex: '1' }}>{quotation?.delivery_term}</div>
                   </div>
+
                   <div style={{ display: 'flex', alignItems: 'center', fontSize: '11px', marginBottom: '1px' }}>
                     <Typography variant="subtitle2" style={{ fontSize: '11px' }}>
-                      Country supply:
+                      {' '}
+                      Vendor Lead Time:
                     </Typography>
-                    <div style={{ flex: '1' }}>{quotation.country_supply}</div>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', fontSize: '11px', marginBottom: '1px' }}>
-                    <Typography variant="subtitle2" style={{ fontSize: '11px' }}>
-                      Country origin:
-                    </Typography>
-                    <div style={{ flex: '1' }}>{quotation?.country_origin}</div>
+                    <div style={{ flex: '1' }}>{quotation?.lead_time}</div>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', fontSize: '11px', marginBottom: '1px' }}>
                     <Typography variant="subtitle2" style={{ fontSize: '11px' }}>
@@ -853,19 +841,7 @@ const LPOCompare = () => {
                     </Typography>
                     <div style={{ flex: '1' }}>{quotation?.currency}</div>
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center', fontSize: '11px', marginBottom: '1px' }}>
-                    <Typography variant="subtitle2" style={{ fontSize: '11px' }}>
-                      Port of Loading:
-                    </Typography>
-                    <div style={{ flex: '1' }}>{quotation?.port_loading}</div>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', fontSize: '11px', marginBottom: '1px' }}>
-                    <Typography variant="subtitle2" style={{ fontSize: '11px' }}>
-                      {' '}
-                      Lead Time:
-                    </Typography>
-                    <div style={{ flex: '1' }}>{quotation?.lead_time}</div>
-                  </div>
+
                   <div style={{ display: 'flex', alignItems: 'center', fontSize: '11px', marginBottom: '1px' }}>
                     <Typography variant="subtitle2" style={{ fontSize: '11px' }}>
                       {' '}
@@ -892,7 +868,6 @@ const LPOCompare = () => {
                       {formatNumber(Number(quotation?.product_amt + quotation?.effective_cost))} {quotation?.currency}
                     </div>
                   </div>
-                  <div style={{ width: '100%', border: '1px dotted black' }} />
 
                   <div style={{ display: 'flex', alignItems: 'center', fontSize: '11px', marginBottom: '1px' }}>
                     <Typography variant="subtitle2" style={{ fontSize: '11px' }}>
@@ -900,14 +875,6 @@ const LPOCompare = () => {
                       Procurement Justification :
                     </Typography>
                     <div style={{ flex: '1' }}>{quotation?.procurement_justification || 'N.A.'}</div>
-                  </div>
-
-                  <div style={{ display: 'flex', alignItems: 'center', fontSize: '11px', marginBottom: '1px' }}>
-                    <Typography variant="subtitle2" style={{ fontSize: '11px' }}>
-                      {' '}
-                      Unit Justification :
-                    </Typography>
-                    <div style={{ flex: '1' }}>{quotation?.unit_justification || 'N.A.'}</div>
                   </div>
 
                   <div
@@ -953,42 +920,44 @@ const LPOCompare = () => {
           </div>
         </Grid>
       </Grid>
-      <Grid container spacing={2}>
-        <Table>{renderTableHeader('documentsList', 'Documents List')}</Table>
-        {showTableHeading.documentsList && (
-          <DataGrid
-            getRowHeight={() => 'auto'}
-            sx={{
-              '& .MuiDataGrid-cell': {
-                border: '1px solid rgba(224, 224, 224, 1)',
-                display: 'flex',
-                justifyContent: 'start',
-                alignItems: 'center'
-              },
-              '& .MuiDataGrid-columnHeader': {
-                backgroundColor: '#f5f5f5',
-                border: '1px solid rgba(224, 224, 224, 1)',
-                height: '25px !important',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center'
-              },
-              '& .MuiDataGrid-scrollbar': {
-                height: '8px'
-              }
-            }}
-            columns={[
-              { headerName: 'Sr.No.', field: 'id', width: 70 },
-              { headerName: 'Quote ID', field: 'quotation_id', width: 100 },
-              { headerName: 'Document', field: 'document_name', width: 180 },
-              { headerName: 'Document Date', field: 'document_date', width: 120 },
-              { headerName: 'File Name', field: 'file_name', width: 180 },
-              { headerName: 'Notes', field: 'notes', width: 300 }
-            ]}
-            rows={doc_list}
-          />
-        )}
-      </Grid>
+
+      <Table>{renderTableHeader('documentsList', 'Documents List')}</Table>
+      {showTableHeading.documentsList && (
+        <DataGrid
+          getRowHeight={() => 'auto'}
+          sx={{
+            '& .MuiDataGrid-cell': {
+              border: '1px solid rgba(224, 224, 224, 1)',
+              display: 'flex',
+              justifyContent: 'start',
+              alignItems: 'center'
+            },
+            '& .MuiDataGrid-columnHeader': {
+              backgroundColor: '#f5f5f5',
+              border: '1px solid rgba(224, 224, 224, 1)',
+              height: '25px !important',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            },
+            '& .MuiDataGrid-scrollbar': {
+              height: '8px'
+            }
+          }}
+          columns={[
+            { headerName: 'Sr.No.', field: 'id', width: 70 },
+            { headerName: 'Quote ID', field: 'quotation_id', width: 100 },
+            { headerName: 'Document', field: 'document_name', width: 180 },
+            { headerName: 'Document Date', field: 'document_date', width: 120 },
+            { headerName: 'File Name', field: 'file_name', width: 180 },
+            { headerName: 'Notes', field: 'notes', width: 300 }
+          ]}
+          rows={doc_list}
+          hideFooter
+          hideFooterPagination
+          hideFooterSelectedRowCount
+        />
+      )}
     </div>
   );
 };

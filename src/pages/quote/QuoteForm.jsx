@@ -35,6 +35,9 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { styled } from '@mui/system';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import CustomParagraphLight from 'components/CustomParagraphLight';
+import CustomParagraphDark from 'components/CustomParagraphDark';
+import CustomHeading from 'components/CustomHeading';
 const faqItemDatalist = [
   {
     id: 1,
@@ -148,14 +151,13 @@ const QuoteForm = () => {
   });
   const [showTableHeading, setShowTableHeading] = useState({
     createrfqForm: true,
-    itemListRfq: true,
-    vendorlist: true,
+    basicInfo: true,
     requireDoc: true,
     paymentTerms: true,
     freightCharges: true,
     additionalCharges: true,
-    requireDoc: true,
-    itemDetail: true
+    itemDetail: true,
+    quoteAmount: true
   });
   const [faqItemData, setFaqItemData] = useState(faqItemDatalist);
   const [ReqDocs, setReqDocs] = useState([]);
@@ -226,11 +228,13 @@ const QuoteForm = () => {
 
   const [fileArray, setFileArray] = useState([]);
   const [listDoc, setlistDoc] = useState([
-    { name: 'C.I.', remark: '', file: null, selected: false },
-    { name: 'Packing List', remark: '', file: null, selected: false },
-    { name: 'Way Bill', remark: '', file: null, selected: false },
-    { name: 'Cert of Analysis', remark: '', file: null, selected: false },
-    { name: 'Others', remark: '', file: null, selected: false }
+    { name: 'Quotation.', remark: '', file: null, selected: false },
+    { name: 'Proforma Invoice', remark: '', file: null, selected: false },
+    { name: 'TDS', remark: '', file: null, selected: false },
+    { name: 'MSDS', remark: '', file: null, selected: false },
+    { name: 'Brochure', remark: '', file: null, selected: false },
+    { name: 'Drowing', remark: '', file: null, selected: false },
+    { name: 'Other', remark: '', file: null, selected: false }
   ]);
   const handleCheckboxChange = (index) => {
     const updatedFileArray = [...listDoc];
@@ -254,12 +258,12 @@ const QuoteForm = () => {
   const renderTableHeader = (sectionName, sectionLabel) => (
     <TableHead sx={{ backgroundColor: '#EAF1F6' }}>
       <TableRow>
-        <TableCell sx={{ padding: 0 }} colSpan={12}>
+        <TableCell sx={{ padding: 0, paddingLeft: '8px !important' }} colSpan={12}>
           <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Typography variant="h6" fontWeight={500}>
+            <Typography fontSize={'14px'} fontWeight={600} textTransform={'none'}>
               {sectionLabel}
             </Typography>
-            <IconButton size="small" onClick={() => toggleTableBody(sectionName)} sx={{ height: '30px' }}>
+            <IconButton size="large" onClick={() => toggleTableBody(sectionName)} sx={{ height: '30px' }}>
               {showTableHeading[sectionName] ? <KeyboardArrowUpOutlinedIcon /> : <KeyboardArrowDownOutlinedIcon />}
             </IconButton>
           </Box>
@@ -269,8 +273,9 @@ const QuoteForm = () => {
   );
   const TableHeader = [
     { field: 'id', headerName: 'ID', width: 50 },
-    { field: 'shipment_type', headerName: 'Shipment Type', width: 120 },
-    { field: 'item_type', headerName: 'Item Category', width: 120 },
+    { field: 'item_cat', headerName: 'Item Category', width: 120 },
+    { field: 'group', headerName: 'Group', width: 100 },
+    { field: 'subgroup', headerName: 'Sub Group', width: 120 },
     { field: 'item_code', headerName: 'Item Code', width: 100 },
     { field: 'item_name', headerName: 'Item Name', width: 120 },
     {
@@ -292,48 +297,10 @@ const QuoteForm = () => {
         </div>
       )
     },
-    {
-      field: 'item_name_label',
-      headerName: 'Item Label Name',
-      width: 250,
-      editable: true,
-      renderHeader: (params) => (
-        <div>
-          <IconButton
-            aria-label="delete"
-            size="small"
-            onClick={() => handleCopyButtonClick(params?.colDef?.field)}
-            style={{ cursor: 'pointer' }}
-          >
-            <ContentCopyIcon fontSize="inherit" />
-          </IconButton>
-          <span>{params.colDef.headerName}</span>
-        </div>
-      )
-    },
-    {
-      field: 'cria',
-      headerName: 'CRIA Req #',
-      width: 80,
-      renderCell: (params) => {
-        return (
-          <span>
-            {params.row.name === 'total'
-              ? ''
-              : params.row?.nafdac_req === 'true'
-                ? params.row?.cria_req === 'true'
-                  ? is_cria_required
-                    ? 'Yes'
-                    : 'No'
-                  : 'N'
-                : 'N'}
-          </span>
-        );
-      }
-    },
+
     // { field: 'address', headerName: 'Shipping address', width: 200 },
     { field: 'uom', headerName: 'UOM', width: 70 },
-    { field: 'quantity', headerName: 'OPR Qty', width: 75 },
+    { field: 'quantity', headerName: 'LPR Qty', width: 75 },
     {
       field: 'quote_qtd',
       headerName: `Quote Qty`,
@@ -406,6 +373,12 @@ const QuoteForm = () => {
       }
     },
     {
+      field: 'pack_uom',
+      headerName: 'Pack UOM',
+      width: 100,
+      editable: true
+    },
+    {
       field: 'pack_size',
       headerName: 'Pack Size',
       width: 100,
@@ -440,12 +413,36 @@ const QuoteForm = () => {
     },
     {
       field: 'opr_remark',
-      headerName: 'OPR Remarks',
+      headerName: 'LPR Item Remarks',
       width: 200
     },
     {
       field: 'remarks',
-      headerName: 'Vendor Remarks',
+      headerName: 'Vendor Item Remarks',
+      width: 200,
+      editable: true
+    },
+    {
+      field: 'vatRate',
+      headerName: 'VAT Rate',
+      width: 200,
+      editable: true
+    },
+    {
+      field: 'itemVatTotal',
+      headerName: 'Item VAT Total',
+      width: 200,
+      editable: true
+    },
+    {
+      field: 'roundOfVat',
+      headerName: 'Round off VAT',
+      width: 200,
+      editable: true
+    },
+    {
+      field: 'itemAmount',
+      headerName: 'Item Amount Incl. VAT',
       width: 200,
       editable: true
     }
@@ -485,11 +482,6 @@ const QuoteForm = () => {
   };
 
   const shipmentData = [
-    { label: 'RFQ Num', value: 'Tech Corp' },
-    { label: 'Port of Destination', value: 'LPR1234' },
-    { label: 'Respond Time(Days)', value: '+1 123-456-7890' },
-    { label: 'Delivery_time', value: 'example@techcorp.com' },
-    { label: 'Created On', value: '123 Tech Street, North Division, Electronics City' },
     { label: 'Consignee Name', value: 'Tech Corp' },
     { label: 'Consignee Code', value: 'LPR1234' },
     { label: 'Contact Number', value: '+1 123-456-7890' },
@@ -519,414 +511,446 @@ const QuoteForm = () => {
       )}
 
       <form onSubmit={handleSubmit}>
-        <Table>{renderTableHeader('createrfqForm', 'Create Quote')}</Table>
-        {showTableHeading.createrfqForm && (
-          <Grid container spacing={2} mt={'1px'}>
-            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
-              <Tooltip title="Shipment Mode" placement="right" arrow>
-                <Typography variant="body" style={{ fontSize: '11px', cursor: 'pointer' }}>
+        <Table>{renderTableHeader('basicInfo', 'Basic Info')}</Table>
+        {showTableHeading.basicInfo && (
+          <Box padding={1}>
+            <Grid container spacing={2}>
+              <Grid item xs={3}>
+                <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
+                  <Typography variant="h6" sx={{ marginRight: 1, fontWeight: '500', fontSize: '11px', color: '#333' }}>
+                    RFQ N0.:
+                  </Typography>
+                  <Typography variant="body1" sx={{ color: '#555', fontSize: '11px' }}>
+                    djhdjkk
+                  </Typography>
+                </Box>
+              </Grid>
+              <Grid item xs={3}>
+                <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
+                  <Typography variant="h6" sx={{ marginRight: 1, fontWeight: '500', fontSize: '11px', color: '#333' }}>
+                    RFQ Dt.:
+                  </Typography>
+                  <Typography variant="body1" sx={{ color: '#555', fontSize: '11px' }}>
+                    djhdjkk
+                  </Typography>
+                </Box>
+              </Grid>
+              <Grid item xs={3}>
+                <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
+                  <Typography variant="h6" sx={{ marginRight: 1, fontWeight: '500', fontSize: '11px', color: '#333' }}>
+                    Respond Time(Days):
+                  </Typography>
+                  <Typography variant="body1" sx={{ color: '#555', fontSize: '11px' }}>
+                    djhdjkk
+                  </Typography>
+                </Box>
+              </Grid>
+            </Grid>
+            <Grid container spacing={2}>
+              {/* <Grid item xs={12} sm={2}>
+                <CustomParagraphLight>
                   Shipment Mode<ValidationStar>*</ValidationStar>
-                </Typography>
-              </Tooltip>
-            </Grid>
-            <Grid item xs={12} sm={2} paddingTop={'20px'}>
-              <TextField
-                sx={{
-                  '& .MuiOutlinedInput-input': {
-                    padding: '5px'
-                  },
-                  '& .MuiInputBase-input.Mui-disabled': {
-                    WebkitTextFillColor: '#000000'
-                  }
-                }}
-                name="lprNo"
-                variant="outlined"
-                fullWidth
-                size="small"
-              />
-            </Grid>
-            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
-              <Tooltip title="Shipment Type" placement="right" arrow>
-                <Typography variant="body" style={{ fontSize: '11px', cursor: 'pointer' }}>
-                  Shipment Type<ValidationStar>*</ValidationStar>
-                </Typography>
-              </Tooltip>
-            </Grid>
-            <Grid item xs={12} sm={2} paddingTop={'20px'}>
-              <TextField
-                sx={{
-                  '& .MuiOutlinedInput-input': {
-                    padding: '5px'
-                  },
-                  '& .MuiInputBase-input.Mui-disabled': {
-                    WebkitTextFillColor: '#000000'
-                  }
-                }}
-                name="vertical"
-                variant="outlined"
-                fullWidth
-                size="small"
-              />
-            </Grid>
-            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
-              <Tooltip title=" Vendor Name" placement="right" arrow>
-                <Typography variant="body" style={{ fontSize: '11px', cursor: 'pointer' }}>
+                </CustomParagraphLight>
+                <TextField
+                  sx={{
+                    '& .MuiInputBase-input': {
+                      padding: '4px',
+                      fontSize: '11px'
+                    },
+                    '& .MuiInputBase-input.Mui-disabled': {
+                      WebkitTextFillColor: '#000000'
+                    }
+                  }}
+                  name="lprNo"
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                />
+              </Grid> */}
+
+              <Grid item xs={12} sm={2}>
+                <CustomParagraphLight>
+                  RFQ Delivery Term<ValidationStar>*</ValidationStar>
+                </CustomParagraphLight>
+                <TextField
+                  sx={{
+                    '& .MuiInputBase-input': {
+                      padding: '4px',
+                      fontSize: '11px'
+                    },
+                    '& .MuiInputBase-input.Mui-disabled': {
+                      WebkitTextFillColor: '#000000'
+                    }
+                  }}
+                  name="vertical"
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={2}>
+                <CustomParagraphLight>
                   Vendor Name<ValidationStar>*</ValidationStar>
-                </Typography>
-              </Tooltip>
-            </Grid>
-            <Grid item xs={12} sm={2} paddingTop={'20px'}>
-              <TextField
-                sx={{
-                  '& .MuiOutlinedInput-input': {
-                    padding: '5px'
-                  },
-                  '& .MuiInputBase-input.Mui-disabled': {
-                    WebkitTextFillColor: '#000000'
-                  }
-                }}
-                name="company"
-                variant="outlined"
-                fullWidth
-                size="small"
-              />
-            </Grid>
-            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
-              <Tooltip title="Vendor Address" placement="right" arrow>
-                <Typography variant="body" style={{ fontSize: '11px', cursor: 'pointer' }}>
+                </CustomParagraphLight>
+                <TextField
+                  sx={{
+                    '& .MuiInputBase-input': {
+                      padding: '4px',
+                      fontSize: '11px'
+                    },
+                    '& .MuiInputBase-input.Mui-disabled': {
+                      WebkitTextFillColor: '#000000'
+                    }
+                  }}
+                  name="company"
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                />
+              </Grid>
+
+              {/* <Grid item xs={12} sm={2}>
+                <CustomParagraphLight>
                   Vendor Address<ValidationStar>*</ValidationStar>
-                </Typography>
-              </Tooltip>
-            </Grid>
-            <Grid item xs={12} sm={2} paddingTop={'20px'}>
-              <TextField
-                sx={{
-                  '& .MuiOutlinedInput-input': {
-                    padding: '5px'
-                  },
-                  '& .MuiInputBase-input.Mui-disabled': {
-                    WebkitTextFillColor: '#000000'
-                  }
-                }}
-                name="division"
-                variant="outlined"
-                fullWidth
-                size="small"
-              />
-            </Grid>
+                </CustomParagraphLight>
+                <TextField
+                  sx={{
+                    '& .MuiInputBase-input': {
+                      padding: '4px',
+                      fontSize: '11px'
+                    },
+                    '& .MuiInputBase-input.Mui-disabled': {
+                      WebkitTextFillColor: '#000000'
+                    }
+                  }}
+                  name="division"
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                />
+              </Grid> */}
 
-            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
-              <Tooltip title="Vendor Quote No" placement="right" arrow>
-                <Typography variant="body" style={{ fontSize: '11px', cursor: 'pointer' }}>
+              <Grid item xs={12} sm={2}>
+                <CustomParagraphLight>
                   Vendor Quote No<ValidationStar>*</ValidationStar>
-                </Typography>
-              </Tooltip>
-            </Grid>
-            <Grid item xs={12} sm={2} paddingTop={'20px'}>
-              <TextField
-                sx={{
-                  '& .MuiOutlinedInput-input': {
-                    padding: '5px'
-                  },
-                  '& .MuiInputBase-input.Mui-disabled': {
-                    WebkitTextFillColor: '#000000'
-                  }
-                }}
-                name="lprCategory"
-                variant="outlined"
-                fullWidth
-                size="small"
-              />
-            </Grid>
+                </CustomParagraphLight>
+                <TextField
+                  sx={{
+                    '& .MuiInputBase-input': {
+                      padding: '4px',
+                      fontSize: '11px'
+                    },
+                    '& .MuiInputBase-input.Mui-disabled': {
+                      WebkitTextFillColor: '#000000'
+                    }
+                  }}
+                  name="lprCategory"
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                />
+              </Grid>
 
-            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
-              <Tooltip title="Vendor Quote Date" placement="right" arrow>
-                <Typography variant="body" style={{ fontSize: '11px', cursor: 'pointer' }}>
-                  Vendor Quote Date<ValidationStar>*</ValidationStar>
-                </Typography>
-              </Tooltip>
-            </Grid>
-            <Grid item xs={12} sm={2} paddingTop={'20px'}>
-              <TextField
-                sx={{
-                  '& .MuiOutlinedInput-input': {
-                    padding: '5px'
-                  },
-                  '& .MuiInputBase-input.Mui-disabled': {
-                    WebkitTextFillColor: '#000000'
-                  }
-                }}
-                name="shipmentMode"
-                variant="outlined"
-                fullWidth
-                size="small"
-              />
-            </Grid>
-            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
-              <Typography variant="body" style={{ fontSize: '11px' }}>
-                Currency<ValidationStar>*</ValidationStar>
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={2} paddingTop={'20px'}>
-              <TextField
-                sx={{
-                  '& .MuiOutlinedInput-input': {
-                    padding: '5px'
-                  },
-                  '& .MuiInputBase-input.Mui-disabled': {
-                    WebkitTextFillColor: '#000000'
-                  }
-                }}
-                name="buyingThrough"
-                variant="outlined"
-                fullWidth
-                size="small"
-              />
-            </Grid>
-            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
-              <Tooltip title="Delivery Terms" placement="right" arrow>
-                <Typography variant="body" style={{ fontSize: '11px', cursor: 'pointer' }}>
-                  Delivery Terms<ValidationStar>*</ValidationStar>
-                </Typography>
-              </Tooltip>
-            </Grid>
-            <Grid item xs={12} sm={2} paddingTop={'20px'}>
-              <TextField
-                sx={{
-                  '& .MuiOutlinedInput-input': {
-                    padding: '5px'
-                  },
-                  '& .MuiInputBase-input.Mui-disabled': {
-                    WebkitTextFillColor: '#000000'
-                  }
-                }}
-                name="leftForRFQ"
-                variant="outlined"
-                fullWidth
-                size="small"
-              />
-            </Grid>
-            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
-              <Tooltip title="Buyer Lead Time" placement="right" arrow>
-                <Typography variant="body" style={{ fontSize: '11px', cursor: 'pointer' }}>
-                  Buyer Lead Time<ValidationStar>*</ValidationStar>
-                </Typography>
-              </Tooltip>
-            </Grid>
-            <Grid item xs={12} sm={2} paddingTop={'20px'}>
-              <TextField
-                sx={{
-                  '& .MuiOutlinedInput-input': {
-                    padding: '5px'
-                  },
-                  '& .MuiInputBase-input.Mui-disabled': {
-                    WebkitTextFillColor: '#000000'
-                  }
-                }}
-                name="deliveryTime"
-                variant="outlined"
-                fullWidth
-                size="small"
-              />
-            </Grid>
-            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
-              <Typography variant="body" style={{ fontSize: '11px' }}>
-                Lead Time<ValidationStar>*</ValidationStar>
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={2} paddingTop={'20px'}>
-              <TextField
-                sx={{
-                  '& .MuiOutlinedInput-input': {
-                    padding: '5px'
-                  },
-                  '& .MuiInputBase-input.Mui-disabled': {
-                    WebkitTextFillColor: '#000000'
-                  }
-                }}
-                name="requestedByDept"
-                variant="outlined"
-                fullWidth
-                size="small"
-              />
-            </Grid>
-            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
-              <Tooltip title="Lead Initiation Point" placement="right" arrow>
-                <Typography variant="body" style={{ fontSize: '11px', cursor: 'pointer' }}>
-                  Lead Initiation Point<ValidationStar>*</ValidationStar>
-                </Typography>
-              </Tooltip>
-            </Grid>
-            <Grid item xs={12} sm={2} paddingTop={'20px'}>
-              <TextField
-                sx={{
-                  '& .MuiOutlinedInput-input': {
-                    padding: '5px'
-                  },
-                  '& .MuiInputBase-input.Mui-disabled': {
-                    WebkitTextFillColor: '#000000'
-                  }
-                }}
-                name="requestedBy"
-                variant="outlined"
-                fullWidth
-                size="small"
-              />
-            </Grid>
-            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
-              <Tooltip title="Country of Origin" placement="right" arrow>
-                <Typography variant="body" style={{ fontSize: '11px', cursor: 'pointer' }}>
-                  Country of Origin<ValidationStar>*</ValidationStar>
-                </Typography>
-              </Tooltip>
-            </Grid>
-            <Grid item xs={12} sm={2} paddingTop={'20px'}>
-              <TextField
-                sx={{
-                  '& .MuiOutlinedInput-input': {
-                    padding: '5px'
-                  },
-                  '& .MuiInputBase-input.Mui-disabled': {
-                    WebkitTextFillColor: '#000000'
-                  }
-                }}
-                name="date"
-                variant="outlined"
-                fullWidth
-                size="small"
-              />
-            </Grid>
+              <Grid item xs={12} sm={2}>
+                <Tooltip title="Vendor Quote Date" placement="right" arrow>
+                  <CustomParagraphLight>
+                    Vendor Quote Dt.<ValidationStar>*</ValidationStar>
+                  </CustomParagraphLight>
+                </Tooltip>
+                <TextField
+                  sx={{
+                    '& .MuiInputBase-input': {
+                      padding: '4px',
+                      fontSize: '11px'
+                    },
+                    '& .MuiInputBase-input.Mui-disabled': {
+                      WebkitTextFillColor: '#000000'
+                    }
+                  }}
+                  name="shipmentMode"
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                />
+              </Grid>
 
-            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
-              <Tooltip title="Country of Supply" placement="right" arrow>
-                <Typography variant="body" style={{ fontSize: '11px', cursor: 'pointer' }}>
-                  Country of Supply<ValidationStar>*</ValidationStar>
-                </Typography>
-              </Tooltip>
+              <Grid item xs={12} sm={2}>
+                <CustomParagraphLight>
+                  Quote Currency<ValidationStar>*</ValidationStar>
+                </CustomParagraphLight>
+                <TextField
+                  sx={{
+                    '& .MuiInputBase-input': {
+                      padding: '4px',
+                      fontSize: '11px'
+                    },
+                    '& .MuiInputBase-input.Mui-disabled': {
+                      WebkitTextFillColor: '#000000'
+                    }
+                  }}
+                  name="buyingThrough"
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={2}>
+                <CustomParagraphLight>
+                  Vendor Delivery Terms<ValidationStar>*</ValidationStar>
+                </CustomParagraphLight>
+                <TextField
+                  sx={{
+                    '& .MuiInputBase-input': {
+                      padding: '4px',
+                      fontSize: '11px'
+                    },
+                    '& .MuiInputBase-input.Mui-disabled': {
+                      WebkitTextFillColor: '#000000'
+                    }
+                  }}
+                  name="leftForRFQ"
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={2}>
+                <Tooltip title="Buyer Lead Time" placement="right" arrow>
+                  <CustomParagraphLight>
+                    RFQ Lead Time<ValidationStar>*</ValidationStar>
+                  </CustomParagraphLight>
+                </Tooltip>
+                <TextField
+                  sx={{
+                    '& .MuiInputBase-input': {
+                      padding: '4px',
+                      fontSize: '11px'
+                    },
+                    '& .MuiInputBase-input.Mui-disabled': {
+                      WebkitTextFillColor: '#000000'
+                    }
+                  }}
+                  name="deliveryTime"
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={2}>
+                <CustomParagraphLight>
+                  Vendor Lead Time<ValidationStar>*</ValidationStar>
+                </CustomParagraphLight>
+                <TextField
+                  sx={{
+                    '& .MuiInputBase-input': {
+                      padding: '4px',
+                      fontSize: '11px'
+                    },
+                    '& .MuiInputBase-input.Mui-disabled': {
+                      WebkitTextFillColor: '#000000'
+                    }
+                  }}
+                  name="requestedByDept"
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={2}>
+                <Tooltip title="Lead Initiation Point" placement="right" arrow>
+                  <CustomParagraphLight>
+                    Lead Initiation Point<ValidationStar>*</ValidationStar>
+                  </CustomParagraphLight>
+                </Tooltip>
+                <TextField
+                  sx={{
+                    '& .MuiInputBase-input': {
+                      padding: '4px',
+                      fontSize: '11px'
+                    },
+                    '& .MuiInputBase-input.Mui-disabled': {
+                      WebkitTextFillColor: '#000000'
+                    }
+                  }}
+                  name="requestedBy"
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                />
+              </Grid>
+
+              {/* <Grid item xs={12} sm={2}>
+                <Tooltip title="Country of Origin" placement="right" arrow>
+                  <CustomParagraphLight>
+                    Country of Origin<ValidationStar>*</ValidationStar>
+                  </CustomParagraphLight>
+                </Tooltip>
+                <TextField
+                  sx={{
+                    '& .MuiInputBase-input': {
+                      padding: '4px',
+                      fontSize: '11px'
+                    },
+                    '& .MuiInputBase-input.Mui-disabled': {
+                      WebkitTextFillColor: '#000000'
+                    }
+                  }}
+                  name="date"
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                />
+              </Grid> */}
+
+              {/* <Grid item xs={12} sm={2}>
+                <Tooltip title="Country of Supply" placement="right" arrow>
+                  <CustomParagraphLight>
+                    Country of Supply<ValidationStar>*</ValidationStar>
+                  </CustomParagraphLight>
+                </Tooltip>
+                <TextField
+                  sx={{
+                    '& .MuiInputBase-input': {
+                      padding: '4px',
+                      fontSize: '11px'
+                    },
+                    '& .MuiInputBase-input.Mui-disabled': {
+                      WebkitTextFillColor: '#000000'
+                    }
+                  }}
+                  name="additionalRemarks"
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                />
+              </Grid> */}
+
+              {/* <Grid item xs={12} sm={2}>
+                <Tooltip title="Port of Loading" placement="right" arrow>
+                  <CustomParagraphLight>
+                    Port of Loading<ValidationStar>*</ValidationStar>
+                  </CustomParagraphLight>
+                </Tooltip>
+                <TextField
+                  sx={{
+                    '& .MuiInputBase-input': {
+                      padding: '4px',
+                      fontSize: '11px'
+                    },
+                    '& .MuiInputBase-input.Mui-disabled': {
+                      WebkitTextFillColor: '#000000'
+                    }
+                  }}
+                  name="additionalRemarks"
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                />
+              </Grid> */}
+
+              {/* <Grid item xs={12} sm={2}>
+                <Tooltip title="Port of Delivery" placement="right" arrow>
+                  <CustomParagraphLight>
+                    Port of Delivery<ValidationStar>*</ValidationStar>
+                  </CustomParagraphLight>
+                </Tooltip>
+                <TextField
+                  sx={{
+                    '& .MuiInputBase-input': {
+                      padding: '4px',
+                      fontSize: '11px'
+                    },
+                    '& .MuiInputBase-input.Mui-disabled': {
+                      WebkitTextFillColor: '#000000'
+                    }
+                  }}
+                  name="additionalRemarks"
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                />
+              </Grid> */}
+
+              <Grid item xs={12} sm={2}>
+                <Tooltip title="Quote Valid Till" placement="right" arrow>
+                  <CustomParagraphLight>
+                    Quote Valid Upto<ValidationStar>*</ValidationStar>
+                  </CustomParagraphLight>
+                </Tooltip>
+                <TextField
+                  sx={{
+                    '& .MuiInputBase-input': {
+                      padding: '4px',
+                      fontSize: '11px'
+                    },
+                    '& .MuiInputBase-input.Mui-disabled': {
+                      WebkitTextFillColor: '#000000'
+                    }
+                  }}
+                  name="additionalRemarks"
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={2}>
+                <CustomParagraphLight>Quote Remark</CustomParagraphLight>
+                <TextField
+                  sx={{
+                    '& .MuiInputBase-input': {
+                      padding: '4px',
+                      fontSize: '11px'
+                    },
+                    '& .MuiInputBase-input.Mui-disabled': {
+                      WebkitTextFillColor: '#000000'
+                    }
+                  }}
+                  name="additionalRemarks"
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                />
+              </Grid>
+              <Grid item xs={12} sm={2}>
+                <CustomParagraphLight>Delivery Address</CustomParagraphLight>
+                <TextField
+                  sx={{
+                    '& .MuiInputBase-input': {
+                      padding: '4px',
+                      fontSize: '11px'
+                    },
+                    '& .MuiInputBase-input.Mui-disabled': {
+                      WebkitTextFillColor: '#000000'
+                    }
+                  }}
+                  name="additionalRemarks"
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={12} sm={2} paddingTop={'20px'}>
-              <TextField
-                sx={{
-                  '& .MuiOutlinedInput-input': {
-                    padding: '5px'
-                  },
-                  '& .MuiInputBase-input.Mui-disabled': {
-                    WebkitTextFillColor: '#000000'
-                  }
-                }}
-                name="additionalRemarks"
-                variant="outlined"
-                fullWidth
-                size="small"
-              />
-            </Grid>
-            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
-              <Tooltip title="Port of Loading" placement="right" arrow>
-                <Typography variant="body" style={{ fontSize: '11px', cursor: 'pointer' }}>
-                  Port of Loading<ValidationStar>*</ValidationStar>
-                </Typography>
-              </Tooltip>
-            </Grid>
-            <Grid item xs={12} sm={2} paddingTop={'20px'}>
-              <TextField
-                sx={{
-                  '& .MuiOutlinedInput-input': {
-                    padding: '5px'
-                  },
-                  '& .MuiInputBase-input.Mui-disabled': {
-                    WebkitTextFillColor: '#000000'
-                  }
-                }}
-                name="additionalRemarks"
-                variant="outlined"
-                fullWidth
-                size="small"
-              />
-            </Grid>
-            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
-              <Tooltip title="Port of Delivery" placement="right" arrow>
-                <Typography variant="body" style={{ fontSize: '11px', cursor: 'pointer' }}>
-                  Port of Delivery<ValidationStar>*</ValidationStar>
-                </Typography>
-              </Tooltip>
-            </Grid>
-            <Grid item xs={12} sm={2} paddingTop={'20px'}>
-              <TextField
-                sx={{
-                  '& .MuiOutlinedInput-input': {
-                    padding: '5px'
-                  },
-                  '& .MuiInputBase-input.Mui-disabled': {
-                    WebkitTextFillColor: '#000000'
-                  }
-                }}
-                name="additionalRemarks"
-                variant="outlined"
-                fullWidth
-                size="small"
-              />
-            </Grid>
-            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
-              <Tooltip title="Quote Valid Till" placement="right" arrow>
-                <Typography variant="body" style={{ fontSize: '11px', cursor: 'pointer' }}>
-                  Quote Valid Till<ValidationStar>*</ValidationStar>
-                </Typography>
-              </Tooltip>
-            </Grid>
-            <Grid item xs={12} sm={2} paddingTop={'20px'}>
-              <TextField
-                sx={{
-                  '& .MuiOutlinedInput-input': {
-                    padding: '5px'
-                  },
-                  '& .MuiInputBase-input.Mui-disabled': {
-                    WebkitTextFillColor: '#000000'
-                  }
-                }}
-                name="additionalRemarks"
-                variant="outlined"
-                fullWidth
-                size="small"
-              />
-            </Grid>
-            <Grid item xs={12} sm={2} paddingTop={'20px !important'}>
-              <Typography variant="body" style={{ fontSize: '11px' }}>
-                Remarks
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={2} paddingTop={'20px'}>
-              <TextField
-                sx={{
-                  '& .MuiOutlinedInput-input': {
-                    padding: '5px'
-                  },
-                  '& .MuiInputBase-input.Mui-disabled': {
-                    WebkitTextFillColor: '#000000'
-                  }
-                }}
-                name="additionalRemarks"
-                variant="outlined"
-                fullWidth
-                size="small"
-              />
-            </Grid>
-          </Grid>
+          </Box>
         )}
-        <Table sx={{ marginTop: '10px' }}>{renderTableHeader('paymentTerms', 'Payment Terms')}</Table>
+        <Table sx={{ marginTop: '10px' }}>{renderTableHeader('paymentTerms', 'Payment Term')}</Table>
         {showTableHeading.paymentTerms && (
-          <Box mb={1}>
-            <Grid item xs={12} sm={2}>
-              <Typography variant="body" style={{ fontSize: '11px' }}>
-                Payment Terms<span style={{ color: 'red' }}>*</span>{' '}
-              </Typography>
-            </Grid>
+          <Box padding={1}>
             <Grid item xs={12} sm={5}>
+              <CustomParagraphLight>
+                Payment Terms<span style={{ color: 'red' }}>*</span>{' '}
+              </CustomParagraphLight>
               <TextField
                 fullWidth
                 sx={{
                   '& .MuiInputBase-input': {
-                    padding: '5px',
-                    fontSize: '12px'
+                    padding: '4px',
+                    fontSize: '11px'
                   },
                   '& .MuiInputBase-input.Mui-disabled': {
                     WebkitTextFillColor: '#000000'
@@ -942,33 +966,30 @@ const QuoteForm = () => {
               />
             </Grid>
 
-            <Grid container spacing={2} sx={{ marginTop: '20px' }}>
+            <Grid container sx={{ marginTop: '10px' }}>
               <Grid item xs={12} sm={3}>
-                <Typography variant="body" style={{ fontSize: '11px' }}>
-                  MileStone
-                </Typography>
+                <CustomParagraphLight>MileStone</CustomParagraphLight>
               </Grid>
               <Grid item xs={12} sm={2}>
-                <Typography variant="body" style={{ fontSize: '11px' }}>
-                  Percentage
-                </Typography>
+                <CustomParagraphLight>Percentage</CustomParagraphLight>
               </Grid>
               <Grid item xs={12} sm={2}>
-                <Typography variant="body" style={{ fontSize: '11px' }}>
-                  Initiation Point
-                </Typography>
+                <CustomParagraphLight>Initiation Point</CustomParagraphLight>
               </Grid>
             </Grid>
 
             {data.map((item, index) => (
-              <Grid container spacing={2} key={index} sx={{ marginTop: '2px' }}>
-                <Grid item xs={12} sm={3}>
+              <Grid container spacing={2} key={index}>
+                <Grid item xs={12} sm={2}>
                   <Select
                     fullWidth
                     sx={{
                       '& .MuiInputBase-input': {
-                        padding: '5px',
-                        fontSize: '12px'
+                        padding: '2px',
+                        fontSize: '11px'
+                      },
+                      '& .MuiInputBase-input.Mui-disabled': {
+                        WebkitTextFillColor: '#000000'
                       }
                     }}
                     variant="outlined"
@@ -989,8 +1010,11 @@ const QuoteForm = () => {
                   <TextField
                     sx={{
                       '& .MuiInputBase-input': {
-                        padding: '5px',
-                        fontSize: '12px'
+                        padding: '4px',
+                        fontSize: '11px'
+                      },
+                      '& .MuiInputBase-input.Mui-disabled': {
+                        WebkitTextFillColor: '#000000'
                       }
                     }}
                     id="percentage_value"
@@ -1009,8 +1033,11 @@ const QuoteForm = () => {
                     fullWidth
                     sx={{
                       '& .MuiInputBase-input': {
-                        padding: '5px',
-                        fontSize: '12px'
+                        padding: '2px',
+                        fontSize: '11px'
+                      },
+                      '& .MuiInputBase-input.Mui-disabled': {
+                        WebkitTextFillColor: '#000000'
                       }
                     }}
                     variant="outlined"
@@ -1027,307 +1054,458 @@ const QuoteForm = () => {
                     ))}
                   </Select>
                 </Grid>
-                <Grid item xs={12} sm={2}>
-                  <Box>
-                    <Button variant="contained" size="small" color="primary" onClick={handleAdd}>
-                      Add
-                    </Button>
-                  </Box>
+
+                <Grid item xs={12} sm={0.3}>
+                  <IconButton aria-label="add" size="small" onClick={handleAdd}>
+                    <AddIcon color="success" />
+                  </IconButton>
                 </Grid>
-                <Grid item xs={12} sm={2}>
-                  <Button fullWidth variant="outlined" size="small" color="error" onClick={() => handleRemove(index)}>
-                    Remove
-                  </Button>
+
+                <Grid item xs={12} sm={0.3}>
+                  <IconButton aria-label="delete" size="small" onClick={() => handleRemove(index)}>
+                    <DeleteIcon color="error" />
+                  </IconButton>
                 </Grid>
               </Grid>
             ))}
           </Box>
         )}
-        <Table>{renderTableHeader('freightCharges', 'Delivery/Transportation')}</Table>
+        <Table>{renderTableHeader('freightCharges', 'Delivery/Transportation Charges')}</Table>
         {showTableHeading.freightCharges && (
-          <TableBody>
-            <TableRow sx={{ marginBottom: '10px', marginTop: '10px' }}>
-              <TableCell colSpan={6}>
-                {FreightArray?.map((item, index) => (
-                  <Grid key={index + 1} container spacing={1}>
-                    <Grid item xs={12} sm={0.5}>
-                      <Typography variant="subtitle1" align="center" marginTop={'20px'}>
-                        {index + 1}
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12} sm={4}>
-                      <Typography variant="body" style={{ fontSize: '11px' }}>
-                        No of Truck/vehicle
-                        <ValidationStar>*</ValidationStar>
-                      </Typography>
-                      <TextField
-                        value={item.no_of_container}
-                        onChange={(e) => handleInputChangeFreight(e, index, 'no_of_container')}
-                        variant="outlined"
-                        sx={{
-                          '& .MuiOutlinedInput-input': {
-                            padding: '5px'
-                          }
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={4}>
-                      <Typography variant="body" style={{ fontSize: '11px' }} align="center"></Typography>
-                      <Select
-                        fullWidth
-                        as={SelectFieldPadding}
-                        variant="outlined"
-                        name="pack_type"
-                        value={item.types_of_container || '0'}
-                        onChange={(e) => handleInputChangeFreight(e, index, 'types_of_container')}
-                        sx={{
-                          marginTop: '23px',
-                          '& .MuiSelect-select': {
-                            padding: '5px'
-                          }
-                        }}
-                      >
-                        <MenuItem value="0" selected>
-                          <em>Not Selected</em>
-                        </MenuItem>
-                        <MenuItem value="30 ton">30 ton</MenuItem>
-                        <MenuItem value="45 ton">45 ton</MenuItem>
-                        <MenuItem value="15 ton">15 ton</MenuItem>
-                        <MenuItem value="10 ton">10 ton</MenuItem>
-                        <MenuItem value="other">Other</MenuItem>
-                      </Select>
-                    </Grid>
-                    {index === FreightArray.length - 1 && (
-                      <Grid item xs={12} sm={0.5} marginTop={'20px'}>
-                        <IconButton aria-label="add" size="small" onClick={addFreightEntry}>
-                          <AddIcon color="success" />
-                        </IconButton>
-                      </Grid>
-                    )}
-                    {index === FreightArray.length - 1 && index !== 0 && (
-                      <Grid item xs={12} sm={0.5} marginTop={'20px'}>
-                        <IconButton aria-label="delete" size="small" onClick={() => removeFreightEntry(index)}>
-                          <DeleteIcon color="error" />
-                        </IconButton>
-                      </Grid>
-                    )}
+          <Box padding={1}>
+            {FreightArray?.map((item, index) => (
+              <Grid container spacing={1}>
+                <Grid item xs={12} sm={0.3} marginTop={'16px'}>
+                  <CustomParagraphLight>{index + 1}</CustomParagraphLight>
+                </Grid>
+                <Grid item xs={12} sm={2}>
+                  <CustomParagraphLight>
+                    No of Truck/vehicle
+                    <ValidationStar>*</ValidationStar>
+                  </CustomParagraphLight>
+                  <TextField
+                    value={item.no_of_container}
+                    onChange={(e) => handleInputChangeFreight(e, index, 'no_of_container')}
+                    variant="outlined"
+                    fullWidth
+                    sx={{
+                      '& .MuiInputBase-input': {
+                        padding: '4px',
+                        fontSize: '11px'
+                      },
+                      '& .MuiInputBase-input.Mui-disabled': {
+                        WebkitTextFillColor: '#000000'
+                      }
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={1}>
+                  <CustomParagraphLight>Type of Truck</CustomParagraphLight>
+                  <Select
+                    fullWidth
+                    as={SelectFieldPadding}
+                    variant="outlined"
+                    name="pack_type"
+                    value={item.types_of_container || '0'}
+                    onChange={(e) => handleInputChangeFreight(e, index, 'types_of_container')}
+                    sx={{
+                      '& .MuiInputBase-input': {
+                        padding: '2px',
+                        fontSize: '11px'
+                      },
+                      '& .MuiInputBase-input.Mui-disabled': {
+                        WebkitTextFillColor: '#000000'
+                      }
+                    }}
+                  >
+                    <MenuItem value="0" selected>
+                      <em>Not Selected</em>
+                    </MenuItem>
+                    <MenuItem value="30 ton">30 ton</MenuItem>
+                    <MenuItem value="45 ton">45 ton</MenuItem>
+                    <MenuItem value="15 ton">15 ton</MenuItem>
+                    <MenuItem value="10 ton">10 ton</MenuItem>
+                    <MenuItem value="other">Other</MenuItem>
+                  </Select>
+                </Grid>
+                <Grid item xs={12} sm={2}>
+                  <CustomParagraphLight>
+                    Transpotation Rate
+                    <ValidationStar>*</ValidationStar>
+                  </CustomParagraphLight>
+                  <TextField
+                    value={item.no_of_container}
+                    onChange={(e) => handleInputChangeFreight(e, index, 'no_of_container')}
+                    variant="outlined"
+                    fullWidth
+                    sx={{
+                      '& .MuiInputBase-input': {
+                        padding: '4px',
+                        fontSize: '11px'
+                      },
+                      '& .MuiInputBase-input.Mui-disabled': {
+                        WebkitTextFillColor: '#000000'
+                      }
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={2}>
+                  <CustomParagraphLight>
+                    Transpotation Amt.
+                    <ValidationStar>*</ValidationStar>
+                  </CustomParagraphLight>
+                  <TextField
+                    value={item.no_of_container}
+                    onChange={(e) => handleInputChangeFreight(e, index, 'no_of_container')}
+                    variant="outlined"
+                    fullWidth
+                    sx={{
+                      '& .MuiInputBase-input': {
+                        padding: '4px',
+                        fontSize: '11px'
+                      },
+                      '& .MuiInputBase-input.Mui-disabled': {
+                        WebkitTextFillColor: '#000000'
+                      }
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={1}>
+                  <CustomParagraphLight>
+                    VAT
+                    <ValidationStar>*</ValidationStar>
+                  </CustomParagraphLight>
+                  <TextField
+                    value={item.no_of_container}
+                    onChange={(e) => handleInputChangeFreight(e, index, 'no_of_container')}
+                    variant="outlined"
+                    fullWidth
+                    sx={{
+                      '& .MuiInputBase-input': {
+                        padding: '4px',
+                        fontSize: '11px'
+                      },
+                      '& .MuiInputBase-input.Mui-disabled': {
+                        WebkitTextFillColor: '#000000'
+                      }
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={2}>
+                  <CustomParagraphLight>
+                    Transport Amt. incl. VAT
+                    <ValidationStar>*</ValidationStar>
+                  </CustomParagraphLight>
+                  <TextField
+                    value={item.no_of_container}
+                    onChange={(e) => handleInputChangeFreight(e, index, 'no_of_container')}
+                    variant="outlined"
+                    fullWidth
+                    sx={{
+                      '& .MuiInputBase-input': {
+                        padding: '4px',
+                        fontSize: '11px'
+                      },
+                      '& .MuiInputBase-input.Mui-disabled': {
+                        WebkitTextFillColor: '#000000'
+                      }
+                    }}
+                  />
+                </Grid>
+                {index === FreightArray.length - 1 && (
+                  <Grid item xs={12} sm={0.3} display={'flex'} alignItems={'end'}>
+                    <IconButton aria-label="add" size="small" onClick={addFreightEntry}>
+                      <AddIcon color="success" />
+                    </IconButton>
                   </Grid>
-                ))}
-              </TableCell>
-            </TableRow>
-          </TableBody>
+                )}
+                {index === FreightArray.length - 1 && index !== 0 && (
+                  <Grid item xs={12} sm={0.3} display={'flex'} alignItems={'end'}>
+                    <IconButton aria-label="delete" size="small" onClick={() => removeFreightEntry(index)}>
+                      <DeleteIcon color="error" />
+                    </IconButton>
+                  </Grid>
+                )}
+              </Grid>
+            ))}
+          </Box>
         )}
         <Table>{renderTableHeader('additionalCharges', 'Additional Charges')}</Table>
         {showTableHeading.additionalCharges && (
-          <TableBody>
-            <TableRow sx={{ marginBottom: '10px', marginTop: '10px' }}>
-              <TableCell colSpan={12}>
-                {FreightArray?.map((item, index) => (
-                  <Grid key={index + 1} container display={'flex'} alignItems={'center'} spacing={2}>
-                    <Grid item xs={12} sm={0.5}>
-                      <Typography variant="subtitle1" align="center">
-                        {index + 1}
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12} sm={2.1}>
-                      <Typography variant="body" style={{ fontSize: '11px' }}>
-                        Head of Expense
-                        <ValidationStar>*</ValidationStar>
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12} sm={3}>
-                      <TextField
-                        value={item.head_of_expense}
-                        onChange={(e) => handleInputChangeFreight(e, index, 'head_of_expense')}
-                        variant="outlined"
-                        sx={{
-                          padding: '5px',
-                          '& .MuiOutlinedInput-input': {
-                            padding: '5px'
-                          }
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={2}>
-                      <Typography variant="body" style={{ fontSize: '11px' }}>
-                        Amount
-                        <ValidationStar>*</ValidationStar>
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12} sm={3}>
-                      <TextField
-                        value={item.no_of_container}
-                        onChange={(e) => handleInputChangeFreight(e, index, 'no_of_container')}
-                        variant="outlined"
-                        sx={{
-                          padding: '5px',
-                          '& .MuiOutlinedInput-input': {
-                            padding: '5px'
-                          }
-                        }}
-                      />
-                    </Grid>
-
-                    {index === FreightArray.length - 1 && (
-                      <Grid item xs={12} sm={2}>
-                        <IconButton aria-label="add" size="small" onClick={addFreightEntry}>
-                          <AddIcon color="success" />
-                        </IconButton>
-                      </Grid>
-                    )}
-                    {index === FreightArray.length - 1 && index !== 0 && (
-                      <Grid item xs={12} sm={2}>
-                        <IconButton aria-label="delete" size="small" onClick={() => removeFreightEntry(index)}>
-                          <DeleteIcon color="error" />
-                        </IconButton>
-                      </Grid>
-                    )}
+          <Box padding={1}>
+            {FreightArray?.map((item, index) => (
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={0.3}>
+                  <CustomParagraphLight>{index + 1}</CustomParagraphLight>
+                </Grid>
+                <Grid item xs={12} sm={1.2}>
+                  <CustomParagraphLight>
+                    Head of Expense
+                    <ValidationStar>*</ValidationStar>
+                  </CustomParagraphLight>
+                </Grid>
+                <Grid item xs={12} sm={2}>
+                  <TextField
+                    value={item.head_of_expense}
+                    onChange={(e) => handleInputChangeFreight(e, index, 'head_of_expense')}
+                    variant="outlined"
+                    sx={{
+                      '& .MuiInputBase-input': {
+                        padding: '4px',
+                        fontSize: '11px'
+                      },
+                      '& .MuiInputBase-input.Mui-disabled': {
+                        WebkitTextFillColor: '#000000'
+                      }
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={0.7}>
+                  <CustomParagraphLight>
+                    Amount
+                    <ValidationStar>*</ValidationStar>
+                  </CustomParagraphLight>
+                </Grid>
+                <Grid item xs={12} sm={1.5}>
+                  <TextField
+                    value={item.no_of_container}
+                    onChange={(e) => handleInputChangeFreight(e, index, 'no_of_container')}
+                    variant="outlined"
+                    sx={{
+                      '& .MuiInputBase-input': {
+                        padding: '4px',
+                        fontSize: '11px'
+                      },
+                      '& .MuiInputBase-input.Mui-disabled': {
+                        WebkitTextFillColor: '#000000'
+                      }
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={1}>
+                  <CustomParagraphLight>
+                    VAT
+                    <ValidationStar>*</ValidationStar>
+                  </CustomParagraphLight>
+                  <TextField
+                    value={item.no_of_container}
+                    onChange={(e) => handleInputChangeFreight(e, index, 'no_of_container')}
+                    variant="outlined"
+                    fullWidth
+                    sx={{
+                      '& .MuiInputBase-input': {
+                        padding: '4px',
+                        fontSize: '11px'
+                      },
+                      '& .MuiInputBase-input.Mui-disabled': {
+                        WebkitTextFillColor: '#000000'
+                      }
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={2}>
+                  <CustomParagraphLight>
+                    Amt. incl. VAT
+                    <ValidationStar>*</ValidationStar>
+                  </CustomParagraphLight>
+                  <TextField
+                    value={item.no_of_container}
+                    onChange={(e) => handleInputChangeFreight(e, index, 'no_of_container')}
+                    variant="outlined"
+                    fullWidth
+                    sx={{
+                      '& .MuiInputBase-input': {
+                        padding: '4px',
+                        fontSize: '11px'
+                      },
+                      '& .MuiInputBase-input.Mui-disabled': {
+                        WebkitTextFillColor: '#000000'
+                      }
+                    }}
+                  />
+                </Grid>
+                {index === FreightArray.length - 1 && (
+                  <Grid item xs={12} sm={0.3}>
+                    <IconButton aria-label="add" size="small" onClick={addFreightEntry}>
+                      <AddIcon color="success" />
+                    </IconButton>
                   </Grid>
-                ))}
-              </TableCell>
-            </TableRow>
-          </TableBody>
+                )}
+                {index === FreightArray.length - 1 && index !== 0 && (
+                  <Grid item xs={12} sm={0.3}>
+                    <IconButton aria-label="delete" size="small" onClick={() => removeFreightEntry(index)}>
+                      <DeleteIcon color="error" />
+                    </IconButton>
+                  </Grid>
+                )}
+              </Grid>
+            ))}
+          </Box>
         )}
         <Table>
-          {renderTableHeader('requireDoc', 'Required Document List')}
+          {renderTableHeader('requireDoc', 'Required Document List at the time of Shipment')}
           {showTableHeading.requireDoc && (
-            <TableBody>
-              <TableRow sx={{ marginBottom: '10px', marginTop: '10px' }}>
-                <TableCell colSpan={6}>
-                  <Grid container spacing={1} alignItems="center">
-                    <Grid item xs={12} sm={0.3}></Grid>
-                    <Grid item xs={12} sm={2}>
-                      {' '}
-                      <Typography variant="subtitle2" style={{ fontSize: '11px' }}>
-                        Documents Required
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12} sm={2}>
-                      <Typography variant="subtitle2" style={{ fontSize: '11px' }}>
-                        Will Be Provided
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12} sm={3}>
-                      <Typography variant="subtitle2" style={{ fontSize: '11px' }}>
-                        Remarks
-                      </Typography>
-                    </Grid>
-                  </Grid>
+            <Box padding={1}>
+              <Grid container spacing={1} alignItems="center">
+                <Grid item xs={12} sm={0.3}></Grid>
+                <Grid item xs={12} sm={2}>
+                  {' '}
+                  <CustomParagraphDark>Documents Required</CustomParagraphDark>
+                </Grid>
+                <Grid item xs={12} sm={2}>
+                  <CustomParagraphDark>Will Be Provided</CustomParagraphDark>
+                </Grid>
+                <Grid item xs={12} sm={3}>
+                  <CustomParagraphDark>Remarks</CustomParagraphDark>
+                </Grid>
+              </Grid>
+              <Grid container spacing={1} alignItems="center">
+                <Grid item xs={12} sm={0.3}>
+                  <Grid item xs={12} sm={2}></Grid>
+                  <CustomParagraphLight>1</CustomParagraphLight>
+                </Grid>
 
-                  <Grid container spacing={1} alignItems="center">
-                    <Grid item xs={12} sm={0.3}>
-                      <Grid item xs={12} sm={2}></Grid>
-                      <Typography variant="body" style={{ fontSize: '11px' }}>
-                        1
-                      </Typography>
-                    </Grid>
+                <Grid item xs={12} sm={2}>
+                  <CustomParagraphLight>Commercial Invoice</CustomParagraphLight>
+                </Grid>
 
-                    <Grid item xs={12} sm={2}>
-                      <Typography variant="body" style={{ fontSize: '11px' }}>
-                        Packing List
-                      </Typography>
-                    </Grid>
+                <Grid item xs={12} sm={2}>
+                  <RadioGroup
+                    row
+                    value={'Yes'}
+                    onChange={(e) => handleInputChangeDoc(e, index, 'available')}
+                    sx={{ fontSize: '10px !important' }}
+                    style={{ fontSize: '10px !important' }}
+                  >
+                    <FormControlLabel
+                      value="yes"
+                      control={<Radio color="primary" />}
+                      label={<Typography style={{ fontSize: '11px' }}>Yes</Typography>} // Font size for label
+                    />
+                    <FormControlLabel
+                      value="no"
+                      control={<Radio color="primary" />}
+                      label={<Typography style={{ fontSize: '11px' }}>No</Typography>} // Font size for label
+                    />
+                  </RadioGroup>
+                </Grid>
 
-                    <Grid item xs={12} sm={2}>
-                      <RadioGroup
-                        row
-                        value={'Yes'}
-                        onChange={(e) => handleInputChangeDoc(e, index, 'available')}
-                        sx={{ fontSize: '11px' }} // Ensures the font size is 11px for the entire group
-                      >
-                        <FormControlLabel
-                          value="yes"
-                          control={<Radio color="primary" />}
-                          label={<Typography style={{ fontSize: '11px' }}>Yes</Typography>} // Font size for label
-                        />
-                        <FormControlLabel
-                          value="no"
-                          control={<Radio color="primary" />}
-                          label={<Typography style={{ fontSize: '11px' }}>No</Typography>} // Font size for label
-                        />
-                      </RadioGroup>
-                    </Grid>
+                <Grid item xs={12} sm={3}>
+                  <TextField
+                    fullWidth
+                    onChange={(e) => handleInputChangeFileData(e, index, 'remark')}
+                    variant="outlined"
+                    sx={{
+                      '& .MuiOutlinedInput-input': {
+                        padding: '5px'
+                      }
+                    }}
+                  />
+                </Grid>
+              </Grid>
+              <Grid container spacing={1} alignItems="center">
+                <Grid item xs={12} sm={0.3}>
+                  <Grid item xs={12} sm={2}></Grid>
+                  <CustomParagraphLight>1</CustomParagraphLight>
+                </Grid>
 
-                    <Grid item xs={12} sm={3}>
-                      <TextField
-                        fullWidth
-                        onChange={(e) => handleInputChangeFileData(e, index, 'remark')}
-                        variant="outlined"
-                        sx={{
-                          '& .MuiOutlinedInput-input': {
-                            padding: '5px'
-                          }
-                        }}
-                      />
-                    </Grid>
-                  </Grid>
+                <Grid item xs={12} sm={2}>
+                  <CustomParagraphLight>Packing List</CustomParagraphLight>
+                </Grid>
 
-                  <Grid container spacing={1} alignItems="center">
-                    <Grid item xs={12} sm={0.3}>
-                      <Grid item xs={12} sm={2}></Grid>
-                      <Typography variant="body" style={{ fontSize: '11px' }}>
-                        2
-                      </Typography>
-                    </Grid>
+                <Grid item xs={12} sm={2}>
+                  <RadioGroup
+                    row
+                    value={'Yes'}
+                    onChange={(e) => handleInputChangeDoc(e, index, 'available')}
+                    sx={{ fontSize: '10px !important' }}
+                    style={{ fontSize: '10px !important' }}
+                  >
+                    <FormControlLabel
+                      value="yes"
+                      control={<Radio color="primary" />}
+                      label={<Typography style={{ fontSize: '11px' }}>Yes</Typography>} // Font size for label
+                    />
+                    <FormControlLabel
+                      value="no"
+                      control={<Radio color="primary" />}
+                      label={<Typography style={{ fontSize: '11px' }}>No</Typography>} // Font size for label
+                    />
+                  </RadioGroup>
+                </Grid>
 
-                    <Grid item xs={12} sm={2}>
-                      <Typography variant="body" style={{ fontSize: '11px' }}>
-                        Certificate of Origin
-                      </Typography>
-                    </Grid>
+                <Grid item xs={12} sm={3}>
+                  <TextField
+                    fullWidth
+                    onChange={(e) => handleInputChangeFileData(e, index, 'remark')}
+                    variant="outlined"
+                    sx={{
+                      '& .MuiOutlinedInput-input': {
+                        padding: '5px'
+                      }
+                    }}
+                  />
+                </Grid>
+              </Grid>
 
-                    <Grid item xs={12} sm={2}>
-                      <RadioGroup
-                        row
-                        value={'Yes'}
-                        onChange={(e) => handleInputChangeDoc(e, index, 'available')}
-                        sx={{ fontSize: '11px' }} // Ensures the font size is 11px for the entire group
-                      >
-                        <FormControlLabel
-                          value="yes"
-                          control={<Radio color="primary" />}
-                          label={<Typography style={{ fontSize: '11px' }}>Yes</Typography>} // Font size for label
-                        />
-                        <FormControlLabel
-                          value="no"
-                          control={<Radio color="primary" />}
-                          label={<Typography style={{ fontSize: '11px' }}>No</Typography>} // Font size for label
-                        />
-                      </RadioGroup>
-                    </Grid>
+              <Grid container spacing={1} alignItems="center">
+                <Grid item xs={12} sm={0.3}>
+                  <Grid item xs={12} sm={2}></Grid>
+                  <CustomParagraphLight>2</CustomParagraphLight>
+                </Grid>
 
-                    <Grid item xs={12} sm={3}>
-                      <TextField
-                        fullWidth
-                        onChange={(e) => handleInputChangeFileData(e, index, 'remark')}
-                        variant="outlined"
-                        sx={{
-                          '& .MuiOutlinedInput-input': {
-                            padding: '5px'
-                          }
-                        }}
-                      />
-                    </Grid>
-                  </Grid>
-                </TableCell>
-              </TableRow>
-            </TableBody>
+                <Grid item xs={12} sm={2}>
+                  <CustomParagraphLight>Certificate of Analysis</CustomParagraphLight>
+                </Grid>
+
+                <Grid item xs={12} sm={2}>
+                  <RadioGroup
+                    row
+                    value={'Yes'}
+                    onChange={(e) => handleInputChangeDoc(e, index, 'available')}
+                    sx={{ fontSize: '11px' }} // Ensures the font size is 11px for the entire group
+                  >
+                    <FormControlLabel
+                      value="yes"
+                      control={<Radio color="primary" />}
+                      label={<Typography style={{ fontSize: '11px' }}>Yes</Typography>} // Font size for label
+                    />
+                    <FormControlLabel
+                      value="no"
+                      control={<Radio color="primary" />}
+                      label={<Typography style={{ fontSize: '11px' }}>No</Typography>} // Font size for label
+                    />
+                  </RadioGroup>
+                </Grid>
+
+                <Grid item xs={12} sm={3}>
+                  <TextField
+                    fullWidth
+                    onChange={(e) => handleInputChangeFileData(e, index, 'remark')}
+                    variant="outlined"
+                    sx={{
+                      '& .MuiOutlinedInput-input': {
+                        padding: '5px'
+                      }
+                    }}
+                  />
+                </Grid>
+              </Grid>
+            </Box>
           )}
         </Table>
         <Table>
           {renderTableHeader('requireDoc', 'Upload Documents')}
           {showTableHeading.requireDoc && (
-            <TableBody>
-              <Typography variant="h5" sx={{ color: '#0060ff', marginTop: '5px', marginBottom: '10px' }}>
-                Select Files
-              </Typography>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
+            <Box padding={1}>
+              <CustomHeading>Select Files</CustomHeading>
+              <Grid container spacing={1} display={'flex'} alignItems={'center'} marginBottom={1}>
+                <Grid item xs={12} alignItems={'center'}>
                   <form>
-                    <Grid container spacing={2}>
+                    <Grid container spacing={1}>
                       {listDoc.map((file, index) => (
                         <Grid item xs={2} key={index}>
-                          <Typography variant="body2" sx={{ fontSize: '11px', display: 'flex', alignItems: 'center' }}>
+                          <CustomParagraphLight>
                             <input
                               type="checkbox"
                               checked={file?.selected}
@@ -1335,7 +1513,7 @@ const QuoteForm = () => {
                               style={{ marginRight: '5px' }}
                             />
                             {file.name}
-                          </Typography>
+                          </CustomParagraphLight>
                         </Grid>
                       ))}
                     </Grid>
@@ -1343,100 +1521,153 @@ const QuoteForm = () => {
                 </Grid>
               </Grid>
 
-              <TableRow sx={{ marginBottom: '10px', marginTop: '10px' }}>
-                <TableCell colSpan={6}>
-                  {fileArray?.map((item, index) => (
-                    <Grid
-                      key={index + 1}
-                      container
-                      spacing={1}
-                      alignItems="center"
-                      sx={{ border: '1px dotted gray', borderRadius: '12px', margin: '2px', padding: '8px' }}
+              {fileArray?.map((item, index) => (
+                <Grid
+                  key={index + 1}
+                  container
+                  spacing={2}
+                  alignItems="center"
+                  sx={{ border: '1px dotted gray', borderRadius: '12px', margin: '2px', padding: '8px' }}
+                >
+                  <Grid item xs={12} sm={0.2}>
+                    <CustomParagraphLight>{index + 1}</CustomParagraphLight>
+                  </Grid>
+                  <Grid item xs={12} sm={2} paddingTop={'0 !important'}>
+                    <CustomParagraphLight>Document Name</CustomParagraphLight>
+                    <TextField
+                      placeholder="Document Name"
+                      value={item.name}
+                      disabled={index <= 6}
+                      onChange={(e) => handleInputChangeFile(e, index, 'name')}
+                      variant="outlined"
+                      sx={{
+                        '& .MuiOutlinedInput-input': {
+                          padding: '4px',
+                          fontSize: '12px'
+                        },
+                        '& .MuiInputBase-input.Mui-disabled': {
+                          WebkitTextFillColor: '#000000'
+                        }
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={2} paddingTop={'0 !important'}>
+                    <CustomParagraphLight>Remarks</CustomParagraphLight>
+                    <TextField
+                      fullWidth
+                      onChange={(e) => handleInputChangeFile(e, index, 'remark')}
+                      onBlur={(e) => {
+                        e.target.value === '' && toast.error('Remarks are required');
+                      }}
+                      value={item.remark}
+                      variant="outlined"
+                      sx={{
+                        '& .MuiOutlinedInput-input': {
+                          padding: '4px',
+                          fontSize: '12px'
+                        },
+                        '& .MuiInputBase-input.Mui-disabled': {
+                          WebkitTextFillColor: '#000000'
+                        }
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={1.5} display={'flex'} alignItems={'end'}>
+                    <Button
+                      component="label"
+                      size="small"
+                      variant="contained"
+                      startIcon={<CloudUploadIcon />}
+                      sx={{
+                        backgroundColor: '#2c6095',
+                        color: '#fff',
+                        '&:hover': {
+                          backgroundColor: '#244b78'
+                        }
+                      }}
                     >
-                      <Grid item xs={12} sm={0.2}>
-                        <Typography variant="subtitle1">{index + 1}</Typography>
-                      </Grid>
-                      <Grid item xs={12} sm={2}>
-                        <TextField
-                          label="Document Name #"
-                          value={item.name}
-                          disabled={index <= 6}
-                          onChange={(e) => handleInputChangeFile(e, index, 'name')}
-                          variant="outlined"
-                          sx={{
-                            '& .MuiOutlinedInput-input': {
-                              padding: '5px',
-                              fontSize: '12px'
-                            },
-                            '& .MuiInputBase-input.Mui-disabled': {
-                              WebkitTextFillColor: '#000000'
-                            }
-                          }}
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={4}>
-                        <TextField
-                          fullWidth
-                          placeholder="Remarks"
-                          onChange={(e) => handleInputChangeFile(e, index, 'remark')}
-                          onBlur={(e) => {
-                            e.target.value === '' && toast.error('Remarks are required');
-                          }}
-                          value={item.remark}
-                          variant="outlined"
-                          sx={{
-                            '& .MuiOutlinedInput-input': {
-                              padding: '5px',
-                              fontSize: '12px'
-                            },
-                            '& .MuiInputBase-input.Mui-disabled': {
-                              WebkitTextFillColor: '#000000'
-                            }
-                          }}
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={2}>
-                        <div>
-                          <Button
-                            component="label"
-                            sx={{ marginBottom: '0' }}
-                            size="small"
-                            variant="contained"
-                            startIcon={<CloudUploadIcon />}
-                          >
-                            Upload File
-                            <VisuallyHiddenInput type="file" onChange={(e) => handleFileChangeFile(e, index)} />
-                          </Button>
-                        </div>
-                      </Grid>
-                      <Grid item xs={12} sm={2}>
-                        {item.file && <span style={{ color: 'blue' }}>{item.file.name}</span>}
-                      </Grid>
-                      {/* {index === fileArray.length - 1 && ( */}
-                      <Grid item xs={12} sm={0.5}>
-                        <IconButton aria-label="add" size="small" onClick={addFileEntry}>
-                          <AddIcon color="success" />
-                        </IconButton>
-                      </Grid>
-                      {/* )} */}
-                      {/* {index === fileArray.length - 1 && index !== 0 && index > 6 && ( */}
-                      <Grid item xs={12} sm={0.5}>
-                        <IconButton aria-label="delete" size="small" onClick={() => removeFileEntry(index)}>
-                          <DeleteIcon color="error" />
-                        </IconButton>
-                      </Grid>
-                      {/* )} */}
-                    </Grid>
-                  ))}
-                </TableCell>
-              </TableRow>
-            </TableBody>
+                      Upload File
+                      <VisuallyHiddenInput type="file" onChange={(e) => handleFileChangeFile(e, index)} />
+                    </Button>
+                  </Grid>
+                  <Grid item xs={12} sm={2}>
+                    {item.file && <span style={{ color: 'navy', fontSize: '10px' }}>{item.file.name}</span>}
+                  </Grid>
+                  {/* {index === fileArray.length - 1 && ( */}
+                  <Grid item xs={12} sm={0.3}>
+                    <IconButton aria-label="add" size="small" onClick={addFileEntry}>
+                      <AddIcon color="success" />
+                    </IconButton>
+                  </Grid>
+                  {/* )} */}
+                  {/* {index === fileArray.length - 1 && index !== 0 && index > 6 && ( */}
+                  <Grid item xs={12} sm={0.3}>
+                    <IconButton aria-label="delete" size="small" onClick={() => removeFileEntry(index)}>
+                      <DeleteIcon color="error" />
+                    </IconButton>
+                  </Grid>
+                  {/* )} */}
+                </Grid>
+              ))}
+            </Box>
           )}
         </Table>
-
+        <Table>{renderTableHeader('quoteAmount', 'Quotation Amount Breakup')}</Table>
+        {showTableHeading.quoteAmount && (
+          <Box padding={1}>
+            <Grid container spacing={2}>
+              <Grid item xs={1}>
+                <CustomParagraphDark>
+                  Item Cost:
+                  <br />
+                  <span style={{ fontSize: '9px' }}>(Ex. VAT)</span>
+                </CustomParagraphDark>
+              </Grid>
+              <Grid item xs={1}>
+                <CustomParagraphLight>1000</CustomParagraphLight>
+              </Grid>
+              <Grid item xs={1}>
+                <CustomParagraphDark>
+                  Addition Ch:
+                  <br />
+                  <span style={{ fontSize: '9px' }}>(Ex. VAT)</span>
+                </CustomParagraphDark>
+              </Grid>
+              <Grid item xs={1}>
+                <CustomParagraphLight>1000</CustomParagraphLight>
+              </Grid>
+              <Grid item xs={1.3}>
+                <CustomParagraphDark>
+                  Transportation Ch:
+                  <br />
+                  <span style={{ fontSize: '9px' }}>(Ex. VAT)</span>
+                </CustomParagraphDark>
+              </Grid>
+              <Grid item xs={1}>
+                <CustomParagraphLight>1000</CustomParagraphLight>
+              </Grid>
+              <Grid item xs={1}>
+                <CustomParagraphDark>Total VAT:</CustomParagraphDark>
+              </Grid>
+              <Grid item xs={1}>
+                <CustomParagraphLight>1000</CustomParagraphLight>
+              </Grid>
+              <Grid item xs={1}>
+                <CustomParagraphDark>
+                  Quotation Amt.:
+                  <br />
+                  <span style={{ fontSize: '9px' }}>(Ex. VAT)</span>
+                </CustomParagraphDark>
+              </Grid>
+              <Grid item xs={1}>
+                <CustomParagraphLight>1000</CustomParagraphLight>
+              </Grid>
+            </Grid>
+          </Box>
+        )}
         <Table>{renderTableHeader('itemDetail', 'Item Details')}</Table>
         {showTableHeading.itemDetail && (
-          <>
+          <Box padding={1}>
             <DataGrid
               getRowHeight={() => 'auto'}
               sx={{
@@ -1473,13 +1704,34 @@ const QuoteForm = () => {
               rowHeight={35}
               // slots={{ toolbar: GridToolbar }}
             />
-          </>
+          </Box>
         )}
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 3 }}>
-          <Button variant="outlined" size="small" color="secondary" sx={{ mr: 2 }} onClick={() => resetForm()}>
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Button
+            size="small"
+            sx={{
+              mr: 2,
+              backgroundColor: '#cd640d',
+              color: '#fff',
+              '&:hover': {
+                backgroundColor: '#cd640d'
+              }
+            }}
+            onClick={() => resetForm()}
+          >
             Cancel
           </Button>
-          <Button variant="contained" size="small" color="primary" type="submit">
+          <Button
+            size="small"
+            type="submit"
+            sx={{
+              backgroundColor: '#2c6095',
+              color: '#fff',
+              '&:hover': {
+                backgroundColor: '#244b78'
+              }
+            }}
+          >
             Submit
           </Button>
         </Box>

@@ -27,12 +27,31 @@ const LPOViewList = () => {
       headerName: 'OPR No.',
       renderCell: (params) =>
         params?.row?.status === '2' ? (
-          <Chip label={params.value} sx={{ width: '200px' }} color={'success'} />
+          <Box
+            sx={{
+            
+              color: 'navy', // Text color
+              fontWeight: 'bold', // Bold text
+              
+            }}
+          >
+            {params.value}
+          </Box>
         ) : (
-          <Chip label={params.value} sx={{ width: '200px' }} />
+          <Box
+            sx={{
+           
+              color: 'navy', // Default text color
+              fontWeight: 'bold', // Bold text
+             
+            }}
+          >
+            {params.value}
+          </Box>
         ),
-      width: '150'
+      width: 150 // Ensure this is a number
     },
+    
     {
       headerName: 'Procurement Status',
       field: 'status_procurement',
@@ -40,7 +59,7 @@ const LPOViewList = () => {
       renderCell: (params) =>
         params?.row?.status === '10' ? <span>Recommended By BH</span> : params?.row?.status === '11' && <span>LPO Created</span>
     },
-    { headerName: 'Quote Status #', field: 'quote_status', width: 120 },
+    { headerName: 'Quote Status', field: 'quote_status', width: 120 },
     { headerName: 'Vertical', field: 'vertical_name', width: 120 },
     { headerName: 'Company', field: 'company_name', width: 120 },
     { headerName: 'Division', field: 'division_name', width: 120 },
@@ -99,7 +118,7 @@ const LPOViewList = () => {
   return (
     <MainCard
       title={
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontWeight:600, fontSize:"16px" }}>
           <span>{!showLPOView ? 'Create LPO - List of OPR with Quotes' : 'Quotes For Company: & OPR ID:OPR-324-OPR'}</span>
           {showLPOView && (
             <PlusButton
@@ -119,11 +138,11 @@ const LPOViewList = () => {
           <DataGrid
             getRowHeight={() => 'auto'}
             sx={{
-              minHeight: '70vh',
+              minHeight: '85vh',
               '& .MuiDataGrid-cell': {
                 border: '1px solid rgba(224, 224, 224, 1)',
                 display: 'flex',
-                justifyContent: 'center',
+                
                 alignItems: 'center'
               },
               '& .MuiDataGrid-columnHeader': {
@@ -131,7 +150,7 @@ const LPOViewList = () => {
                 border: '1px solid rgba(224, 224, 224, 1)',
                 height: '25px !important',
                 display: 'flex',
-                justifyContent: 'center',
+                
                 alignItems: 'center'
               },
               '& .MuiDataGrid-scrollbar': {

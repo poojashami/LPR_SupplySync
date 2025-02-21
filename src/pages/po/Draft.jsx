@@ -4,9 +4,8 @@ import MainCard from 'components/MainCard';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutlined';
 import { DataGrid } from '@mui/x-data-grid';
-import CustomHeading from 'components/CustomHeading';
 
-const LPOApprove = () => {
+const DraftPO = () => {
   const [comment, setComment] = useState('');
   const [isApproved, setIsApproved] = useState(false);
   const [showTableHeading, setShowTableHeading] = useState({
@@ -43,16 +42,18 @@ const LPOApprove = () => {
     setIsApproved(desc);
   };
   const lpoData = [
-    { label: 'Quotation No.', value: 'OPR-56789' },
-    { label: 'Quotation Dt.', value: 'OPR-56789' },
+    { label: 'Vendor Code', value: 'jfj' },
+
+    { label: 'Vendor Name', value: 'Tech Corp' },
     { label: 'Quote Ref. No.', value: 'LPR1234' },
+    { label: 'Quotation No.', value: 'OPR-56789' },
     { label: 'RFQ No.', value: 'OPR-56789' },
 
     { label: 'LPR No', value: 'OPR-56789' },
-    { label: 'Quotation Currency', value: 'USD' },
-    { label: 'Delivery Term', value: 'FOB (Free on Board)' },
-    { label: 'Payment Term', value: 'Net 30 Days' },
-    { label: 'Vendor Lead Time', value: '4 Weeks' },
+    { label: 'Currency', value: 'USD' },
+    { label: 'Delivery Type', value: 'FOB (Free on Board)' },
+    { label: 'Payment Terms', value: 'Net 30 Days' },
+    { label: 'Delivery Time', value: '4 Weeks' },
     { label: 'Delivery Address', value: '123 Tech Street, Electronics City, CA' },
     { label: 'Quotation Remarks', value: 'Prices valid for 60 days' }
   ];
@@ -105,13 +106,41 @@ const LPOApprove = () => {
       charge_amount: 300.0
     }
   ];
-  const ApprovalHeader = [
-    { field: 'id', headerName: 'BY', width: 50 },
-    { field: 'user_name', headerName: 'Concurred By', width: 100 },
-    { field: 'concurrence_remarks', headerName: 'Concurrence Remarks', width: 200 },
-    { field: 'updatedAt', headerName: 'Concurrence Time', width: 200 },
-    { field: 'action', headerName: 'Action', width: 100 },
-    { field: 'approval_status', headerName: 'Last Status', width: 100 }
+  const lprData = [
+    {
+      id: 1,
+      vendor: 'Tech Corp',
+      company: 'Global Electronics Ltd.',
+      department: 'Procurement',
+      shipMode: 'Air Freight',
+      buyingHouse: 'Global Buying Solutions',
+      unitJustification: 'Required for assembly line',
+      procurementJustification: 'Best price and lead time',
+      totalCost: '15,000 USD'
+    },
+    {
+      id: 2,
+      vendor: 'Tech World',
+      company: 'Innovative Solutions Ltd.',
+      department: 'Logistics',
+      shipMode: 'Sea Freight',
+      buyingHouse: 'Prime Buying Solutions',
+      unitJustification: 'Bulk purchase discount',
+      procurementJustification: 'Volume pricing benefits',
+      totalCost: '30,000 USD'
+    }
+  ];
+
+  // Column definitions for the DataGrid
+  const columns = [
+    { field: 'vendor', headerName: 'Vendor', flex: 1 },
+    { field: 'company', headerName: 'Company', flex: 1.5 },
+    { field: 'department', headerName: 'Department', flex: 1 },
+    { field: 'shipMode', headerName: 'Ship Mode', flex: 1 },
+    { field: 'buyingHouse', headerName: 'Buying House', flex: 1.5 },
+    { field: 'unitJustification', headerName: 'Unit Justification', flex: 2 },
+    { field: 'procurementJustification', headerName: 'Procurement Justification', flex: 2 },
+    { field: 'totalCost', headerName: 'Total Cost', flex: 1 }
   ];
   const ApprovalData = [
     {
@@ -121,13 +150,207 @@ const LPOApprove = () => {
       updatedAt: '2025-01-15 10:30 AM',
       action: 'Approve',
       approval_status: 'Approved'
+    },
+    {
+      id: 2,
+      user_name: 'Jane Smith',
+      concurrence_remarks: 'Requires further clarification.',
+      updatedAt: '2025-01-14 03:45 PM',
+      action: 'Request Changes',
+      approval_status: 'Pending'
+    },
+    {
+      id: 3,
+      user_name: 'Michael Johnson',
+      concurrence_remarks: 'Approved as is.',
+      updatedAt: '2025-01-13 01:15 PM',
+      action: 'Approve',
+      approval_status: 'Approved'
+    },
+    {
+      id: 4,
+      user_name: 'Emily Davis',
+      concurrence_remarks: 'Rejected due to incomplete details.',
+      updatedAt: '2025-01-12 11:00 AM',
+      action: 'Reject',
+      approval_status: 'Rejected'
+    },
+    {
+      id: 5,
+      user_name: 'Chris Brown',
+      concurrence_remarks: 'Approved after review.',
+      updatedAt: '2025-01-11 09:20 AM',
+      action: 'Approve',
+      approval_status: 'Approved'
     }
   ];
-
+  const QuotationHeader = [
+    {
+      field: 'quo_num',
+      headerName: 'Quotation No.',
+      width: 150,
+      renderCell: (params) => (
+        <div onClick={() => handleViewClick(params.row)} style={{ cursor: 'pointer', color: 'blue' }} aria-hidden="true">
+          {params.value}
+        </div>
+      )
+    },
+    {
+      field: 'status_quo',
+      headerName: 'Status',
+      width: 100,
+      renderCell: (params) => (
+        <div style={{ cursor: 'pointer' }} aria-hidden="true">
+          {params?.value ? <b style={{ color: 'green' }}>Selected</b> : <b style={{ color: 'red' }}>Not Selected</b>}
+        </div>
+      ),
+      sortable: true
+    },
+    { field: 'vendor_name', headerName: 'Vendor Name', width: 200 },
+    { field: 'quo_date', headerName: 'Quo Date', width: 100 },
+    { field: 'delivery_terms', headerName: 'Delivery Terms', width: 100 },
+    { field: 'lead_time', headerName: 'Lead Time', width: 80 },
+    { field: 'currency', headerName: 'Currency', width: 80 },
+    { field: 'total_cost', headerName: 'Amount', width: 80 },
+    { field: 'additional_cost', headerName: 'Additional Costs', width: 80 },
+    { field: 'final_amount', headerName: 'Final Total', width: 80 }
+  ];
+  const QuotationData = [
+    {
+      id: 1,
+      quo_num: 'QTN-001',
+      status_quo: true,
+      vendor_name: 'Vendor A',
+      quo_date: '2025-01-01',
+      delivery_terms: 'FOB',
+      lead_time: '10 days',
+      currency: 'USD',
+      total_cost: 5000,
+      additional_cost: 300,
+      final_amount: 5300
+    },
+    {
+      id: 2,
+      quo_num: 'QTN-002',
+      status_quo: false,
+      vendor_name: 'Vendor B',
+      quo_date: '2025-01-03',
+      delivery_terms: 'CIF',
+      lead_time: '15 days',
+      currency: 'EUR',
+      total_cost: 4000,
+      additional_cost: 200,
+      final_amount: 4200
+    },
+    {
+      id: 3,
+      quo_num: 'QTN-003',
+      status_quo: true,
+      vendor_name: 'Vendor C',
+      quo_date: '2025-01-05',
+      delivery_terms: 'DDP',
+      lead_time: '20 days',
+      currency: 'INR',
+      total_cost: 300000,
+      additional_cost: 5000,
+      final_amount: 305000
+    },
+    {
+      id: 4,
+      quo_num: 'QTN-004',
+      status_quo: false,
+      vendor_name: 'Vendor D',
+      quo_date: '2025-01-07',
+      delivery_terms: 'EXW',
+      lead_time: '7 days',
+      currency: 'GBP',
+      total_cost: 3500,
+      additional_cost: 100,
+      final_amount: 3600
+    },
+    {
+      id: 5,
+      quo_num: 'QTN-005',
+      status_quo: true,
+      vendor_name: 'Vendor E',
+      quo_date: '2025-01-09',
+      delivery_terms: 'FCA',
+      lead_time: '12 days',
+      currency: 'JPY',
+      total_cost: 750000,
+      additional_cost: 25000,
+      final_amount: 775000
+    }
+  ];
+  const paymentHeader = [
+    { field: 'id', headerName: 'S.NO', width: 50 },
+    { field: 'term', headerName: 'Payment Term', width: 200 },
+    { field: 'amount', headerName: 'Amount', width: 100 },
+    { field: 'due_on', headerName: 'Due on', width: 100 },
+    { field: 'paid_amt', headerName: 'Paid Amt', width: 100 },
+    { field: 'date', headerName: 'Date', width: 100 },
+    {
+      field: 'payment_status',
+      headerName: 'Status',
+      width: 100,
+      renderCell: (params) => (
+        <div style={{ cursor: 'pointer' }} aria-hidden="true">
+          {params.value == 5 ? <b style={{ color: 'green' }}>Done</b> : <b style={{ color: 'red' }}> Not Done</b>}
+        </div>
+      )
+    }
+  ];
+  const paymentData = [
+    {
+      id: 1,
+      term: 'Advance Payment',
+      amount: 5000,
+      due_on: '2025-01-10',
+      paid_amt: 5000,
+      date: '2025-01-05',
+      payment_status: 5
+    },
+    {
+      id: 2,
+      term: '50% on Delivery',
+      amount: 10000,
+      due_on: '2025-01-15',
+      paid_amt: 5000,
+      date: '2025-01-12',
+      payment_status: 3
+    },
+    {
+      id: 3,
+      term: 'Remaining Payment',
+      amount: 5000,
+      due_on: '2025-01-20',
+      paid_amt: 0,
+      date: null,
+      payment_status: 1
+    },
+    {
+      id: 4,
+      term: 'Milestone Payment',
+      amount: 20000,
+      due_on: '2025-02-01',
+      paid_amt: 10000,
+      date: '2025-01-28',
+      payment_status: 3
+    },
+    {
+      id: 5,
+      term: 'Final Payment',
+      amount: 15000,
+      due_on: '2025-02-10',
+      paid_amt: 15000,
+      date: '2025-02-05',
+      payment_status: 5
+    }
+  ];
   const quotationAmountBreakup = [
-    { label: 'Product Cost', value: '2236700 INR' },
-    { label: 'Additional Charges', value: '700 INR' },
-    { label: 'Transportation Charges', value: '12000 INR' },
+    { label: 'FOB Cost', value: '2236700 INR' },
+    { label: 'Inland Charges', value: '700 INR' },
+    { label: 'Freight Cost', value: '12000 INR' },
     { label: 'Quotation Amount', value: '2249400 INR' }
   ];
   const stockItemColumns = [
@@ -280,8 +503,7 @@ const LPOApprove = () => {
   ];
 
   return (
-    <Box>
-      Card
+    <MainCard>
       <Table>{renderTableHeader('basicDetail', 'Basic Details')}</Table>
       {showTableHeading.basicDetail && (
         <Grid item xs={12} sm={12} sx={{ padding: '10px' }}>
@@ -315,40 +537,17 @@ const LPOApprove = () => {
       <Table>{renderTableHeader('oprDetail', 'LPR Details')}</Table>
       {showTableHeading.oprDetail && (
         <Grid item xs={12} sm={12} sx={{ padding: '10px' }}>
-          <Grid>LPr Detail Show in Table</Grid>
-          <Grid container spacing={2}>
-            {oprData
-              .reduce((acc, item, index) => {
-                if (index % 4 === 0) acc.push([]);
-                acc[acc.length - 1].push(item);
-                return acc;
-              }, [])
-              .map((row, rowIndex) => (
-                <Grid container item xs={12} key={rowIndex} spacing={2}>
-                  {row.map((item, itemIndex) => (
-                    <Grid item xs={3} key={itemIndex}>
-                      <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
-                        <Typography variant="h6" sx={{ marginRight: 1, fontWeight: '500', fontSize: '11px', color: '#333' }}>
-                          {item.label}:
-                        </Typography>
-                        <Typography variant="body1" sx={{ color: '#555', fontSize: '11px' }}>
-                          {item.value}
-                        </Typography>
-                      </Box>
-                    </Grid>
-                  ))}
-                </Grid>
-              ))}
-          </Grid>
+          <div style={{ height: 400, width: '100%' }}>
+            <DataGrid rows={lprData} columns={columns} pageSize={5} rowsPerPageOptions={[5]} />
+          </div>
         </Grid>
       )}
       {/* ----------------------------------------------------------------------- */}
-      <Table>{renderTableHeader('additinalCost', 'Require Documents, Additional Charges & Quotation Documents')}</Table>
+      <Table>{renderTableHeader('additinalCost', 'Additional Charges & Required Documents')}</Table>
       {showTableHeading.additinalCost && (
         <Box>
           <Grid container spacing={1}>
-            <Grid item xs={12} md={4}>
-              <CustomHeading>Require Document</CustomHeading>
+            <Grid item xs={12} md={6}>
               <DataGrid
                 getRowHeight={() => 'auto'}
                 sx={{
@@ -402,64 +601,7 @@ const LPOApprove = () => {
                 hideFooterSelectedRowCount
               />
             </Grid>
-            <Grid item xs={12} md={4}>
-              <CustomHeading>Additional Charges</CustomHeading>
-              <DataGrid
-                getRowHeight={() => 'auto'}
-                sx={{
-                  '& .MuiDataGrid-cell': {
-                    border: '1px solid rgba(224, 224, 224, 1)',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    textTransform: 'capitalize'
-                  },
-                  '& .MuiDataGrid-columnHeader': {
-                    backgroundColor: '#f5f5f5',
-                    border: '1px solid rgba(224, 224, 224, 1)',
-                    height: '25px !important',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                  },
-                  '& .MuiDataGrid-scrollbar': {
-                    height: '8px'
-                  }
-                }}
-                columns={[
-                  { headerName: 'Sr.No.', field: 'id', width: 50 },
-                  {
-                    headerName: 'Charge name',
-                    field: 'charge_name',
-                    width: 180,
-                    renderCell: (params) => {
-                      return <span>{params?.value?.replace(/_/g, ' ')}</span>;
-                    }
-                  },
-                  {
-                    headerName: 'Charges By',
-                    field: 'charges_by',
-                    width: 80,
-                    flex: 1,
-                    renderCell: (params) => {
-                      return <span>{params?.value?.replace(/_/g, ' ')}</span>;
-                    }
-                  },
-                  {
-                    headerName: 'Charges Amount',
-                    field: 'charge_amount',
-                    width: 120
-                  }
-                ]}
-                rows={additionalChargesBuyer}
-                hideFooter
-                hideFooterPagination
-                hideFooterSelectedRowCount
-              />
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <CustomHeading>Quotation Remark</CustomHeading>
-
+            <Grid item xs={12} md={6}>
               <DataGrid
                 getRowHeight={() => 'auto'}
                 sx={{
@@ -510,117 +652,8 @@ const LPOApprove = () => {
           </Grid>
         </Box>
       )}
-      <Table sx={{ marginTop: '20px' }}>
-        {renderTableHeader('ApprovalDetails', 'Approval, Quotation Details & Payment Details')}
-        {showTableHeading.ApprovalDetails && (
-          <Box>
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={4}>
-                <Typography color={'navy'} fontSize={'13px'} fontWeight={600}>
-                  Approval Detail
-                </Typography>
-                <DataGrid
-                  getRowHeight={() => 'auto'}
-                  sx={{
-                    '& .MuiDataGrid-cell': {
-                      border: '1px solid rgba(224, 224, 224, 1)',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      textTransform: 'capitalize'
-                    },
-                    '& .MuiDataGrid-columnHeader': {
-                      backgroundColor: '#f5f5f5',
-                      border: '1px solid rgba(224, 224, 224, 1)',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center'
-                    },
-                    '& .MuiDataGrid-scrollbar': {
-                      height: '8px'
-                    }
-                  }}
-                  columns={ApprovalHeader}
-                  rows={ApprovalData}
-                  hideFooter
-                  hideFooterPagination
-                  hideFooterSelectedRowCount
-                />
-              </Grid>
-              <Grid item xs={12} md={4}>
-                <Box display={'flex '} justifyContent={'space-between'} alignItems={'center'}>
-                  <Typography color={'navy'} fontSize={'13px'} fontWeight={600}>
-                    Quotation Detail
-                  </Typography>
-                  <button>Comparision Code</button>
-                </Box>
-                <DataGrid
-                  getRowHeight={() => 'auto'}
-                  sx={{
-                    '& .MuiDataGrid-cell': {
-                      border: '1px solid rgba(224, 224, 224, 1)',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      textTransform: 'capitalize'
-                    },
-                    '& .MuiDataGrid-columnHeader': {
-                      backgroundColor: '#f5f5f5',
-                      border: '1px solid rgba(224, 224, 224, 1)',
-                      height: '25px !important',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center'
-                    },
-                    '& .MuiDataGrid-scrollbar': {
-                      height: '8px'
-                    }
-                  }}
-                  columns={ApprovalHeader}
-                  rows={ApprovalData}
-                  hideFooter
-                  hideFooterPagination
-                  hideFooterSelectedRowCount
-                />
-              </Grid>
 
-              <Grid item xs={12} md={4}>
-                <Typography color={'navy'} fontSize={'13px'} fontWeight={600}>
-                  Payment Detail
-                </Typography>
-                <DataGrid
-                  getRowHeight={() => 'auto'}
-                  sx={{
-                    '& .MuiDataGrid-cell': {
-                      border: '1px solid rgba(224, 224, 224, 1)',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      textTransform: 'capitalize'
-                    },
-                    '& .MuiDataGrid-columnHeader': {
-                      backgroundColor: '#f5f5f5',
-                      border: '1px solid rgba(224, 224, 224, 1)',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center'
-                    },
-                    '& .MuiDataGrid-scrollbar': {
-                      height: '8px'
-                    }
-                  }}
-                  columns={ApprovalHeader}
-                  rows={ApprovalData}
-                  hideFooter
-                  hideFooterPagination
-                  hideFooterSelectedRowCount
-                />
-              </Grid>
-            </Grid>
-          </Box>
-        )}
-      </Table>
-      <Table sx={{ marginTop: '30px' }}> {renderTableHeader('BreakupAmountDetails', 'LPO Amount Breakup')}</Table>
+      <Table sx={{ marginTop: '30px' }}> {renderTableHeader('BreakupAmountDetails', 'Quotation Amount Breakup')}</Table>
       {showTableHeading.BreakupAmountDetails && (
         <Grid item xs={12} sm={12} sx={{ padding: '10px' }}>
           <Grid container spacing={2}>
@@ -639,6 +672,7 @@ const LPOApprove = () => {
           </Grid>
         </Grid>
       )}
+
       <Table>{renderTableHeader('itemDetails', 'Items Details')}</Table>
       {showTableHeading.itemDetails && (
         <DataGrid
@@ -670,70 +704,8 @@ const LPOApprove = () => {
           hideFooterSelectedRowCount
         />
       )}
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={12} mt={5}>
-          <Typography color={'navy'} fontSize={'13px'} fontWeight={600}>
-            LPO Approval
-          </Typography>
-        </Grid>
-        <Grid item xs={12} md={12}>
-          <Typography variant="body1" sx={{ color: 'navy' }} marginBottom={'10px'}>
-            Approval of PO{' '}
-            <span className="text-primary" style={{ color: 'blue' }}>
-              #LPO73676
-            </span>
-          </Typography>
-
-          <Grid item xs={12} sm={3}>
-            <Typography variant="subtitle2" style={{ fontSize: '11px' }}>
-              Remarks
-            </Typography>
-            <TextField
-              fullWidth
-              id="remarks"
-              // label="Remarks"
-              value={comment}
-              variant="outlined"
-              onChange={(e) => setComment(e.target.value)}
-              sx={{
-                '& .MuiOutlinedInput-input': {
-                  padding: '4px'
-                }
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <div style={{ textAlign: 'center', display: 'flex', justifyContent: 'end', paddingTop: '10px' }}>
-              <Button size="small" onClick={() => accept(false)} variant="contained" color="error">
-                Reject
-              </Button>
-
-              <Button
-                size="small"
-                sx={{
-                  backgroundColor: '#2c6095',
-                  color: '#fff',
-                  '&:hover': {
-                    backgroundColor: '#244b78'
-                  },
-                  ml: 2
-                }}
-                onClick={() => {
-                  if (comment.trim() !== '') {
-                    accept(true);
-                    setIsApproved(true);
-                    // setApprovalPOOpen(true);
-                  }
-                }}
-              >
-                Approve
-              </Button>
-            </div>
-          </Grid>
-        </Grid>
-      </Grid>
-    </Box>
+    </MainCard>
   );
 };
 
-export default LPOApprove;
+export default DraftPO;

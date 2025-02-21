@@ -7,6 +7,8 @@ import VendorList from './VendorList';
 import AdditionalInformationView from './AdditionalInformationView';
 import ItemList from './ItemList';
 import { DataGrid } from '@mui/x-data-grid';
+import CustomParagraphDark from 'components/CustomParagraphDark';
+import CustomParagraphLight from 'components/CustomParagraphLight';
 
 const QuoteView = ({ selectedRFQ, onBack }) => {
   const [showTableHeading, setShowTableHeading] = useState({
@@ -29,9 +31,9 @@ const QuoteView = ({ selectedRFQ, onBack }) => {
   const renderTableHeader = (sectionName, sectionLabel) => (
     <TableHead sx={{ backgroundColor: '#EAF1F6' }}>
       <TableRow>
-        <TableCell sx={{ padding: 0 }} colSpan={12}>
+        <TableCell sx={{ padding: 0, paddingLeft: '8px !important' }} colSpan={12}>
           <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Typography variant="h6" fontWeight={500}>
+            <Typography fontSize={'14px'} fontWeight={600} textTransform={'none'}>
               {sectionLabel}
             </Typography>
             <IconButton size="large" onClick={() => toggleTableBody(sectionName)} sx={{ height: '30px' }}>
@@ -86,30 +88,24 @@ const QuoteView = ({ selectedRFQ, onBack }) => {
   ];
 
   const shipmentData = [
-    { label: 'Consignee Name', value: 'Tech Corp' },
-    { label: 'Consignee Code', value: 'LPR1234' },
-    { label: 'Contact Number', value: '+1 123-456-7890' },
-    { label: 'Contact Email', value: 'example@techcorp.com' },
-    { label: 'Address', value: '123 Tech Street, North Division, Electronics City' }
+    { label: 'Vendor Name:', value: 'Tech Corp' },
+    { label: 'Vendor Ref. No:', value: 'VREF1234' },
+    { label: 'Vendor Ref. Date:', value: '2025-01-01' },
+    { label: 'Quotation Date:', value: '2025-01-10' },
+    { label: 'Currency:', value: 'USD' },
+    { label: 'Delivery Term:', value: 'FOB (Free On Board)' },
+    { label: 'Lead Initiation Point:', value: 'New York, USA' },
+    { label: 'Quote Valid Upto:', value: '2025-02-01' },
+    { label: 'Country of Origin:', value: 'USA' },
+    { label: 'Country of Supply:', value: 'India' },
+    { label: 'Port of Loading:', value: 'Los Angeles Port' },
+    { label: 'Vendor Lead Time:', value: '15 Days' },
+    { label: 'Shipment Mode:', value: 'Net 30 Days' },
+    { label: 'Shipment Type:', value: 'Net 30 Days' },
+    { label: 'Payment Terms:', value: 'Net 30 Days' },
+    { label: 'Remarks:', value: 'Ensure proper documentation before shipment.' }
   ];
-  const VendorData = [
-    { label: 'Vendor Name', value: 'Tech Corp' },
-    { label: 'Vendor Reference No', value: 'VREF1234' },
-    { label: 'Vendor Reference Date', value: '2025-01-01' },
-    { label: 'Quotation Date', value: '2025-01-10' },
-    { label: 'Currency', value: 'USD' },
-    { label: 'Delivery Terms', value: 'FOB (Free On Board)' },
-    { label: 'Lead Initiated Point', value: 'New York, USA' },
-    { label: 'Quote Valid Till', value: '2025-02-01' }
-  ];
-  const logisticDetailData = [
-    { label: 'Country of Origin', value: 'USA' },
-    { label: 'Country of Supply', value: 'India' },
-    { label: 'Port of Loading', value: 'Los Angeles Port' },
-    { label: 'Lead Time', value: '15 Days' },
-    { label: 'Payment Terms', value: 'Net 30 Days' },
-    { label: 'Remarks', value: 'Ensure proper documentation before shipment.' }
-  ];
+
   const ItemColumns = [
     { field: 'id', headerName: 'S.NO', width: 50 },
     { field: 'item_type', headerName: 'Item Category', width: 150 },
@@ -226,77 +222,38 @@ const QuoteView = ({ selectedRFQ, onBack }) => {
   ];
   return (
     <>
-      <Table>{renderTableHeader('rfqDetail', 'Buying House Info')}</Table>
+      <Table>{renderTableHeader('rfqDetail', 'Basic Info')}</Table>
       {showTableHeading.rfqDetail && (
         <Grid item xs={12} sm={12} sx={{ padding: '10px' }}>
           <Grid container spacing={2}>
             {shipmentData.map((item, index) => (
               <Grid item xs={3} key={index}>
                 <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
-                  <Typography variant="h6" sx={{ marginRight: 1, fontWeight: '500', fontSize: '11px', color: '#333' }}>
-                    {item.label}:
-                  </Typography>
-                  <Typography variant="body1" sx={{ color: '#555', fontSize: '11px' }}>
-                    {item.value}
-                  </Typography>
+                  <CustomParagraphDark>{item.label}:</CustomParagraphDark>
+                  <CustomParagraphLight>{item.value}</CustomParagraphLight>
                 </Box>
               </Grid>
             ))}
           </Grid>
         </Grid>
       )}
-      <Table>{renderTableHeader('quotedetail', 'Vendor Details')}</Table>
-      {showTableHeading.quotedetail && (
-        <Grid item xs={12} sm={12} sx={{ padding: '10px' }}>
-          <Grid container spacing={2}>
-            {VendorData.map((item, index) => (
-              <Grid item xs={3} key={index}>
-                <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
-                  <Typography variant="h6" sx={{ marginRight: 1, fontWeight: '500', fontSize: '11px', color: '#333' }}>
-                    {item.label}:
-                  </Typography>
-                  <Typography variant="body1" sx={{ color: '#555', fontSize: '11px' }}>
-                    {item.value}
-                  </Typography>
-                </Box>
-              </Grid>
-            ))}
-          </Grid>
-        </Grid>
-      )}
-      <Table>{renderTableHeader('logisticDetail', 'Logictics Details')}</Table>
-      {showTableHeading.logisticDetail && (
-        <Grid item xs={12} sm={12} sx={{ padding: '10px' }}>
-          <Grid container spacing={2}>
-            {logisticDetailData.map((item, index) => (
-              <Grid item xs={3} key={index}>
-                <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
-                  <Typography variant="h6" sx={{ marginRight: 1, fontWeight: '500', fontSize: '11px', color: '#333' }}>
-                    {item.label}:
-                  </Typography>
-                  <Typography variant="body1" sx={{ color: '#555', fontSize: '11px' }}>
-                    {item.value}
-                  </Typography>
-                </Box>
-              </Grid>
-            ))}
-          </Grid>
-        </Grid>
-      )}
-      <Table>{renderTableHeader('requireDocs', 'Require Docs')}</Table>
+
+      <Table>{renderTableHeader('requireDocs', 'Documents Info')}</Table>
       {showTableHeading.requireDocs && (
         <Box>
           <Grid container spacing={2}>
             {/* First DataGrid */}
             <Grid item xs={12} md={6}>
-              <Box color={'#3f78ff'}>Require Docs</Box>
+              <Box color={'navy'} fontWeight={600} fontSize={'13px'}>
+                Required Documents at the time of Shipment
+              </Box>
               <DataGrid
                 getRowHeight={() => 'auto'}
                 sx={{
                   '& .MuiDataGrid-cell': {
                     border: '1px solid rgba(224, 224, 224, 1)',
                     display: 'flex',
-                    justifyContent: 'center',
+
                     alignItems: 'center'
                   },
                   '& .MuiDataGrid-columnHeader': {
@@ -304,7 +261,7 @@ const QuoteView = ({ selectedRFQ, onBack }) => {
                     border: '1px solid rgba(224, 224, 224, 1)',
                     height: '25px !important',
                     display: 'flex',
-                    justifyContent: 'center',
+
                     alignItems: 'center'
                   },
                   '& .MuiCheckbox-root': {
@@ -332,14 +289,16 @@ const QuoteView = ({ selectedRFQ, onBack }) => {
 
             {/* Second DataGrid */}
             <Grid item xs={12} md={6}>
-              <Box color={'#3f78ff'}>Docs Details</Box>
+              <Box color={'navy'} fontWeight={600} fontSize={'13px'}>
+                Documents Provided with Quote
+              </Box>
               <DataGrid
                 getRowHeight={() => 'auto'}
                 sx={{
                   '& .MuiDataGrid-cell': {
                     border: '1px solid rgba(224, 224, 224, 1)',
                     display: 'flex',
-                    justifyContent: 'center',
+
                     alignItems: 'center'
                   },
                   '& .MuiDataGrid-columnHeader': {
@@ -347,7 +306,7 @@ const QuoteView = ({ selectedRFQ, onBack }) => {
                     border: '1px solid rgba(224, 224, 224, 1)',
                     height: '25px !important',
                     display: 'flex',
-                    justifyContent: 'center',
+
                     alignItems: 'center'
                   },
                   '& .MuiDataGrid-scrollbar': {
@@ -364,7 +323,7 @@ const QuoteView = ({ selectedRFQ, onBack }) => {
           </Grid>
         </Box>
       )}
-      <Table sx={{ marginTop: '20px' }}>{renderTableHeader('additionalCostDetail', 'Additional Cost Detail')}</Table>
+      <Table sx={{ marginTop: '20px' }}>{renderTableHeader('additionalCostDetail', 'Additional Charges Info')}</Table>
       <Table>
         {showTableHeading.additionalCostDetail && (
           <Grid item xs={12} sm={12} sx={{ padding: '10px' }}>
@@ -372,12 +331,8 @@ const QuoteView = ({ selectedRFQ, onBack }) => {
               {additionalCostData.map((item, index) => (
                 <Grid item xs={3} key={index}>
                   <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
-                    <Typography variant="h6" sx={{ marginRight: 1, fontWeight: '500', fontSize: '11px', color: '#333' }}>
-                      {item.label}:
-                    </Typography>
-                    <Typography variant="body1" sx={{ color: '#555', fontSize: '11px' }}>
-                      {item.value}
-                    </Typography>
+                    <CustomParagraphDark>{item.label}:</CustomParagraphDark>
+                    <CustomParagraphLight>{item.value}</CustomParagraphLight>
                   </Box>
                 </Grid>
               ))}
@@ -393,12 +348,8 @@ const QuoteView = ({ selectedRFQ, onBack }) => {
               {quotationAmountBreakup.map((item, index) => (
                 <Grid item xs={3} key={index}>
                   <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
-                    <Typography variant="h6" sx={{ marginRight: 1, fontWeight: '500', fontSize: '11px', color: '#333' }}>
-                      {item.label}:
-                    </Typography>
-                    <Typography variant="body1" sx={{ color: '#555', fontSize: '11px' }}>
-                      {item.value}
-                    </Typography>
+                    <CustomParagraphDark>{item.label}:</CustomParagraphDark>
+                    <CustomParagraphLight>{item.value}</CustomParagraphLight>
                   </Box>
                 </Grid>
               ))}
@@ -411,28 +362,23 @@ const QuoteView = ({ selectedRFQ, onBack }) => {
         <DataGrid
           getRowHeight={() => 'auto'}
           sx={{
+            height: '30vh',
             '& .MuiDataGrid-cell': {
               border: '1px solid rgba(224, 224, 224, 1)',
               display: 'flex',
-              justifyContent: 'center',
+
               alignItems: 'center'
             },
             '& .MuiDataGrid-columnHeader': {
               backgroundColor: '#f5f5f5',
               border: '1px solid rgba(224, 224, 224, 1)',
-              // height: '25px !important',
+              height: '25px !important',
               display: 'flex',
-              justifyContent: 'center',
+
               alignItems: 'center'
             },
-            '& .MuiCheckbox-root': {
-              padding: 0,
-              margin: '0 auto', // Center align the checkbox
-              width: '18px',
-              height: '18px'
-            },
-            '& .MuiSvgIcon-root': {
-              fontSize: '20px'
+            '& .MuiDataGrid-scrollbar': {
+              height: '8px'
             },
             '& .MuiDataGrid-scrollbar': {
               height: '8px'

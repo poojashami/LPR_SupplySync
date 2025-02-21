@@ -23,9 +23,9 @@ const LPOView = () => {
   const renderTableHeader = (sectionName, sectionLabel) => (
     <TableHead sx={{ backgroundColor: '#EAF1F6' }}>
       <TableRow>
-        <TableCell sx={{ padding: 0 }} colSpan={12}>
+        <TableCell sx={{ padding: 0, paddingLeft: '8px !important' }} colSpan={12}>
           <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Typography variant="h6" fontWeight={500}>
+            <Typography fontSize={'14px'} fontWeight={600} textTransform={'none'}>
               {sectionLabel}
             </Typography>
             <IconButton size="large" onClick={() => toggleTableBody(sectionName)} sx={{ height: '30px' }}>
@@ -539,7 +539,7 @@ const LPOView = () => {
       {/* ----------------------------------------------------------------------- */}
       <Table>{renderTableHeader('additinalCost', 'Additional Charges & Required Documents')}</Table>
       {showTableHeading.additinalCost && (
-        <Box>
+        <Box padding={1}>
           <Grid container spacing={1}>
             <Grid item xs={12} md={6}>
               <DataGrid
@@ -548,7 +548,7 @@ const LPOView = () => {
                   '& .MuiDataGrid-cell': {
                     border: '1px solid rgba(224, 224, 224, 1)',
                     display: 'flex',
-                    justifyContent: 'center',
+
                     alignItems: 'center',
                     textTransform: 'capitalize'
                   },
@@ -557,7 +557,7 @@ const LPOView = () => {
                     border: '1px solid rgba(224, 224, 224, 1)',
                     height: '25px !important',
                     display: 'flex',
-                    justifyContent: 'center',
+
                     alignItems: 'center'
                   },
                   '& .MuiDataGrid-scrollbar': {
@@ -602,7 +602,7 @@ const LPOView = () => {
                   '& .MuiDataGrid-cell': {
                     border: '1px solid rgba(224, 224, 224, 1)',
                     display: 'flex',
-                    justifyContent: 'center',
+
                     alignItems: 'center',
                     textTransform: 'capitalize'
                   },
@@ -611,7 +611,7 @@ const LPOView = () => {
                     border: '1px solid rgba(224, 224, 224, 1)',
                     height: '25px !important',
                     display: 'flex',
-                    justifyContent: 'center',
+
                     alignItems: 'center'
                   },
                   '& .MuiDataGrid-scrollbar': {
@@ -646,118 +646,123 @@ const LPOView = () => {
           </Grid>
         </Box>
       )}
-      <Table sx={{ marginTop: '20px' }}>
-        {renderTableHeader('ApprovalDetails', 'Approval And Quotation Details & Payment Details')}
-        {showTableHeading.ApprovalDetails && (
-          <Box>
-            <Grid container spacing={1}>
-              <Grid item xs={12} md={4}>
-                <Typography color={'#3f78ff'}>Approval Details</Typography>
-                <DataGrid
-                  getRowHeight={() => 'auto'}
-                  sx={{
-                    '& .MuiDataGrid-cell': {
-                      border: '1px solid rgba(224, 224, 224, 1)',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      textTransform: 'capitalize'
-                    },
-                    '& .MuiDataGrid-columnHeader': {
-                      backgroundColor: '#f5f5f5',
-                      border: '1px solid rgba(224, 224, 224, 1)',
-                      height: '25px !important',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center'
-                    },
-                    '& .MuiDataGrid-scrollbar': {
-                      height: '8px'
-                    }
-                  }}
-                  columns={ApprovalHeader}
-                  rows={ApprovalData}
-                  hideFooter
-                  hideFooterPagination
-                  hideFooterSelectedRowCount
-                />
-              </Grid>
-              <Grid item xs={12} md={4}>
-                <Box display={'flex'} alignItems={'center'} justifyContent={'space-between'}>
-                  <Typography color={'#3f78ff'}>Quotations Details</Typography>
-                  <button
-                    variant="contained"
-                    size="small
-                  "
-                    color="primary"
-                  >
-                    View Comparision
-                  </button>
-                </Box>
-                <DataGrid
-                  getRowHeight={() => 'auto'}
-                  sx={{
-                    '& .MuiDataGrid-cell': {
-                      border: '1px solid rgba(224, 224, 224, 1)',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      textTransform: 'capitalize'
-                    },
-                    '& .MuiDataGrid-columnHeader': {
-                      backgroundColor: '#f5f5f5',
-                      border: '1px solid rgba(224, 224, 224, 1)',
-                      height: '25px !important',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center'
-                    },
-                    '& .MuiDataGrid-scrollbar': {
-                      height: '8px'
-                    }
-                  }}
-                  columns={QuotationHeader}
-                  rows={QuotationData}
-                  hideFooter
-                  hideFooterPagination
-                  hideFooterSelectedRowCount
-                />
-              </Grid>
-              <Grid item xs={12} md={4}>
-                <Typography color={'#3f78ff'}>Payment Details</Typography>
-                <DataGrid
-                  getRowHeight={() => 'auto'}
-                  sx={{
-                    '& .MuiDataGrid-cell': {
-                      border: '1px solid rgba(224, 224, 224, 1)',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      textTransform: 'capitalize'
-                    },
-                    '& .MuiDataGrid-columnHeader': {
-                      backgroundColor: '#f5f5f5',
-                      border: '1px solid rgba(224, 224, 224, 1)',
-                      height: '25px !important',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center'
-                    },
-                    '& .MuiDataGrid-scrollbar': {
-                      height: '8px'
-                    }
-                  }}
-                  columns={paymentHeader}
-                  rows={paymentData}
-                  hideFooter
-                  hideFooterPagination
-                  hideFooterSelectedRowCount
-                />
-              </Grid>
+      <Table sx={{ marginTop: '20px' }}>{renderTableHeader('ApprovalDetails', 'Approval And Quotation Details & Payment Details')}</Table>
+      {showTableHeading.ApprovalDetails && (
+        <Box padding={1}>
+          <Grid container spacing={1}>
+            <Grid item xs={12} md={4}>
+              <Typography color={'navy'} fontSize={'13px'} fontWeight={600}>
+                Approval Details
+              </Typography>
+              <DataGrid
+                getRowHeight={() => 'auto'}
+                sx={{
+                  '& .MuiDataGrid-cell': {
+                    border: '1px solid rgba(224, 224, 224, 1)',
+                    display: 'flex',
+
+                    alignItems: 'center',
+                    textTransform: 'capitalize'
+                  },
+                  '& .MuiDataGrid-columnHeader': {
+                    backgroundColor: '#f5f5f5',
+                    border: '1px solid rgba(224, 224, 224, 1)',
+                    height: '25px !important',
+                    display: 'flex',
+
+                    alignItems: 'center'
+                  },
+                  '& .MuiDataGrid-scrollbar': {
+                    height: '8px'
+                  }
+                }}
+                columns={ApprovalHeader}
+                rows={ApprovalData}
+                hideFooter
+                hideFooterPagination
+                hideFooterSelectedRowCount
+              />
             </Grid>
-          </Box>
-        )}
-      </Table>
+            <Grid item xs={12} md={4}>
+              <Box display={'flex'} alignItems={'center'} justifyContent={'space-between'}>
+                <Typography color={'navy'} fontSize={'13px'} fontWeight={600}>
+                  Quotations Details
+                </Typography>
+                <button
+                  variant="contained"
+                  size="small
+                  "
+                  color="primary"
+                >
+                  View Comparision
+                </button>
+              </Box>
+              <DataGrid
+                getRowHeight={() => 'auto'}
+                sx={{
+                  '& .MuiDataGrid-cell': {
+                    border: '1px solid rgba(224, 224, 224, 1)',
+                    display: 'flex',
+
+                    alignItems: 'center',
+                    textTransform: 'capitalize'
+                  },
+                  '& .MuiDataGrid-columnHeader': {
+                    backgroundColor: '#f5f5f5',
+                    border: '1px solid rgba(224, 224, 224, 1)',
+                    height: '25px !important',
+                    display: 'flex',
+
+                    alignItems: 'center'
+                  },
+                  '& .MuiDataGrid-scrollbar': {
+                    height: '8px'
+                  }
+                }}
+                columns={QuotationHeader}
+                rows={QuotationData}
+                hideFooter
+                hideFooterPagination
+                hideFooterSelectedRowCount
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Typography color={'navy'} fontSize={'13px'} fontWeight={600}>
+                Payment Details
+              </Typography>
+              <DataGrid
+                getRowHeight={() => 'auto'}
+                sx={{
+                  '& .MuiDataGrid-cell': {
+                    border: '1px solid rgba(224, 224, 224, 1)',
+                    display: 'flex',
+
+                    alignItems: 'center',
+                    textTransform: 'capitalize'
+                  },
+                  '& .MuiDataGrid-columnHeader': {
+                    backgroundColor: '#f5f5f5',
+                    border: '1px solid rgba(224, 224, 224, 1)',
+                    height: '25px !important',
+                    display: 'flex',
+
+                    alignItems: 'center'
+                  },
+                  '& .MuiDataGrid-scrollbar': {
+                    height: '8px'
+                  }
+                }}
+                columns={paymentHeader}
+                rows={paymentData}
+                hideFooter
+                hideFooterPagination
+                hideFooterSelectedRowCount
+              />
+            </Grid>
+          </Grid>
+        </Box>
+      )}
+
       <Table sx={{ marginTop: '30px' }}> {renderTableHeader('BreakupAmountDetails', 'Quotation Amount Breakup')}</Table>
       {showTableHeading.BreakupAmountDetails && (
         <Grid item xs={12} sm={12} sx={{ padding: '10px' }}>
@@ -780,13 +785,14 @@ const LPOView = () => {
 
       <Table>{renderTableHeader('itemDetails', 'Items Details')}</Table>
       {showTableHeading.itemDetails && (
+        <Box padding={1}>
         <DataGrid
           getRowHeight={() => 'auto'}
           sx={{
             '& .MuiDataGrid-cell': {
               border: '1px solid rgba(224, 224, 224, 1)',
               display: 'flex',
-              justifyContent: 'center',
+
               alignItems: 'center',
               textTransform: 'capitalize'
             },
@@ -795,7 +801,7 @@ const LPOView = () => {
               border: '1px solid rgba(224, 224, 224, 1)',
               height: '25px !important',
               display: 'flex',
-              justifyContent: 'center',
+
               alignItems: 'center'
             },
             '& .MuiDataGrid-scrollbar': {
@@ -808,6 +814,7 @@ const LPOView = () => {
           hideFooterPagination
           hideFooterSelectedRowCount
         />
+        </Box>
       )}
     </Box>
   );

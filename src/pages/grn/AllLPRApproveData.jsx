@@ -1,6 +1,3 @@
-import LPRView from './LPRView';
-import ItemTable from './ItemTable';
-
 import React, { useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Box, Checkbox, Typography, Table, TableRow, TableHead, TableCell, IconButton, Grid, TextField, Button } from '@mui/material';
@@ -47,7 +44,7 @@ const AllLPRApproveData = () => {
       width: 130,
       renderCell: (params) => <span>{params.value.split('T')[0]}</span>
     },
-    { field: 'concurrence_remarks', headerName: 'Request Remark', width: 150, flex:1 }
+    { field: 'concurrence_remarks', headerName: 'Request Remark', width: 150, flex: 1 }
   ];
 
   // Hardcoded Data
@@ -85,7 +82,7 @@ const AllLPRApproveData = () => {
   ];
   const ApprovalColumn = [
     { field: 'id', headerName: 'Sl. No.', width: 50 },
-    { field: 'user_name', headerName: 'Concurred By', width: 100, flex:1 },
+    { field: 'user_name', headerName: 'Concurred By', width: 100, flex: 1 },
     { field: 'approval_status', headerName: 'Action', width: 80 },
     { field: 'updatedAt', headerName: 'Action Date', width: 180 }
   ];
@@ -132,8 +129,6 @@ const AllLPRApproveData = () => {
   };
   return (
     <div>
-      <LPRView />
-      <ItemTable />
       <Box>
         <Table>{renderTableHeader('approvedlpr', 'Approval Details')}</Table>
         {showTableHeading.approvedlpr && (
@@ -149,7 +144,7 @@ const AllLPRApproveData = () => {
                       '& .MuiDataGrid-cell': {
                         border: '1px solid rgba(224, 224, 224, 1)',
                         display: 'flex',
-                        
+
                         alignItems: 'center'
                       },
                       '& .MuiDataGrid-columnHeader': {
@@ -157,7 +152,7 @@ const AllLPRApproveData = () => {
                         border: '1px solid rgba(224, 224, 224, 1)',
                         height: '25px !important',
                         display: 'flex',
-                       
+
                         alignItems: 'center'
                       },
                       '& .MuiCheckbox-root': {

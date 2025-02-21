@@ -113,7 +113,7 @@ const QuoteComparelist = () => {
   return (
     <MainCard
       title={
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontWeight: 600, fontSize: '16px' }}>
           <span>
             {selectedQuote
               ? `Quotes For Company: ${selectedQuote.company_name} & OPR ID: ${selectedQuote.opr_num}`
@@ -130,10 +130,11 @@ const QuoteComparelist = () => {
         <DataGrid
           getRowHeight={() => 'auto'}
           sx={{
+            height: '85vh',
             '& .MuiDataGrid-cell': {
               border: '1px solid rgba(224, 224, 224, 1)',
               display: 'flex',
-              justifyContent: 'center',
+
               alignItems: 'center'
             },
             '& .MuiDataGrid-columnHeader': {
@@ -141,7 +142,7 @@ const QuoteComparelist = () => {
               border: '1px solid rgba(224, 224, 224, 1)',
               height: '25px !important',
               display: 'flex',
-              justifyContent: 'center',
+
               alignItems: 'center'
             },
             '& .MuiCheckbox-root': {
@@ -161,9 +162,6 @@ const QuoteComparelist = () => {
           columns={quotecomListColumn}
           pageSize={5}
           rowsPerPageOptions={[5]}
-          hideFooter
-          hideFooterPagination
-          hideFooterSelectedRowCount
         />
       )}
     </MainCard>

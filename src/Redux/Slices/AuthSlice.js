@@ -39,7 +39,7 @@ const authSlice = createSlice({
         JSON.stringify({
           first_name: action.payload.first_name,
           email: action.payload.email,
-          role: action.payload.role
+          role: action.payload.role_name || 'admin'
         })
       );
     },

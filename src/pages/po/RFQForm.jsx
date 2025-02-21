@@ -225,11 +225,11 @@ const RFQForm = () => {
         {showTableHeading.itemListRfq && <ItemList />}
       </Box>
       <Box mt={'10px'}>
-        <Table>{renderTableHeader('vendorlist', 'Select Vendor')}</Table>
+        <Table sx={{mb:1}}>{renderTableHeader('vendorlist', 'Select Vendor')}</Table>
         {showTableHeading.vendorlist && <VendorList />}
       </Box>
       <Box mt={'10px'}>
-        <Table>{renderTableHeader('requireDoc', 'Required Document at The Time of Shipping')}</Table>
+        <Table  sx={{mb:1}}>{renderTableHeader('requireDoc', 'Required Document at The Time of Shipping')}</Table>
         {showTableHeading.requireDoc && <DocumentDetail />}
       </Box>
     </Box>
