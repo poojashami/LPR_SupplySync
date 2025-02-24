@@ -516,7 +516,7 @@ import {
   IconButton,
   MenuItem,
   InputAdornment,
-  TableBody
+  TableBody,
   TableBody
 } from '@mui/material';
 import { errorMessageStyle } from 'components/StyleComponent';
