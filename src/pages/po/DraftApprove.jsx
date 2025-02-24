@@ -1,7 +1,8 @@
 import { Box } from '@mui/material';
 import React from 'react';
 import MainLPOView from './MainLPOView';
-const LPOView = () => {
+
+const DraftApprove = () => {
   return (
     <Box>
       <MainLPOView />
@@ -9,4 +10,4 @@ const LPOView = () => {
   );
 };
 
-export default LPOView;
+export default DraftApprove;

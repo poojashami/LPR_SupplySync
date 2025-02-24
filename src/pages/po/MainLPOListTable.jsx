@@ -3,11 +3,12 @@ import React, { useState, useEffect } from 'react';
 import MainCard from 'components/MainCard';
 import { DataGrid } from '@mui/x-data-grid';
 import PlusButton from 'components/CustomButton';
-import LPOView from './LPOView';
-import LPOApprove from './LPOApprove';
+import DraftApprove from './DraftApprove';
 
-const LPOApproveList = () => {
-  const [viewLPO, setViewLPO] = useState(false);
+const MainLPOListTable = () => {
+  const [draftPO, setDraftPO] = useState(false);
+  const [approvalPO, setApprovalPO] = useState(false);
+  const [issuePO, setIssuePO] = useState(false);
 
   const cols = [
     { headerName: 'Sr. No.', field: 'id', width: 60 },
@@ -118,10 +119,10 @@ const LPOApproveList = () => {
   ];
 
   const handleViewClick = async (data) => {
-    setViewLPO(true);
+    setDraftPO(true);
   };
   const handleClose = async () => {
-    setViewLPO(false);
+    setDraftPO(false);
   };
 
   return (
@@ -136,8 +137,8 @@ const LPOApproveList = () => {
             fontSize: '16px'
           }}
         >
-          {viewLPO ? <span>Pending LPO Approvals </span> : viewLPO ? <span>LPO View </span> : <span>Approve LPO List</span>}
-          {viewLPO ? (
+          {draftPO ? <span>Pending LPO Approvals </span> : draftPO ? <span>LPO View </span> : <span>Draft List</span>}
+          {draftPO ? (
             <span>
               <PlusButton label="Back" onClick={handleClose} />
             </span>
@@ -148,8 +149,8 @@ const LPOApproveList = () => {
       }
     >
       <div>
-        {viewLPO ? (
-          <LPOApprove />
+        {draftPO ? (
+          <DraftApprove />
         ) : (
           <Box>
             <DataGrid
@@ -188,4 +189,4 @@ const LPOApproveList = () => {
   );
 };
 
-export default LPOApproveList;
+export default MainLPOListTable;

@@ -7,7 +7,7 @@ import LPOCompare from './LPOCompare';
 import PlusButton from 'components/CustomButton';
 import { color } from 'framer-motion';
 
-const POList = () => {
+const CreatePOList = () => {
   const [showLPOCompare, setShowLPOCompare] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null); // To store the selected row data
 
@@ -56,14 +56,13 @@ const POList = () => {
     },
     { headerName: 'LPR Category', field: 'opr_description', width: 150 },
 
-   
     { headerName: 'Quote Status', field: 'quote_status', width: 120 },
     { headerName: 'Quote Received', field: 'quote_rev', width: 120 },
     { headerName: 'Vertical', field: 'vertical_name', width: 120 },
     { headerName: 'Company', field: 'company_name', width: 120 },
     { headerName: 'Division', field: 'division_name', width: 120 },
-       { headerName: 'RFQ Lead Time', field: 'd_timeline_name', width: 120 },
-    { headerName: 'RFQ Remark', field: 'remarks', width: 150 },
+    { headerName: 'RFQ Lead Time', field: 'd_timeline_name', width: 120 },
+    { headerName: 'RFQ Remark', field: 'remarks', width: 150 }
   ];
 
   const oprData = [
@@ -112,7 +111,7 @@ const POList = () => {
     <MainCard
       title={
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '16px', fontWeight: 600 }}>
-          <span>{!showLPOCompare ? 'Create LPO - List of OPR with Quotes' : 'Quotes For Company: & OPR ID:OPR-324-OPR'}</span>
+          <span>{!showLPOCompare ? 'Create LPO - List of OPR with Quotes' : 'Compare Quote'}</span>
           {showLPOCompare && (
             <PlusButton
               label="Back"
@@ -161,4 +160,4 @@ const POList = () => {
   );
 };
 
-export default POList;
+export default CreatePOList;

@@ -29,6 +29,13 @@ const Treasury = {
           type: 'item',
           url: '/treasury/approve',
           target: false
+        },
+        {
+          id: 'treasury',
+          title: <FormattedMessage id="View" />,
+          type: 'item',
+          url: '/treasury/approve',
+          target: false
         }
       ]
     }

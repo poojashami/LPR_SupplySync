@@ -4,9 +4,8 @@ import MainCard from 'components/MainCard';
 import { DataGrid } from '@mui/x-data-grid';
 import PlusButton from 'components/CustomButton';
 import LPOView from './LPOView';
-import LPOApprove from './LPOApprove';
 
-const LPOApproveList = () => {
+const IssueLPOList = () => {
   const [viewLPO, setViewLPO] = useState(false);
 
   const cols = [
@@ -136,7 +135,7 @@ const LPOApproveList = () => {
             fontSize: '16px'
           }}
         >
-          {viewLPO ? <span>Pending LPO Approvals </span> : viewLPO ? <span>LPO View </span> : <span>Approve LPO List</span>}
+          {viewLPO ? <span>Pending LPO Approvals </span> : viewLPO ? <span>LPO View </span> : <span>Issued LPO List</span>}
           {viewLPO ? (
             <span>
               <PlusButton label="Back" onClick={handleClose} />
@@ -149,7 +148,7 @@ const LPOApproveList = () => {
     >
       <div>
         {viewLPO ? (
-          <LPOApprove />
+          <LPOView />
         ) : (
           <Box>
             <DataGrid
@@ -188,4 +187,4 @@ const LPOApproveList = () => {
   );
 };
 
-export default LPOApproveList;
+export default IssueLPOList;

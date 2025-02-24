@@ -24,7 +24,7 @@ const PO_Menu = {
           target: false
         },
         {
-          id: 'po_create',
+          id: 'po_draft',
           title: <FormattedMessage id="Draft" />,
           type: 'item',
           url: '/po/draft',
@@ -38,19 +38,13 @@ const PO_Menu = {
           target: false
         },
         {
-          id: 'po_view',
+          id: 'issued_lpo',
           title: <FormattedMessage id="Issued LPO" />,
           type: 'item',
-          url: '/po/view',
+          url: '/po/issued_lpo',
           target: false
         }
-        // {
-        //   id: 'po_req_payemnt',
-        //   title: <FormattedMessage id="Request Payment(Vendor)" />,
-        //   type: 'item',
-        //   url: '/po/request-payment',
-        //   target: false
-        // }
+        
       ]
     }
   ]
