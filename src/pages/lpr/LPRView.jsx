@@ -38,7 +38,7 @@ const LPRView = () => {
   );
 
   const shipmentData = [
-    { label: 'LPR No', value: 'LPR001JBJKKJ878' }, // You can add LPR No logic if needed
+    { label: 'LPR No', value: formValues.lpr_num }, 
     { label: 'LPR Date', value: formValues.lprDate },
     { label: 'LPR Category', value: formValues.lprCategory },
     { label: 'Vertical', value: formValues.vertical },
