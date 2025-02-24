@@ -9,100 +9,74 @@ import { color } from 'framer-motion';
 
 const CreatePOList = () => {
   const [showLPOCompare, setShowLPOCompare] = useState(false);
-  const [selectedRow, setSelectedRow] = useState(null); // To store the selected row data
+  const [selectedRow, setSelectedRow] = useState(null);
 
   const handleCreateClick = (row) => {
-    setSelectedRow(row); // Set the selected row data
-    setShowLPOCompare(true); // Show the LPOCompare component
+    setSelectedRow(row);
+    setShowLPOCompare(true);
   };
 
   const columnDefs = [
-    {
-      field: 'action',
-      headerName: 'Create',
-      width: 60,
-      renderCell: (params) => (
-        <CreateIcon
-          style={{ cursor: 'pointer' }}
-          onClick={() => handleCreateClick(params.row)} // Pass the row data
-        />
-      )
-    },
+    { field: 'id', headerName: 'Sr. No', width: 60 },
     {
       field: 'rfq_no',
       headerName: 'RFQ No.',
       renderCell: (params) => (
         <div
           style={{
-            color: params?.row?.status === '2' ? 'navy' : 'red'
+            color: 'navy',
+            cursor: 'pointer',
+            textDecoration: 'none'
           }}
+          onClick={() => handleCreateClick(params.row)}
         >
           {params.value}
         </div>
       ),
       width: 150
     },
-    {
-      field: 'rfq_dt',
-      headerName: 'RFQ Dt.',
-
-      width: 150
-    },
-    {
-      field: 'opr_num',
-      headerName: 'LPR No.',
-
-      width: 150
-    },
-    { headerName: 'LPR Category', field: 'opr_description', width: 150 },
-
-    { headerName: 'Quote Status', field: 'quote_status', width: 120 },
-    { headerName: 'Quote Received', field: 'quote_rev', width: 120 },
-    { headerName: 'Vertical', field: 'vertical_name', width: 120 },
-    { headerName: 'Company', field: 'company_name', width: 120 },
-    { headerName: 'Division', field: 'division_name', width: 120 },
-    { headerName: 'RFQ Lead Time', field: 'd_timeline_name', width: 120 },
-    { headerName: 'RFQ Remark', field: 'remarks', width: 150 }
+    { field: 'rfq_dt', headerName: 'RFQ Dt.', width: 150 },
+    { field: 'opr_num', headerName: 'LPR No.', width: 150 },
+    { field: 'opr_description', headerName: 'LPR Category', width: 150 },
+    { field: 'quote_status', headerName: 'Quote Status', width: 120 },
+    { field: 'quote_rev', headerName: 'Quote Received', width: 120 },
+    { field: 'vertical_name', headerName: 'Vertical', width: 120 },
+    { field: 'company_name', headerName: 'Company', width: 120 },
+    { field: 'division_name', headerName: 'Division', width: 120 },
+    { field: 'd_timeline_name', headerName: 'RFQ Lead Time', width: 120 },
+    { field: 'remarks', headerName: 'RFQ Remark', width: 150 }
   ];
 
   const oprData = [
     {
       id: 1,
-      opr_num: 'OPR001',
-      status: '2',
-      status_procurement: '10',
-      quote_status: 'Received',
-      vertical_name: 'Retail',
-      company_name: 'ABC Corp',
-      division_name: 'North Division',
-      buy_from: 'Supplier A',
-      buying_house_name: 'House X',
-      shipment_mode_name: 'Air',
-      d_timeline_name: '2 Weeks',
-      dept_name: 'Logistics',
-      requested_by: 'John Doe',
-      opr_date: '2025-01-01',
-      remarks: 'Urgent order',
-      opr_description: 'Electronics'
+      rfq_no: 'RFQ-1001',
+      rfq_dt: '2024-02-20',
+      opr_num: 'LPR-5001',
+      opr_description: 'Electrical',
+      quote_status: 'Pending',
+      quote_rev: 3,
+      vertical_name: 'Construction',
+      company_name: 'XYZ Ltd.',
+      division_name: 'Infra',
+      d_timeline_name: '7 Days',
+      remarks: 'Urgent',
+      status: '2'
     },
     {
       id: 2,
-      opr_num: 'OPR002',
-      status: '11',
-      status_procurement: '11',
-      quote_status: 'Pending',
-      vertical_name: 'Manufacturing',
-      company_name: 'XYZ Ltd',
-      division_name: 'South Division',
-      buy_from: 'Supplier B',
-      buying_house_name: 'House Y',
-      shipment_mode_name: 'Sea',
-      d_timeline_name: '1 Month',
-      dept_name: 'Procurement',
-      requested_by: 'Jane Smith',
-      opr_date: '2025-01-05',
-      remarks: 'Regular order',
-      opr_description: 'Machinery'
+      rfq_no: 'RFQ-1002',
+      rfq_dt: '2024-02-21',
+      opr_num: 'LPR-5002',
+      opr_description: 'Mechanical',
+      quote_status: 'Approved',
+      quote_rev: 2,
+      vertical_name: 'Automobile',
+      company_name: 'ABC Corp.',
+      division_name: 'Manufacturing',
+      d_timeline_name: '5 Days',
+      remarks: 'High Priority',
+      status: '1'
     }
   ];
 
@@ -112,14 +86,7 @@ const CreatePOList = () => {
       title={
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '16px', fontWeight: 600 }}>
           <span>{!showLPOCompare ? 'Create LPO - List of OPR with Quotes' : 'Compare Quote'}</span>
-          {showLPOCompare && (
-            <PlusButton
-              label="Back"
-              onClick={() => {
-                setShowLPOCompare(false);
-              }}
-            />
-          )}
+          {showLPOCompare && <PlusButton label="Back" onClick={() => setShowLPOCompare(false)} />}
         </Box>
       }
     >
@@ -134,7 +101,6 @@ const CreatePOList = () => {
               '& .MuiDataGrid-cell': {
                 border: '1px solid rgba(224, 224, 224, 1)',
                 display: 'flex',
-
                 alignItems: 'center'
               },
               '& .MuiDataGrid-columnHeader': {
@@ -142,7 +108,6 @@ const CreatePOList = () => {
                 border: '1px solid rgba(224, 224, 224, 1)',
                 height: '25px !important',
                 display: 'flex',
-
                 alignItems: 'center'
               },
               '& .MuiDataGrid-scrollbar': {

@@ -11,8 +11,9 @@ import LPOItemDetail from './LPOItemDetail';
 import LpoAmountBackup from './LpoAmountBackup';
 import SubmitButton from 'components/CustomSubmitBtn';
 import { useNavigate } from 'react-router-dom';
+import ConsigneeConsignerDetail from './ConsigneeConsignerDetail';
 
-const MainLPOView = () => {
+const MainLPOView = ({ mode }) => {
   const [comment, setComment] = useState('');
   const [loading, setLoading] = useState(false);
   const [isApproved, setIsApproved] = useState(false);
@@ -56,7 +57,7 @@ const MainLPOView = () => {
 
   return (
     <Box>
-      Card
+      <ConsigneeConsignerDetail />
       <Table>{renderTableHeader('basicDetail', 'Basic Details')}</Table>
       {showTableHeading.basicDetail && <LPOBasicDetail />}
       {/* ----------------------------------------------------------------------- */}
@@ -73,93 +74,98 @@ const MainLPOView = () => {
       {showTableHeading.BreakupAmountDetails && <LpoAmountBackup />}
       <Table>{renderTableHeader('itemDetails', 'Items Details')}</Table>
       {showTableHeading.itemDetails && <LPOItemDetail />}
-      <Box padding={1}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={12}>
-            <Typography color={'navy'} fontSize={'13px'} fontWeight={600}>
-              LPO Approval
-            </Typography>
-          </Grid>
-          <Grid item xs={12} md={12}>
-            <Typography variant="body1" sx={{ color: 'navy' }} marginBottom={'10px'}>
-              Approval of PO{' '}
-              <span className="text-primary" style={{ color: 'blue' }}>
-                #LPO73676
-              </span>
-            </Typography>
-
-            <Grid item xs={12} sm={3}>
-              <Typography variant="subtitle2" style={{ fontSize: '11px' }}>
-                Remarks
+      {!(mode === 'issued_lpo') && (
+        <Box padding={1}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={12}>
+              <Typography color={'navy'} fontSize={'13px'} fontWeight={600}>
+                LPO Approval
               </Typography>
-              <TextField
-                fullWidth
-                id="remarks"
-                value={comment}
-                variant="outlined"
-                onChange={(e) => setComment(e.target.value)}
-                sx={{
-                  '& .MuiOutlinedInput-input': {
-                    padding: '4px'
-                  }
-                }}
-              />
             </Grid>
-            <Grid item xs={12} sm={3}>
-              <div style={{ textAlign: 'center', display: 'flex', justifyContent: 'end', paddingTop: '10px' }}>
-                <CancelButton onClick={() => accept(false)}>Cancel</CancelButton>
+            <Grid item xs={12} md={12}>
+              <Typography variant="body1"  marginBottom={'10px'}>
+                Approval of PO{' '}
+                <span className="text-primary" style={{ color: 'navy' }}>
+                  #LPO73676
+                </span>
+              </Typography>
 
-                <Button
-                  size="small"
+              <Grid item xs={12} sm={3}>
+                <Typography variant="subtitle2" style={{ fontSize: '11px' }}>
+                  Remarks
+                </Typography>
+                <TextField
+                  fullWidth
+                  id="remarks"
+                  value={comment}
+                  variant="outlined"
+                  onChange={(e) => setComment(e.target.value)}
                   sx={{
-                    backgroundColor: '#2c6095',
-                    color: '#fff',
-                    '&:hover': {
-                      backgroundColor: '#244b78'
-                    },
-                    ml: 2
-                  }}
-                  onClick={() => {
-                    if (comment.trim() !== '') {
-                      accept(true);
-                      setIsApproved(true);
-                      // setApprovalPOOpen(true);
+                    '& .MuiOutlinedInput-input': {
+                      padding: '4px'
                     }
                   }}
-                >
-                  Send for Approval
-                </Button>
-              </div>
+                />
+              </Grid>
+              <Grid item xs={12} sm={3}>
+                <div style={{ textAlign: 'center', display: 'flex', justifyContent: 'end', paddingTop: '10px' }}>
+                  <CancelButton onClick={() => accept(false)}>Cancel</CancelButton>
+
+                  <Button
+                    size="small"
+                    sx={{
+                      backgroundColor: '#2c6095',
+                      color: '#fff',
+                      '&:hover': {
+                        backgroundColor: '#244b78'
+                      },
+                      ml: 2
+                    }}
+                    onClick={() => {
+                      if (comment.trim() !== '') {
+                        accept(true);
+                        setIsApproved(true);
+                        // setApprovalPOOpen(true);
+                      }
+                    }}
+                  >
+                    {mode === 'draft' ? 'Send for Approval' : mode === 'approve' ? 'Approve' : ''}
+                  </Button>
+                </div>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-      </Box>
-      <Box display="flex" justifyContent="center" mt={2} gap={2}>
-        <SubmitButton
-          disabled={loading}
-          variant="contained"
-          onClick={handleOpenDoc}
-          // endIcon={loading ? <CircularProgress size={'large'} sx={{ color: 'primary' }} /> : <SendIcon />}
-        >
-          Send via Mail
-        </SubmitButton>
-        <SubmitButton
-          disabled={loading}
-          variant="contained"
-          // onClick={handleOpenDoc}
-          // endIcon={loading ? <CircularProgress size={'large'} sx={{ color: 'primary' }} /> : <SendIcon />}
-        >
-          Attach LPO Acceptance Copy
-        </SubmitButton>
-        <SubmitButton
-          disabled={loading}
-          variant="contained"
-          // onClick={handleOpenDoc}
-          // endIcon={loading ? <CircularProgress size={'large'} sx={{ color: 'primary' }} /> : <SendIcon />}
-        >
-          Request for Payment
-        </SubmitButton>
-      </Box>
+        </Box>
+      )}
+
+      {mode === 'issued_lpo' && (
+        <Box display="flex" justifyContent="center" mt={2} gap={2}>
+          <SubmitButton
+            disabled={loading}
+            variant="contained"
+            onClick={handleOpenDoc}
+            // endIcon={loading ? <CircularProgress size={'large'} sx={{ color: 'primary' }} /> : <SendIcon />}
+          >
+            Send via Mail
+          </SubmitButton>
+          <SubmitButton
+            disabled={loading}
+            variant="contained"
+            // onClick={handleOpenDoc}
+            // endIcon={loading ? <CircularProgress size={'large'} sx={{ color: 'primary' }} /> : <SendIcon />}
+          >
+            Attach LPO Acceptance Copy
+          </SubmitButton>
+          <SubmitButton
+            disabled={loading}
+            variant="contained"
+            // onClick={handleOpenDoc}
+            // endIcon={loading ? <CircularProgress size={'large'} sx={{ color: 'primary' }} /> : <SendIcon />}
+          >
+            Request for Payment
+          </SubmitButton>
+        </Box>
+      )}
     </Box>
   );
 };

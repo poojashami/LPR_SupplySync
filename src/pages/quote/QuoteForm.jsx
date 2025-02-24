@@ -38,6 +38,7 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CustomParagraphLight from 'components/CustomParagraphLight';
 import CustomParagraphDark from 'components/CustomParagraphDark';
 import CustomHeading from 'components/CustomHeading';
+import ConsigneeConsignerDetail from 'pages/po/ConsigneeConsignerDetail';
 const faqItemDatalist = [
   {
     id: 1,
@@ -490,63 +491,77 @@ const QuoteForm = () => {
   ];
   return (
     <>
-      <Table>{renderTableHeader('createrfqForm', 'Buying House Info')}</Table>
-      {showTableHeading.createrfqForm && (
-        <Grid item xs={12} sm={12} sx={{ padding: '10px' }}>
-          <Grid container spacing={2}>
-            {shipmentData.map((item, index) => (
-              <Grid item xs={3} key={index}>
-                <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
-                  <Typography variant="h6" sx={{ marginRight: 1, fontWeight: '500', fontSize: '11px', color: '#333' }}>
-                    {item.label}:
-                  </Typography>
-                  <Typography variant="body1" sx={{ color: '#555', fontSize: '11px' }}>
-                    {item.value}
-                  </Typography>
-                </Box>
-              </Grid>
-            ))}
-          </Grid>
-        </Grid>
-      )}
+      {showTableHeading.createrfqForm && <ConsigneeConsignerDetail />}
 
       <form onSubmit={handleSubmit}>
         <Table>{renderTableHeader('basicInfo', 'Basic Info')}</Table>
         {showTableHeading.basicInfo && (
           <Box padding={1}>
             <Grid container spacing={2}>
-              <Grid item xs={3}>
-                <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
-                  <Typography variant="h6" sx={{ marginRight: 1, fontWeight: '500', fontSize: '11px', color: '#333' }}>
-                    RFQ N0.:
-                  </Typography>
-                  <Typography variant="body1" sx={{ color: '#555', fontSize: '11px' }}>
-                    djhdjkk
-                  </Typography>
-                </Box>
+              <Grid item xs={12} sm={2}>
+                <CustomParagraphLight>
+                  RFQ No. <ValidationStar>*</ValidationStar>
+                </CustomParagraphLight>
+                <TextField
+                  sx={{
+                    '& .MuiInputBase-input': {
+                      padding: '4px',
+                      fontSize: '11px'
+                    },
+                    '& .MuiInputBase-input.Mui-disabled': {
+                      WebkitTextFillColor: '#000000'
+                    }
+                  }}
+                  name="vertical"
+                  variant="outlined"
+                  value={'RAFF444'}
+                  fullWidth
+                  size="small"
+                />
               </Grid>
-              <Grid item xs={3}>
-                <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
-                  <Typography variant="h6" sx={{ marginRight: 1, fontWeight: '500', fontSize: '11px', color: '#333' }}>
-                    RFQ Dt.:
-                  </Typography>
-                  <Typography variant="body1" sx={{ color: '#555', fontSize: '11px' }}>
-                    djhdjkk
-                  </Typography>
-                </Box>
+              <Grid item xs={12} sm={2}>
+                <CustomParagraphLight>
+                  RFQ Dt. <ValidationStar>*</ValidationStar>
+                </CustomParagraphLight>
+                <TextField
+                  sx={{
+                    '& .MuiInputBase-input': {
+                      padding: '4px',
+                      fontSize: '11px'
+                    },
+                    '& .MuiInputBase-input.Mui-disabled': {
+                      WebkitTextFillColor: '#000000'
+                    }
+                  }}
+                  name="vertical"
+                  variant="outlined"
+                  value={'2025-01-01'}
+                  fullWidth
+                  size="small"
+                />
               </Grid>
-              <Grid item xs={3}>
-                <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
-                  <Typography variant="h6" sx={{ marginRight: 1, fontWeight: '500', fontSize: '11px', color: '#333' }}>
-                    Respond Time(Days):
-                  </Typography>
-                  <Typography variant="body1" sx={{ color: '#555', fontSize: '11px' }}>
-                    djhdjkk
-                  </Typography>
-                </Box>
+              <Grid item xs={12} sm={2}>
+                <CustomParagraphLight>
+                  Response Time (Days) <ValidationStar>*</ValidationStar>
+                </CustomParagraphLight>
+                <TextField
+                  sx={{
+                    '& .MuiInputBase-input': {
+                      padding: '4px',
+                      fontSize: '11px'
+                    },
+                    '& .MuiInputBase-input.Mui-disabled': {
+                      WebkitTextFillColor: '#000000'
+                    }
+                  }}
+                  name="vertical"
+                  variant="outlined"
+                  value={'50 Day'}
+                  fullWidth
+                  size="small"
+                />
               </Grid>
-            </Grid>
-            <Grid container spacing={2}>
+
               {/* <Grid item xs={12} sm={2}>
                 <CustomParagraphLight>
                   Shipment Mode<ValidationStar>*</ValidationStar>
@@ -1238,13 +1253,12 @@ const QuoteForm = () => {
                 <Grid item xs={12} sm={0.3}>
                   <CustomParagraphLight>{index + 1}</CustomParagraphLight>
                 </Grid>
-                <Grid item xs={12} sm={1.2}>
+
+                <Grid item xs={12} sm={1.5}>
                   <CustomParagraphLight>
                     Head of Expense
                     <ValidationStar>*</ValidationStar>
                   </CustomParagraphLight>
-                </Grid>
-                <Grid item xs={12} sm={2}>
                   <TextField
                     value={item.head_of_expense}
                     onChange={(e) => handleInputChangeFreight(e, index, 'head_of_expense')}
@@ -1260,13 +1274,12 @@ const QuoteForm = () => {
                     }}
                   />
                 </Grid>
-                <Grid item xs={12} sm={0.7}>
+
+                <Grid item xs={12} sm={1.5}>
                   <CustomParagraphLight>
                     Amount
                     <ValidationStar>*</ValidationStar>
                   </CustomParagraphLight>
-                </Grid>
-                <Grid item xs={12} sm={1.5}>
                   <TextField
                     value={item.no_of_container}
                     onChange={(e) => handleInputChangeFreight(e, index, 'no_of_container')}
@@ -1282,7 +1295,7 @@ const QuoteForm = () => {
                     }}
                   />
                 </Grid>
-                <Grid item xs={12} sm={1}>
+                <Grid item xs={12} sm={1.5}>
                   <CustomParagraphLight>
                     VAT
                     <ValidationStar>*</ValidationStar>
@@ -1303,7 +1316,7 @@ const QuoteForm = () => {
                     }}
                   />
                 </Grid>
-                <Grid item xs={12} sm={2}>
+                <Grid item xs={12} sm={1.5}>
                   <CustomParagraphLight>
                     Amt. incl. VAT
                     <ValidationStar>*</ValidationStar>
@@ -1324,8 +1337,29 @@ const QuoteForm = () => {
                     }}
                   />
                 </Grid>
+                <Grid item xs={12} sm={1.5}>
+                  <CustomParagraphLight>
+                    Round of
+                    <ValidationStar>*</ValidationStar>
+                  </CustomParagraphLight>
+                  <TextField
+                    value={item.no_of_container}
+                    onChange={(e) => handleInputChangeFreight(e, index, 'no_of_container')}
+                    variant="outlined"
+                    fullWidth
+                    sx={{
+                      '& .MuiInputBase-input': {
+                        padding: '4px',
+                        fontSize: '11px'
+                      },
+                      '& .MuiInputBase-input.Mui-disabled': {
+                        WebkitTextFillColor: '#000000'
+                      }
+                    }}
+                  />
+                </Grid>
                 {index === FreightArray.length - 1 && (
-                  <Grid item xs={12} sm={0.3}>
+                  <Grid item xs={12} sm={0.3} display={'flex'} alignItems={'end'}>
                     <IconButton aria-label="add" size="small" onClick={addFreightEntry}>
                       <AddIcon color="success" />
                     </IconButton>
@@ -1499,27 +1533,22 @@ const QuoteForm = () => {
           {showTableHeading.requireDoc && (
             <Box padding={1}>
               <CustomHeading>Select Files</CustomHeading>
-              <Grid container spacing={1} display={'flex'} alignItems={'center'} marginBottom={1}>
-                <Grid item xs={12} alignItems={'center'}>
-                  <form>
-                    <Grid container spacing={1}>
-                      {listDoc.map((file, index) => (
-                        <Grid item xs={2} key={index}>
-                          <CustomParagraphLight>
-                            <input
-                              type="checkbox"
-                              checked={file?.selected}
-                              onChange={() => handleCheckboxChange(index)}
-                              style={{ marginRight: '5px' }}
-                            />
-                            {file.name}
-                          </CustomParagraphLight>
-                        </Grid>
-                      ))}
-                    </Grid>
-                  </form>
-                </Grid>
-              </Grid>
+
+              <form>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  {listDoc.map((file, index) => (
+                    <Box key={index} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <input
+                        type="checkbox"
+                        checked={file?.selected}
+                        onChange={() => handleCheckboxChange(index)}
+                        style={{ marginRight: '5px' }}
+                      />
+                      <CustomParagraphLight>{file.name}</CustomParagraphLight>
+                    </Box>
+                  ))}
+                </Box>
+              </form>
 
               {fileArray?.map((item, index) => (
                 <Grid

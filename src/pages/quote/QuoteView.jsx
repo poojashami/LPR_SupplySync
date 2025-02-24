@@ -9,6 +9,7 @@ import ItemList from './ItemList';
 import { DataGrid } from '@mui/x-data-grid';
 import CustomParagraphDark from 'components/CustomParagraphDark';
 import CustomParagraphLight from 'components/CustomParagraphLight';
+import QuoteItemDetail from './QuoteItemDetail';
 
 const QuoteView = ({ selectedRFQ, onBack }) => {
   const [showTableHeading, setShowTableHeading] = useState({
@@ -88,22 +89,21 @@ const QuoteView = ({ selectedRFQ, onBack }) => {
   ];
 
   const shipmentData = [
-    { label: 'Vendor Name:', value: 'Tech Corp' },
-    { label: 'Vendor Ref. No:', value: 'VREF1234' },
-    { label: 'Vendor Ref. Date:', value: '2025-01-01' },
-    { label: 'Quotation Date:', value: '2025-01-10' },
-    { label: 'Currency:', value: 'USD' },
-    { label: 'Delivery Term:', value: 'FOB (Free On Board)' },
-    { label: 'Lead Initiation Point:', value: 'New York, USA' },
-    { label: 'Quote Valid Upto:', value: '2025-02-01' },
-    { label: 'Country of Origin:', value: 'USA' },
-    { label: 'Country of Supply:', value: 'India' },
-    { label: 'Port of Loading:', value: 'Los Angeles Port' },
-    { label: 'Vendor Lead Time:', value: '15 Days' },
-    { label: 'Shipment Mode:', value: 'Net 30 Days' },
-    { label: 'Shipment Type:', value: 'Net 30 Days' },
-    { label: 'Payment Terms:', value: 'Net 30 Days' },
-    { label: 'Remarks:', value: 'Ensure proper documentation before shipment.' }
+    { label: 'RFQ No.', value: 'VREF1234' },
+    { label: 'RFQ Dt.', value: '2025-01-01' },
+    { label: 'Response Time (Days)', value: '10' },
+    { label: 'RFQ Delivery Term', value: 'FOB (Free On Board)' },
+    { label: 'Vendor Name', value: 'Tech Corp' },
+    { label: 'Vendor Quote No.', value: 'VQ-56789' },
+    { label: 'Vendor Quote Dt.', value: '2025-01-05' },
+    { label: 'Quote Currency', value: 'USD' },
+    { label: 'Vendor Delivery Terms', value: 'New York, USA' },
+    { label: 'RFQ Lead Time', value: '15 Days' },
+    { label: 'Vendor Lead Time', value: 'Los Angeles Port' },
+    { label: 'Lead Initiation Point', value: 'India' },
+    { label: 'Quote Valid Upto', value: '2025-02-01' },
+    { label: 'Quote Remark', value: 'Payment within Net 30 Days' },
+    { label: 'Delivery Address', value: '1234 Elm St, California, USA' }
   ];
 
   const ItemColumns = [
@@ -217,8 +217,11 @@ const QuoteView = ({ selectedRFQ, onBack }) => {
     { label: 'Quotation Amount', value: '2249400 INR' }
   ];
   const additionalCostData = [
-    { label: 'Total Freight Charges', value: 'Tech Corp' },
-    { label: 'Special Packaging', value: 'LPR1234' }
+    { label: 'Head of Expense', value: 'Tech Corp' },
+    { label: 'Amount', value: 'LPR1234' },
+    { label: 'VAT', value: 'LPR1234' },
+    { label: 'Amt. incl. VAT', value: 'LPR1234' },
+    { label: 'Round of', value: 'LPR1234' }
   ];
   return (
     <>
@@ -329,10 +332,10 @@ const QuoteView = ({ selectedRFQ, onBack }) => {
           <Grid item xs={12} sm={12} sx={{ padding: '10px' }}>
             <Grid container spacing={2}>
               {additionalCostData.map((item, index) => (
-                <Grid item xs={3} key={index}>
+                <Grid item xs={2} key={index}>
                   <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
-                    <CustomParagraphDark>{item.label}:</CustomParagraphDark>
-                    <CustomParagraphLight>{item.value}</CustomParagraphLight>
+                    <CustomParagraphDark>{item.label} : </CustomParagraphDark>
+                    <CustomParagraphLight> {item.value}</CustomParagraphLight>
                   </Box>
                 </Grid>
               ))}
@@ -343,56 +346,60 @@ const QuoteView = ({ selectedRFQ, onBack }) => {
       <Table>{renderTableHeader('BreakupAmountDetails', 'Quotation Amount Breakup')}</Table>
       <Table>
         {showTableHeading.BreakupAmountDetails && (
-          <Grid item xs={12} sm={12} sx={{ padding: '10px' }}>
+          <Box padding={1}>
             <Grid container spacing={2}>
-              {quotationAmountBreakup.map((item, index) => (
-                <Grid item xs={3} key={index}>
-                  <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
-                    <CustomParagraphDark>{item.label}:</CustomParagraphDark>
-                    <CustomParagraphLight>{item.value}</CustomParagraphLight>
-                  </Box>
-                </Grid>
-              ))}
+              <Grid item xs={1}>
+                <CustomParagraphDark>
+                  Item Cost:
+                  <br />
+                  <span style={{ fontSize: '9px' }}>(Ex. VAT)</span>
+                </CustomParagraphDark>
+              </Grid>
+              <Grid item xs={1}>
+                <CustomParagraphLight>1000</CustomParagraphLight>
+              </Grid>
+              <Grid item xs={1}>
+                <CustomParagraphDark>
+                  Addition Ch:
+                  <br />
+                  <span style={{ fontSize: '9px' }}>(Ex. VAT)</span>
+                </CustomParagraphDark>
+              </Grid>
+              <Grid item xs={1}>
+                <CustomParagraphLight>1000</CustomParagraphLight>
+              </Grid>
+              <Grid item xs={1.3}>
+                <CustomParagraphDark>
+                  Transportation Ch:
+                  <br />
+                  <span style={{ fontSize: '9px' }}>(Ex. VAT)</span>
+                </CustomParagraphDark>
+              </Grid>
+              <Grid item xs={1}>
+                <CustomParagraphLight>1000</CustomParagraphLight>
+              </Grid>
+              <Grid item xs={1}>
+                <CustomParagraphDark>Total VAT:</CustomParagraphDark>
+              </Grid>
+              <Grid item xs={1}>
+                <CustomParagraphLight>1000</CustomParagraphLight>
+              </Grid>
+              <Grid item xs={1}>
+                <CustomParagraphDark>
+                  Quotation Amt.:
+                  <br />
+                  <span style={{ fontSize: '9px' }}>(Ex. VAT)</span>
+                </CustomParagraphDark>
+              </Grid>
+              <Grid item xs={1}>
+                <CustomParagraphLight>1000</CustomParagraphLight>
+              </Grid>
             </Grid>
-          </Grid>
+          </Box>
         )}
       </Table>
       <Table>{renderTableHeader('itemList', 'Item Details')}</Table>
-      {showTableHeading.itemList && (
-        <DataGrid
-          getRowHeight={() => 'auto'}
-          sx={{
-            height: '30vh',
-            '& .MuiDataGrid-cell': {
-              border: '1px solid rgba(224, 224, 224, 1)',
-              display: 'flex',
-
-              alignItems: 'center'
-            },
-            '& .MuiDataGrid-columnHeader': {
-              backgroundColor: '#f5f5f5',
-              border: '1px solid rgba(224, 224, 224, 1)',
-              height: '25px !important',
-              display: 'flex',
-
-              alignItems: 'center'
-            },
-            '& .MuiDataGrid-scrollbar': {
-              height: '8px'
-            },
-            '& .MuiDataGrid-scrollbar': {
-              height: '8px'
-            }
-          }}
-          rows={itemData}
-          columns={ItemColumns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          hideFooter
-          hideFooterPagination
-          hideFooterSelectedRowCount
-        />
-      )}
+      {showTableHeading.itemList && <QuoteItemDetail />}
     </>
   );
 };

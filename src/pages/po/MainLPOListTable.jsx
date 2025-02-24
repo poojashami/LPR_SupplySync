@@ -1,24 +1,26 @@
 import { Box } from '@mui/material';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import MainCard from 'components/MainCard';
 import { DataGrid } from '@mui/x-data-grid';
 import PlusButton from 'components/CustomButton';
-import DraftApprove from './DraftApprove';
+import MainLPOView from './MainLPOView';
+import { useEffect } from 'react';
 
-const MainLPOListTable = () => {
-  const [draftPO, setDraftPO] = useState(false);
-  const [approvalPO, setApprovalPO] = useState(false);
-  const [issuePO, setIssuePO] = useState(false);
+const MainLPOListTable = ({ mode }) => {
+  const [activeView, setActiveView] = useState(null);
+
+  useEffect(() => {
+    setActiveView(null);
+  }, [mode]);
 
   const cols = [
     { headerName: 'Sr. No.', field: 'id', width: 60 },
-
     {
       field: 'opo_num',
       headerName: 'LPO No.',
       width: 120,
       renderCell: (params) => (
-        <div onClick={() => handleViewClick(params.row)} style={{ cursor: 'pointer', color: 'blue' }} aria-hidden="true">
+        <div onClick={() => handleViewClick(mode)} style={{ cursor: 'pointer', color: 'blue' }} aria-hidden="true">
           {params.value}
         </div>
       )
@@ -46,7 +48,6 @@ const MainLPOListTable = () => {
         return <span style={{ color, fontWeight: 'bold' }}>{params.value}</span>;
       }
     },
-
     { headerName: 'Quotation No.', field: 'quo_num', width: 120 },
     { headerName: 'LPR No.', field: 'lpr_no', width: 120 },
     { headerName: 'RFQ No.', field: 'rfq_no', width: 120 },
@@ -58,9 +59,9 @@ const MainLPOListTable = () => {
     { headerName: 'RFQ Lead Time', field: 'rfq_lead_time', width: 250 },
     { headerName: 'Vendor Lead time', field: 'vendor_lead_time', width: 150 },
     { headerName: 'Quote Currency.', field: 'quote_currency', width: 150 },
-
     { headerName: 'Quote Amt.', field: 'quote_amt', width: 150 }
   ];
+
   const lpoData = [
     {
       id: 1,
@@ -118,49 +119,41 @@ const MainLPOListTable = () => {
     }
   ];
 
-  const handleViewClick = async (data) => {
-    setDraftPO(true);
+  const handleViewClick = (selectedMode) => {
+    setActiveView(selectedMode);
   };
-  const handleClose = async () => {
-    setDraftPO(false);
+
+  const handleClose = () => {
+    setActiveView(null);
   };
 
   return (
-    <MainCard
-      title={
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            fontWeight: 600,
-            fontSize: '16px'
-          }}
+    <>
+      {!activeView && (
+        <MainCard
+          title={
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                fontWeight: 600,
+                fontSize: '16px'
+              }}
+            >
+              {mode === 'draft' ? 'Draft List' : mode === 'approve' ? 'Pending PO Approvals List' : 'Issued PO List'}
+            </Box>
+          }
         >
-          {draftPO ? <span>Pending LPO Approvals </span> : draftPO ? <span>LPO View </span> : <span>Draft List</span>}
-          {draftPO ? (
-            <span>
-              <PlusButton label="Back" onClick={handleClose} />
-            </span>
-          ) : (
-            ''
-          )}
-        </Box>
-      }
-    >
-      <div>
-        {draftPO ? (
-          <DraftApprove />
-        ) : (
           <Box>
             <DataGrid
               getRowHeight={() => 'auto'}
               sx={{
                 height: '85vh',
+                border: '1px solid rgba(224, 224, 224, 1)',
                 '& .MuiDataGrid-cell': {
                   border: '1px solid rgba(224, 224, 224, 1)',
                   display: 'flex',
-
                   alignItems: 'center'
                 },
                 '& .MuiDataGrid-columnHeader': {
@@ -168,11 +161,9 @@ const MainLPOListTable = () => {
                   border: '1px solid rgba(224, 224, 224, 1)',
                   height: '25px !important',
                   display: 'flex',
-
                   alignItems: 'center',
                   minHeight: '30px'
                 },
-
                 '& .MuiDataGrid-scrollbar': {
                   height: '8px'
                 }
@@ -183,9 +174,31 @@ const MainLPOListTable = () => {
               rowsPerPageOptions={[5]}
             />
           </Box>
-        )}
-      </div>
-    </MainCard>
+        </MainCard>
+      )}
+
+      {/* Detail View Card */}
+      {activeView && (
+        <MainCard
+          title={
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                fontWeight: 600,
+                fontSize: '16px'
+              }}
+            >
+              {activeView === 'draft' ? 'Draft PO' : activeView === 'approve' ? 'Pending PO Approvals' : 'Issued PO'}
+              <PlusButton label="Back" onClick={handleClose} />
+            </Box>
+          }
+        >
+          <MainLPOView mode={mode} />
+        </MainCard>
+      )}
+    </>
   );
 };
 

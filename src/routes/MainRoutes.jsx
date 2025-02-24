@@ -11,15 +11,14 @@ import CreateLPRForm from 'pages/lpr/CreateLPRForm';
 import ViewLPRList from 'pages/lpr/ViewLPRList';
 import QuoteList from 'pages/quote/QuoteList';
 import QuoteComparelist from 'pages/quote/QuoteComparelist';
-import LPOApproveList from 'pages/po/LPOApproveList';
 import CreateQuoteList from 'pages/quote/CreateQuoteList';
 import GRNList from 'pages/grn/GRNList';
 import RfqViewList from 'pages/rfq/RfqViewList';
 import CreatePOList from 'pages/po/CreatePOList';
-import DraftList from 'pages/po/DraftList';
-import IssueLPOList from 'pages/po/IssueLPOList';
+
 import LPODocumentPage from 'pages/po/LPODocumentPage';
 import LPOEmailForm from 'pages/po/LPOEmailForm';
+import MainLPOListTable from 'pages/po/MainLPOListTable';
 
 const MainRoutes = {
   path: '/',
@@ -95,15 +94,15 @@ const MainRoutes = {
         },
         {
           path: 'po/draft',
-          element: <DraftList />
+          element: <MainLPOListTable mode={'draft'} />
         },
         {
           path: 'po/approve',
-          element: <LPOApproveList />
+          element: <MainLPOListTable mode={'approve'} />
         },
         {
           path: 'po/issued_lpo',
-          element: <IssueLPOList />
+          element: <MainLPOListTable mode={'issued_lpo'} />
         },
         {
           path: 'po/lpo_doc',

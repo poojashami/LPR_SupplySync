@@ -31,12 +31,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutlined';
-
+import CustomParagraphDark from 'components/CustomParagraphDark';
+import CustomParagraphLight from 'components/CustomParagraphLight';
+import { messageOpen } from 'Redux/Slices/StaticSlice';
+import { useNavigate } from 'react-router';
+import SubmitButton from 'components/CustomSubmitBtn';
+import CancelButton from 'components/CustomCancelButton';
 const LPOCompare = () => {
   const [showTableHeading, setShowTableHeading] = useState({
     documentsList: true
   });
-
+  const navigate = useNavigate();
   const [currency, setCurrency] = useState('USD');
   const { rfqs } = useSelector((state) => state.rfq);
   const [selectedQuote, setSelectedQuote] = useState('');
@@ -46,14 +51,30 @@ const LPOCompare = () => {
   const [convert_to_delivery_term, setConvert_to_deliveryTerm] = useState('CFR');
   const [selectedQuoteForView, setSelectedQuoteForView] = useState([]);
   const [selectionModel, setSelectionModel] = useState([]);
-
+  const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
   const toggleTableBody = (section) => {
     setShowTableHeading((prevState) => ({
       ...prevState,
       [section]: !prevState[section]
     }));
   };
+  const [po_create_data, setPo_create_data] = useState({
+    opo_description: '',
+    unit_justification: '',
+    procurement_justification: ''
+  });
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const create_po = async (quotation) => {
+    navigate('/po/draft');
+  };
   const renderTableHeader = (sectionName, sectionLabel) => (
     <TableHead sx={{ backgroundColor: '#EAF1F6' }}>
       <TableRow>
@@ -144,7 +165,6 @@ const LPOCompare = () => {
       notes: 'Delivery note for shipped items.'
     }
   ];
-
   const vendorDetailsCols = [
     { headerName: 'RFQ Lead Time', field: 'rfq_lead_time' },
 
@@ -300,7 +320,11 @@ const LPOCompare = () => {
       final_amount: 1500.5,
       quote_all_Data: 'USD',
       currencyRates: 1,
-      final_amount_usd: 1500.5
+      final_amount_usd: 1500.5,
+      document_name: 'Quotation Document',
+      document_date: '2025-01-10',
+      file_name: 'quote_001.pdf',
+      notes: 'First quotation document for project A.'
     },
     {
       id: 2,
@@ -324,7 +348,11 @@ const LPOCompare = () => {
       final_amount: 1270,
       quote_all_Data: 'EUR',
       currencyRates: 1.1,
-      final_amount_usd: 1397
+      final_amount_usd: 1397,
+      document_name: 'Quotation Document',
+      document_date: '2025-01-10',
+      file_name: 'quote_001.pdf',
+      notes: 'First quotation document for project A.'
     },
     {
       id: 3,
@@ -348,7 +376,11 @@ const LPOCompare = () => {
       final_amount: 105000,
       quote_all_Data: 'INR',
       currencyRates: 0.012,
-      final_amount_usd: 1260
+      final_amount_usd: 1260,
+      document_name: 'Quotation Document',
+      document_date: '2025-01-10',
+      file_name: 'quote_001.pdf',
+      notes: 'First quotation document for project A.'
     }
   ];
   const vendorDetailsMainData = [
@@ -598,7 +630,7 @@ const LPOCompare = () => {
         </Grid>
       </Grid>
       <Grid container spacing={1}>
-        <Grid item xs={12} md={4}>
+        <Grid item md={4}>
           <Paper style={{ padding: 5, background: '#e8eaf6' }}>
             <Typography
               gutterBottom
@@ -733,14 +765,14 @@ const LPOCompare = () => {
             </div>
           </Paper>
         </Grid>
-        <Grid item xs={12} md={8} style={{ overflowX: 'scroll', scrollbarWidth: 'thin', width: '100px', height: 'max-content' }}>
-          <div style={{ display: 'flex', minWidth: 'max-content' }}>
+        <Grid item md={8}>
+          <div style={{ display: 'flex', overflowX: 'scroll', scrollbarWidth: 'thin', height: 'max-content' }}>
             {/* ?.filter((item) => selectedQuoteForView.includes(item.id)) */}
             {vendorDetailsData ? (
               vendorDetailsData?.map((quotation, index) => (
                 <Paper
                   key={index}
-                  style={{ padding: 5, background: index % 2 === 0 ? '#ede7f6' : '#e3f2fd', minWidth: '600px', marginRight: '16px' }}
+                  style={{ padding: 5, background: index % 2 === 0 ? '#ede7f6' : '#e3f2fd', minWidth: '600px', marginRight: '10px' }}
                 >
                   <Typography
                     gutterBottom
@@ -796,16 +828,65 @@ const LPOCompare = () => {
                       <div>
                         <span style={{ backgroundColor: 'blue', color: 'white', padding: '5px', borderRadius: '10px' }}>Recommend</span>
                       </div>
-                      {/* <Tooltip title={quote?.procurement_justification ? 'Click to Select' : 'Click to Recommend'}> */}
-                      <IconButton
-                        aria-label="add_costs"
-                        onClick={() => {
-                          // create_po(quotation);
-                        }}
-                      >
+                      <IconButton aria-label="add_costs" onClick={handleOpen}>
                         <DoneAllIcon color="info" />
                       </IconButton>
-                      {/* </Tooltip> */}
+                      <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
+                        <DialogTitle>Confirmation</DialogTitle>
+                        <DialogContent>
+                          <DialogContentText id="alert-dialog-description" sx={{ marginBottom: '20px' }}>
+                            You have chosen the following quotation: <em style={{ color: 'red' }}>{quotation.quo_num}</em>, <br />
+                            for <em style={{ color: 'red' }}>{quotation?.opr_num}</em> Please confirm your selection to proceed.
+                          </DialogContentText>
+                          <Box fullWidth sx={{ display: 'flex', gap: '12px', flexDirection: 'column' }}>
+                            <Typography variant="h6" sx={{ fontSize: '11px', color: '#333' }}>
+                              Procurement Justification
+                            </Typography>
+                            <TextField
+                              fullWidth
+                              id="procurement_justification"
+                              name="procurement_justification"
+                              value={quotation?.procurement_justification}
+                              sx={{
+                                '& .MuiInputBase-input': {
+                                  padding: '8px',
+                                  fontSize: '11px'
+                                },
+                                '& .MuiInputBase-input.Mui-disabled': {
+                                  WebkitTextFillColor: '#000000'
+                                }
+                              }}
+                            />
+                            <Typography variant="h6" sx={{ fontSize: '11px', color: '#333' }}>
+                              Unit Justification
+                            </Typography>
+                            <TextField
+                              fullWidth
+                              id="unit_justification"
+                              name="unit_justification"
+                              value={po_create_data?.unit_justification}
+                              onChange={(e) => setPo_create_data((val) => ({ ...val, [e.target.name]: e.target.value }))}
+                              sx={{
+                                '& .MuiInputBase-input': {
+                                  padding: '8px',
+                                  fontSize: '11px'
+                                },
+                                '& .MuiInputBase-input.Mui-disabled': {
+                                  WebkitTextFillColor: '#000000'
+                                }
+                              }}
+                            />
+                          </Box>
+                        </DialogContent>
+                        <DialogActions>
+                          <SubmitButton onClick={handleClose} v>
+                            Cancel
+                          </SubmitButton>
+                          <CancelButton onClick={create_po} autoFocus>
+                            Generate OPO
+                          </CancelButton>
+                        </DialogActions>
+                      </Dialog>
                     </div>
                   </Typography>
                   <div style={{ display: 'flex', alignItems: 'center', fontSize: '11px', marginBottom: '1px' }}>
@@ -912,6 +993,27 @@ const LPOCompare = () => {
                       hideFooter
                     />
                   </div>
+                  <Box paddingTop={2}>
+                    <Grid container spacing={2} sx={{ marginBottom: 2 }}>
+                      <Grid item xs={3}>
+                        <CustomParagraphDark>Document</CustomParagraphDark>
+                        <CustomParagraphLight
+                          sx={{ cursor: 'pointer', color: 'navy', fontWeight: 'bold' }}
+                          onClick={() => dispatch(messageOpen({ type: 'base64', url: document.file_name }))} // Ensure this triggers correctly
+                        >
+                          {quotation.document_name}
+                        </CustomParagraphLight>
+                      </Grid>
+                      <Grid item xs={3}>
+                        <CustomParagraphDark>Document Date</CustomParagraphDark>
+                        <CustomParagraphLight>{quotation.document_date}</CustomParagraphLight>
+                      </Grid>
+                      <Grid item xs={6}>
+                        <CustomParagraphDark>Note</CustomParagraphDark>
+                        <CustomParagraphLight>{quotation.notes}</CustomParagraphLight> {/* Fixed this */}
+                      </Grid>
+                    </Grid>
+                  </Box>
                 </Paper>
               ))
             ) : (
@@ -920,44 +1022,6 @@ const LPOCompare = () => {
           </div>
         </Grid>
       </Grid>
-
-      <Table>{renderTableHeader('documentsList', 'Documents List')}</Table>
-      {showTableHeading.documentsList && (
-        <DataGrid
-          getRowHeight={() => 'auto'}
-          sx={{
-            '& .MuiDataGrid-cell': {
-              border: '1px solid rgba(224, 224, 224, 1)',
-              display: 'flex',
-              justifyContent: 'start',
-              alignItems: 'center'
-            },
-            '& .MuiDataGrid-columnHeader': {
-              backgroundColor: '#f5f5f5',
-              border: '1px solid rgba(224, 224, 224, 1)',
-              height: '25px !important',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center'
-            },
-            '& .MuiDataGrid-scrollbar': {
-              height: '8px'
-            }
-          }}
-          columns={[
-            { headerName: 'Sr.No.', field: 'id', width: 70 },
-            { headerName: 'Quote ID', field: 'quotation_id', width: 100 },
-            { headerName: 'Document', field: 'document_name', width: 180 },
-            { headerName: 'Document Date', field: 'document_date', width: 120 },
-            { headerName: 'File Name', field: 'file_name', width: 180 },
-            { headerName: 'Notes', field: 'notes', width: 300 }
-          ]}
-          rows={doc_list}
-          hideFooter
-          hideFooterPagination
-          hideFooterSelectedRowCount
-        />
-      )}
     </div>
   );
 };

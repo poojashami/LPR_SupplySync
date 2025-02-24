@@ -1,4 +1,6 @@
 import { Box, Grid, Typography } from '@mui/material';
+import CustomParagraphDark from 'components/CustomParagraphDark';
+import CustomParagraphLight from 'components/CustomParagraphLight';
 import React from 'react';
 
 const LpoAmountBackup = () => {
@@ -9,21 +11,53 @@ const LpoAmountBackup = () => {
     { label: 'Quotation Amount', value: '2249400 INR' }
   ];
   return (
-    <Box>
-      <Grid item xs={12} sm={12} sx={{ padding: '10px' }}>
-        <Grid container spacing={2}>
-          {quotationAmountBreakup.map((item, index) => (
-            <Grid item xs={3} key={index}>
-              <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
-                <Typography variant="h6" sx={{ marginRight: 1, fontWeight: '500', fontSize: '11px', color: '#333' }}>
-                  {item.label}:
-                </Typography>
-                <Typography variant="body1" sx={{ color: '#555', fontSize: '11px' }}>
-                  {item.value}
-                </Typography>
-              </Box>
-            </Grid>
-          ))}
+    <Box padding={1}>
+      <Grid container spacing={2}>
+        <Grid item xs={1}>
+          <CustomParagraphDark>
+            Item Cost:
+            <br />
+            <span style={{ fontSize: '9px' }}>(Ex. VAT)</span>
+          </CustomParagraphDark>
+        </Grid>
+        <Grid item xs={1}>
+          <CustomParagraphLight>1000</CustomParagraphLight>
+        </Grid>
+        <Grid item xs={1}>
+          <CustomParagraphDark>
+            Addition Ch:
+            <br />
+            <span style={{ fontSize: '9px' }}>(Ex. VAT)</span>
+          </CustomParagraphDark>
+        </Grid>
+        <Grid item xs={1}>
+          <CustomParagraphLight>1000</CustomParagraphLight>
+        </Grid>
+        <Grid item xs={1.3}>
+          <CustomParagraphDark>
+            Transportation Ch:
+            <br />
+            <span style={{ fontSize: '9px' }}>(Ex. VAT)</span>
+          </CustomParagraphDark>
+        </Grid>
+        <Grid item xs={1}>
+          <CustomParagraphLight>1000</CustomParagraphLight>
+        </Grid>
+        <Grid item xs={1}>
+          <CustomParagraphDark>Total VAT:</CustomParagraphDark>
+        </Grid>
+        <Grid item xs={1}>
+          <CustomParagraphLight>1000</CustomParagraphLight>
+        </Grid>
+        <Grid item xs={1}>
+          <CustomParagraphDark>
+            Quotation Amt.:
+            <br />
+            <span style={{ fontSize: '9px' }}>(Ex. VAT)</span>
+          </CustomParagraphDark>
+        </Grid>
+        <Grid item xs={1}>
+          <CustomParagraphLight>1000</CustomParagraphLight>
         </Grid>
       </Grid>
     </Box>

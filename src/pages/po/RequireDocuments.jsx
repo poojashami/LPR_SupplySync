@@ -50,6 +50,7 @@ const RequireDocuments = () => {
           <DataGrid
             getRowHeight={() => 'auto'}
             sx={{
+              border: '1px solid rgba(224, 224, 224, 1)',
               '& .MuiDataGrid-cell': {
                 border: '1px solid rgba(224, 224, 224, 1)',
                 display: 'flex',
@@ -62,14 +63,16 @@ const RequireDocuments = () => {
                 height: '25px !important',
                 display: 'flex',
 
-                alignItems: 'center'
+                alignItems: 'center',
+                minHeight: '30px'
               },
+
               '& .MuiDataGrid-scrollbar': {
                 height: '8px'
               }
             }}
             columns={[
-              { headerName: 'Sr.No.', field: 'id', width: 50 },
+              { headerName: 'Sr. No.', field: 'id', width: 60 },
               {
                 headerName: 'Charge name',
                 field: 'charge_name',
@@ -82,7 +85,7 @@ const RequireDocuments = () => {
                 headerName: 'Charges By',
                 field: 'charges_by',
                 width: 80,
-                flex: 1,
+
                 renderCell: (params) => {
                   return <span>{params?.value?.replace(/_/g, ' ')}</span>;
                 }
@@ -104,6 +107,7 @@ const RequireDocuments = () => {
           <DataGrid
             getRowHeight={() => 'auto'}
             sx={{
+              border: '1px solid rgba(224, 224, 224, 1)',
               '& .MuiDataGrid-cell': {
                 border: '1px solid rgba(224, 224, 224, 1)',
                 display: 'flex',
@@ -116,14 +120,16 @@ const RequireDocuments = () => {
                 height: '25px !important',
                 display: 'flex',
 
-                alignItems: 'center'
+                alignItems: 'center',
+                minHeight: '30px'
               },
+
               '& .MuiDataGrid-scrollbar': {
                 height: '8px'
               }
             }}
             columns={[
-              { headerName: 'Sr.No.', field: 'id', width: 50 },
+              { headerName: 'Sr. No.', field: 'id', width: 60 },
               {
                 headerName: 'Charge name',
                 field: 'charge_name',
@@ -136,7 +142,7 @@ const RequireDocuments = () => {
                 headerName: 'Charges By',
                 field: 'charges_by',
                 width: 80,
-                flex: 1,
+
                 renderCell: (params) => {
                   return <span>{params?.value?.replace(/_/g, ' ')}</span>;
                 }
@@ -159,36 +165,33 @@ const RequireDocuments = () => {
           <DataGrid
             getRowHeight={() => 'auto'}
             sx={{
+              border: '1px solid rgba(224, 224, 224, 1)',
               '& .MuiDataGrid-cell': {
-                border: '1px solid rgba(224, 224, 224, 1)',
-                display: 'flex',
-
-                alignItems: 'center'
+                border: '1px solid rgba(224, 224, 224, 1)'
               },
               '& .MuiDataGrid-columnHeader': {
                 backgroundColor: '#f5f5f5',
                 border: '1px solid rgba(224, 224, 224, 1)',
                 height: '25px !important',
-                display: 'flex',
 
-                alignItems: 'center'
+                minHeight: '30px'
               },
+
               '& .MuiDataGrid-scrollbar': {
                 height: '8px'
               }
             }}
             columns={[
-              { headerName: 'Sr.No.', field: 'id', width: 50 },
+              { headerName: 'Sr. No.', field: 'id', width: 60 },
               {
                 headerName: 'Doc name',
                 field: 'doc_name',
-                flex: 1
+                width: 150
               },
               {
                 headerName: 'Remarks',
                 field: 'remarks',
-                width: 80,
-                flex: 1
+                width: 200
               },
               {
                 headerName: 'Is Available',
