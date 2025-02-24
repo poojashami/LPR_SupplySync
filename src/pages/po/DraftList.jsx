@@ -3,9 +3,9 @@ import React, { useState, useEffect } from 'react';
 import MainCard from 'components/MainCard';
 import { DataGrid } from '@mui/x-data-grid';
 import PlusButton from 'components/CustomButton';
-import LPOView from './LPOView';
+import DraftApprove from './DraftApprove';
 
-const IssueLPO = () => {
+const DraftList = () => {
   const [viewLPO, setViewLPO] = useState(false);
 
   const cols = [
@@ -130,10 +130,12 @@ const IssueLPO = () => {
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
-            alignItems: 'center'
+            alignItems: 'center',
+            fontWeight: 600,
+            fontSize: '16px'
           }}
         >
-          {viewLPO ? <span>Pending LPO Approvals </span> : viewLPO ? <span>LPO View </span> : <span>LPO List</span>}
+          {viewLPO ? <span>Pending LPO Approvals </span> : viewLPO ? <span>LPO View </span> : <span>Draft List</span>}
           {viewLPO ? (
             <span>
               <PlusButton label="Back" onClick={handleClose} />
@@ -146,9 +148,9 @@ const IssueLPO = () => {
     >
       <div>
         {viewLPO ? (
-          <LPOView />
+          <DraftApprove />
         ) : (
-          <Box sx={{ height: '50vh', width: '100%', marginBottom: '50px' }}>
+          <Box>
             <DataGrid
               getRowHeight={() => 'auto'}
               sx={{
@@ -168,9 +170,6 @@ const IssueLPO = () => {
                   alignItems: 'center',
                   minHeight: '30px'
                 },
-                '& .MuiDataGrid-checkboxInput': {
-                  padding: '0px'
-                },
 
                 '& .MuiDataGrid-scrollbar': {
                   height: '8px'
@@ -188,4 +187,4 @@ const IssueLPO = () => {
   );
 };
 
-export default IssueLPO;
+export default DraftList;

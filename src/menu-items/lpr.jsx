@@ -35,6 +35,13 @@ const LPR = {
           type: 'item',
           url: '/lpr/view',
           target: false
+        },
+        {
+          id: 'view_lpr',
+          title: <FormattedMessage id="Draft" />,
+          type: 'item',
+          url: '/lpr/view',
+          target: false
         }
       ]
     }

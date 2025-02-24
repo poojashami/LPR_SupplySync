@@ -5,22 +5,21 @@ const Dashboard = Loadable(lazy(() => import('pages/extra-pages/dashboard')));
 
 import LPRList from 'pages/lpr/LPRList';
 import RfqList from 'pages/rfq/RfqList';
-import POList from 'pages/po/POList';
-import POReqPayment from 'pages/po/POReqPayment';
 import TreasuryPayment from 'pages/treasury/TreasuryPayment';
 import TreasuryApprove from 'pages/treasury/TreasuryApprove';
 import CreateLPRForm from 'pages/lpr/CreateLPRForm';
 import ViewLPRList from 'pages/lpr/ViewLPRList';
-import ViewGenerateRfqPage from 'pages/rfq/ViewGenerateRfqPage';
 import QuoteList from 'pages/quote/QuoteList';
 import QuoteComparelist from 'pages/quote/QuoteComparelist';
-import LPOView from 'pages/po/LPOView';
 import LPOApproveList from 'pages/po/LPOApproveList';
 import CreateQuoteList from 'pages/quote/CreateQuoteList';
-import DraftPO from 'pages/po/Draft';
 import GRNList from 'pages/grn/GRNList';
-import IssueLPO from 'pages/po/IssueLPO';
 import RfqViewList from 'pages/rfq/RfqViewList';
+import CreatePOList from 'pages/po/CreatePOList';
+import DraftList from 'pages/po/DraftList';
+import IssueLPOList from 'pages/po/IssueLPOList';
+import LPODocumentPage from 'pages/po/LPODocumentPage';
+import LPOEmailForm from 'pages/po/LPOEmailForm';
 
 const MainRoutes = {
   path: '/',
@@ -92,27 +91,27 @@ const MainRoutes = {
       children: [
         {
           path: 'po/create',
-          element: <POList />
+          element: <CreatePOList />
         },
         {
           path: 'po/draft',
-          element: <DraftPO />
+          element: <DraftList />
         },
-        {
-          path: 'po/view',
-          element: <IssueLPO />
-        },
-        // {
-        //   path: 'po/view',
-        //   element: <LPOView />
-        // },
         {
           path: 'po/approve',
           element: <LPOApproveList />
         },
         {
-          path: '/po/request-payment',
-          element: <POReqPayment />
+          path: 'po/issued_lpo',
+          element: <IssueLPOList />
+        },
+        {
+          path: 'po/lpo_doc',
+          element: <LPODocumentPage />
+        },
+        {
+          path: 'po/email',
+          element: <LPOEmailForm />
         }
       ]
     },
