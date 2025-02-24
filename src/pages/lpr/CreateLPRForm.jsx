@@ -516,7 +516,6 @@ import {
   IconButton,
   MenuItem,
   InputAdornment,
-  TableBody,
   TableBody
 } from '@mui/material';
 import { errorMessageStyle } from 'components/StyleComponent';
@@ -540,7 +539,7 @@ const CreateLPRForm = ({ onSubmit, onCancel }) => {
   const [divisions, setDivisions] = useState([]);
   const [verticals, setVerticals] = useState([]);
   const [companies, setCompanies] = useState([]);
-  const[lprCategories,setLprCategories] =useState([]);
+  const [lprCategories, setLprCategories] = useState([]);
 
   useEffect(() => {
     // Fetch divisions
@@ -645,7 +644,7 @@ const CreateLPRForm = ({ onSubmit, onCancel }) => {
         requested_by: formValues.requestedBy,
         lpr_date: formValues.lprDate,
         // additional_remarks: formValues.additionalRemarks,
-        no_min_quote: formValues.noMinQuote,
+        // no_min_quote: formValues.noMinQuote,
         // quotation_email_alert: formValues.quotationEmailAlert,
         delivery_type: formValues.deliveryType
       };
@@ -729,68 +728,68 @@ const CreateLPRForm = ({ onSubmit, onCancel }) => {
                 {errors.lprDate && <div style={errorMessageStyle}>{errors.lprDate}</div>}
               </Grid>
 
-                  <Grid item xs={12} sm={3} paddingTop={'20px'}>
-                    <Typography variant="body" style={{ fontSize: '11px' }}>
-                      Vertical<ValidationStar>*</ValidationStar>
-                    </Typography>
-                    <SelectFieldPadding
-                      name="vertical"
-                      variant="outlined"
-                      fullWidth
-                      size="small"
-                      value={formValues.vertical}
-                      onChange={handleChange}
-                    >
-                      {verticals.map((vertical) => (
-                        <MenuItem key={vertical.vertical_id} value={vertical.vertical_id}>
-                          {vertical.vertical_name}
-                        </MenuItem>
-                      ))}
-                    </SelectFieldPadding>
-                    {errors.vertical && <div style={errorMessageStyle}>{errors.vertical}</div>}
-                  </Grid>
+              <Grid item xs={12} sm={3} paddingTop={'20px'}>
+                <Typography variant="body" style={{ fontSize: '11px' }}>
+                  Vertical<ValidationStar>*</ValidationStar>
+                </Typography>
+                <SelectFieldPadding
+                  name="vertical"
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                  value={formValues.vertical}
+                  onChange={handleChange}
+                >
+                  {verticals.map((vertical) => (
+                    <MenuItem key={vertical.vertical_id} value={vertical.vertical_id}>
+                      {vertical.vertical_name}
+                    </MenuItem>
+                  ))}
+                </SelectFieldPadding>
+                {errors.vertical && <div style={errorMessageStyle}>{errors.vertical}</div>}
+              </Grid>
 
-                  <Grid item xs={12} sm={3} paddingTop={'20px'}>
-                    <Typography variant="body" style={{ fontSize: '11px' }}>
-                      Company<ValidationStar>*</ValidationStar>
-                    </Typography>
-                    <SelectFieldPadding
-                      name="company"
-                      variant="outlined"
-                      fullWidth
-                      size="small"
-                      value={formValues.company}
-                      onChange={handleChange}
-                    >
-                      {companies.map((company) => (
-                        <MenuItem key={company.company_id} value={company.company_id}>
-                          {company.company_name}
-                        </MenuItem>
-                      ))}
-                    </SelectFieldPadding>
-                    {errors.company && <div style={errorMessageStyle}>{errors.company}</div>}
-                  </Grid>
+              <Grid item xs={12} sm={3} paddingTop={'20px'}>
+                <Typography variant="body" style={{ fontSize: '11px' }}>
+                  Company<ValidationStar>*</ValidationStar>
+                </Typography>
+                <SelectFieldPadding
+                  name="company"
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                  value={formValues.company}
+                  onChange={handleChange}
+                >
+                  {companies.map((company) => (
+                    <MenuItem key={company.company_id} value={company.company_id}>
+                      {company.company_name}
+                    </MenuItem>
+                  ))}
+                </SelectFieldPadding>
+                {errors.company && <div style={errorMessageStyle}>{errors.company}</div>}
+              </Grid>
 
-                  <Grid item xs={12} sm={3} paddingTop={'20px'}>
-                    <Typography variant="body" style={{ fontSize: '11px' }}>
-                      Division<ValidationStar>*</ValidationStar>
-                    </Typography>
-                    <SelectFieldPadding
-                      name="division"
-                      variant="outlined"
-                      fullWidth
-                      size="small"
-                      value={formValues.division}
-                      onChange={handleChange}
-                    >
-                      {divisions.map((division) => (
-                        <MenuItem key={division.division_id} value={division.division_id}>
-                          {division.division_name}
-                        </MenuItem>
-                      ))}
-                    </SelectFieldPadding>
-                    {errors.division && <div style={errorMessageStyle}>{errors.division}</div>}
-                  </Grid>
+              <Grid item xs={12} sm={3} paddingTop={'20px'}>
+                <Typography variant="body" style={{ fontSize: '11px' }}>
+                  Division<ValidationStar>*</ValidationStar>
+                </Typography>
+                <SelectFieldPadding
+                  name="division"
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                  value={formValues.division}
+                  onChange={handleChange}
+                >
+                  {divisions.map((division) => (
+                    <MenuItem key={division.division_id} value={division.division_id}>
+                      {division.division_name}
+                    </MenuItem>
+                  ))}
+                </SelectFieldPadding>
+                {errors.division && <div style={errorMessageStyle}>{errors.division}</div>}
+              </Grid>
 
               <Grid item xs={6}>
                 <Typography variant="body2" sx={{ fontWeight: 600, fontSize: '13px', color: 'navy' }}>
@@ -963,26 +962,26 @@ const CreateLPRForm = ({ onSubmit, onCancel }) => {
                     {errors.deliveryTime && <div style={errorMessageStyle}>{errors.deliveryTime}</div>}
                   </Grid>
 
-                              <Grid item xs={12} sm={3} paddingTop={'20px'}>
-                                <Typography variant="body" style={{ fontSize: '11px' }}>
-                                  LPR Category<ValidationStar>*</ValidationStar>
-                                </Typography>
-                                <SelectFieldPadding
-                                  name="lprCategory"
-                                  variant="outlined"
-                                  fullWidth
-                                  size="small"
-                                  value={formValues.lprCategory}
-                                  onChange={handleChange}
-                                >
-                                  {lprCategories.map((category) => (
-                                    <MenuItem key={category.item_super_group_id} value={category.item_super_group_id}>
-                                      {category.item_super_group_name}
-                                    </MenuItem>
-                                  ))}
-                                </SelectFieldPadding>
-                                {errors.lprCategory && <div style={errorMessageStyle}>{errors.lprCategory}</div>}
-                              </Grid>
+                  <Grid item xs={12} sm={3} paddingTop={'20px'}>
+                    <Typography variant="body" style={{ fontSize: '11px' }}>
+                      LPR Category<ValidationStar>*</ValidationStar>
+                    </Typography>
+                    <SelectFieldPadding
+                      name="lprCategory"
+                      variant="outlined"
+                      fullWidth
+                      size="small"
+                      value={formValues.lprCategory}
+                      onChange={handleChange}
+                    >
+                      {lprCategories.map((category) => (
+                        <MenuItem key={category.item_super_group_id} value={category.item_super_group_id}>
+                          {category.item_super_group_name}
+                        </MenuItem>
+                      ))}
+                    </SelectFieldPadding>
+                    {errors.lprCategory && <div style={errorMessageStyle}>{errors.lprCategory}</div>}
+                  </Grid>
 
                   <Grid item xs={12} sm={8}>
                     <Typography variant="body2">LPR Remark</Typography>
