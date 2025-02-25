@@ -2,6 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     formValues: {
+        lpr_id: '',
+        lpr_num: '',
         vertical: '',
         company: '',
         division: '',
